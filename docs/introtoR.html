@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction to R – Microbiome Data Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Microbiome Data Analysis</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+    <a href="https://hemara.nz" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Overview</a></li><li class="breadcrumb-item"><a href="./introtoR.html">Introduction to R</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Set-up</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introtoR.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Introduction to R</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./day1_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 1</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16S.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What is 16S rRNA?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fastq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-processing sequencing data &amp; assigning taxonomy</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./day2.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 2</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./phyloseq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data exploration, normalization, &amp; quality control</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./day3.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Day 3</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data viz</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 4</span></span>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#getting-started-with-rstudio" id="toc-getting-started-with-rstudio" class="nav-link" data-scroll-target="#getting-started-with-rstudio">Getting started with RStudio</a>
+  <ul class="collapse">
+  <li><a href="#rstudio-interface" id="toc-rstudio-interface" class="nav-link" data-scroll-target="#rstudio-interface">RStudio interface</a></li>
+  </ul></li>
+  <li><a href="#r-basics" id="toc-r-basics" class="nav-link" data-scroll-target="#r-basics">R basics</a>
+  <ul class="collapse">
+  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running code</a></li>
+  <li><a href="#using-functions" id="toc-using-functions" class="nav-link" data-scroll-target="#using-functions">Using functions</a></li>
+  <li><a href="#installing-loading-packages" id="toc-installing-loading-packages" class="nav-link" data-scroll-target="#installing-loading-packages">Installing &amp; loading packages</a></li>
+  <li><a href="#installing-and-loading-packages" id="toc-installing-and-loading-packages" class="nav-link" data-scroll-target="#installing-and-loading-packages">Installing and loading packages</a></li>
+  <li><a href="#creating-objects" id="toc-creating-objects" class="nav-link" data-scroll-target="#creating-objects">Creating objects</a></li>
+  <li><a href="#putting-it-all-together-to-create-art" id="toc-putting-it-all-together-to-create-art" class="nav-link" data-scroll-target="#putting-it-all-together-to-create-art">Putting it all together to create aRt</a></li>
+  </ul></li>
+  <li><a href="#introducing-the-palmer-penguins" id="toc-introducing-the-palmer-penguins" class="nav-link" data-scroll-target="#introducing-the-palmer-penguins">Introducing the Palmer penguins</a></li>
+  <li><a href="#creating-an-r-script" id="toc-creating-an-r-script" class="nav-link" data-scroll-target="#creating-an-r-script">Creating an R script</a></li>
+  <li><a href="#tidy-data-principles" id="toc-tidy-data-principles" class="nav-link" data-scroll-target="#tidy-data-principles">Tidy data principles</a></li>
+  <li><a href="#tidy-datasets-are-all-alike" id="toc-tidy-datasets-are-all-alike" class="nav-link" data-scroll-target="#tidy-datasets-are-all-alike">Tidy datasets are all alike…</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing data</a></li>
+  <li><a href="#taking-a-look-at-our-imported-data" id="toc-taking-a-look-at-our-imported-data" class="nav-link" data-scroll-target="#taking-a-look-at-our-imported-data">Taking a look at our imported data</a></li>
+  <li><a href="#taking-a-glimpse-at-our-imported-data" id="toc-taking-a-glimpse-at-our-imported-data" class="nav-link" data-scroll-target="#taking-a-glimpse-at-our-imported-data">Taking a glimpse at our imported data</a></li>
+  <li><a href="#data-filtering" id="toc-data-filtering" class="nav-link" data-scroll-target="#data-filtering">Data filtering</a></li>
+  <li><a href="#removing-na-values-with-drop_na" id="toc-removing-na-values-with-drop_na" class="nav-link" data-scroll-target="#removing-na-values-with-drop_na">Removing N/A values with <code>drop_na()</code></a></li>
+  <li><a href="#creating-plots-with-ggplot" id="toc-creating-plots-with-ggplot" class="nav-link" data-scroll-target="#creating-plots-with-ggplot">Creating plots with ggplot()</a></li>
+  <li><a href="#ggplot-components" id="toc-ggplot-components" class="nav-link" data-scroll-target="#ggplot-components">ggplot() components</a></li>
+  <li><a href="#geom-layers" id="toc-geom-layers" class="nav-link" data-scroll-target="#geom-layers">Geom layers</a></li>
+  <li><a href="#example-1-creating-the-canvas-base" id="toc-example-1-creating-the-canvas-base" class="nav-link" data-scroll-target="#example-1-creating-the-canvas-base">Example 1: creating the canvas base</a></li>
+  <li><a href="#example-1-adding-a-geom-layer" id="toc-example-1-adding-a-geom-layer" class="nav-link" data-scroll-target="#example-1-adding-a-geom-layer">Example 1: adding a geom layer</a></li>
+  <li><a href="#example-1-point-colour-and-shape" id="toc-example-1-point-colour-and-shape" class="nav-link" data-scroll-target="#example-1-point-colour-and-shape">Example 1: point colour and shape</a></li>
+  <li><a href="#example-1-custom-colour-scales" id="toc-example-1-custom-colour-scales" class="nav-link" data-scroll-target="#example-1-custom-colour-scales">Example 1: custom colour scales</a></li>
+  <li><a href="#example-1-adding-custom-axis-labels" id="toc-example-1-adding-custom-axis-labels" class="nav-link" data-scroll-target="#example-1-adding-custom-axis-labels">Example 1: adding custom axis labels</a></li>
+  <li><a href="#example-2-creating-the-canvas-base" id="toc-example-2-creating-the-canvas-base" class="nav-link" data-scroll-target="#example-2-creating-the-canvas-base">Example 2: creating the canvas base</a></li>
+  <li><a href="#example-2-adding-a-geom-layer" id="toc-example-2-adding-a-geom-layer" class="nav-link" data-scroll-target="#example-2-adding-a-geom-layer">Example 2: adding a geom layer</a></li>
+  <li><a href="#example-2-colouring-the-boxplots" id="toc-example-2-colouring-the-boxplots" class="nav-link" data-scroll-target="#example-2-colouring-the-boxplots">Example 2: colouring the boxplots</a></li>
+  <li><a href="#example-2-adding-axis-labels" id="toc-example-2-adding-axis-labels" class="nav-link" data-scroll-target="#example-2-adding-axis-labels">Example 2: adding axis labels</a></li>
+  <li><a href="#example-2-adding-jitter-points" id="toc-example-2-adding-jitter-points" class="nav-link" data-scroll-target="#example-2-adding-jitter-points">Example 2: adding jitter points</a></li>
+  <li><a href="#example-3-creating-the-canvas-base" id="toc-example-3-creating-the-canvas-base" class="nav-link" data-scroll-target="#example-3-creating-the-canvas-base">Example 3: creating the canvas base</a></li>
+  <li><a href="#example-3-adding-a-geom-layer" id="toc-example-3-adding-a-geom-layer" class="nav-link" data-scroll-target="#example-3-adding-a-geom-layer">Example 3: adding a geom layer</a></li>
+  <li><a href="#example-3-faceting-by-a-variable" id="toc-example-3-faceting-by-a-variable" class="nav-link" data-scroll-target="#example-3-faceting-by-a-variable">Example 3: faceting by a variable</a></li>
+  <li><a href="#example-3-colouring-the-bars" id="toc-example-3-colouring-the-bars" class="nav-link" data-scroll-target="#example-3-colouring-the-bars">Example 3: colouring the bars</a></li>
+  <li><a href="#example-3-adding-labels-and-a-theme" id="toc-example-3-adding-labels-and-a-theme" class="nav-link" data-scroll-target="#example-3-adding-labels-and-a-theme">Example 3: adding labels and a theme</a></li>
+  <li><a href="#example-4-creating-a-bar-plot-with-error-bars" id="toc-example-4-creating-a-bar-plot-with-error-bars" class="nav-link" data-scroll-target="#example-4-creating-a-bar-plot-with-error-bars">Example 4: creating a bar plot with error bars</a></li>
+  <li><a href="#dealing-with-errors" id="toc-dealing-with-errors" class="nav-link" data-scroll-target="#dealing-with-errors">Dealing with errors</a></li>
+  <li><a href="#what-to-do-when-you-get-an-error" id="toc-what-to-do-when-you-get-an-error" class="nav-link" data-scroll-target="#what-to-do-when-you-get-an-error">What to do when you get an error</a></li>
+  <li><a href="#r-resources" id="toc-r-resources" class="nav-link" data-scroll-target="#r-resources">R resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Overview</a></li><li class="breadcrumb-item"><a href="./introtoR.html">Introduction to R</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Introduction to R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<ul>
+<li>Getting started with RStudio</li>
+<li>4 coding basics you need to know</li>
+<li>Tidy data principles</li>
+<li>Importing &amp; filtering data</li>
+<li>Creating plots with <code>ggplot()</code></li>
+</ul>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Being able to work competently with R is incredibly useful and versatile. In addition to performing any statistical tests you like, R allows you to make professional-looking graphs and figures. If there is something you want to do with R, odds are you can do it. You just have to figure out how…</p>
+<p>When trying to figure out how to do something, I recommend the following approaches:</p>
+<ul>
+<li><p>Google search what you are trying to do, followed by “in R”. So for instance “Make box plot in R”. There is an extensive user community.</p></li>
+<li><p>If you see a command in a script you are following, and don’t know what it means, use the ‘?’ function. For example, running <code>?ggplot</code> will tell you all about the ggplot function, including its available parameters.</p></li>
+<li><p>Use existing tutorials and resources to give you a pipeline for processing data. Go through with the sample data first to make sure it all works. Then substitute your own data.</p></li>
+</ul>
+<p>Resources I would recommend include:</p>
+<ul>
+<li><p><a href="https://r4ds.hadley.nz/intro.html">R for Data Science</a>, <a href="https://ggplot2-book.org/">Elegant Graphics for Data Analysis</a>, and <a href="https://adv-r.hadley.nz/">Advanced R</a> by Hadley Wickham.</p></li>
+<li><p><a href="https://posit.co/resources/cheatsheets/">Cheatsheets</a> by Posit (formerly RStudio).</p></li>
+<li><p><a href="https://github.com/cxli233/FriendsDontLetFriends">Friends Don’t Let Friends Make Bad Graphs</a> by Chenxin Li.</p></li>
+<li><p><a href="https://github.com/cxli233/Online_R_learning">Online R Learning</a> by Chenxlin Li.</p></li>
+<li><p><a href="https://carpentries.org/">The Carpentries</a> workshops e.g., <a href="https://datacarpentry.github.io/R-ecology-lesson/">Data Analysis and Visualization in R for Ecologists</a>.</p></li>
+<li><p><a href="https://link.springer.com/book/10.1007/978-3-319-71404-2">Numerical Ecology in R</a> by Daniel Borcard, Francois Gillet, and Pierre Legendre.</p></li>
+</ul>
+</section>
+<section id="getting-started-with-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-with-rstudio">Getting started with RStudio</h2>
+<p><span class="fragment highlight-blue">R</span> is a programming language. In this workshop, we’re going to be working in <span class="fragment highlight-blue">RStudio</span>, an Integrated Development Environment that lets us easily write and edit code.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="2b931008-dc7c-4bec-92cb-112a55126975_rw_1920.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="540"></p>
+</figure>
+</div>
+<section id="rstudio-interface" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-interface">RStudio interface</h3>
+<p>The RStudio user interface has 4 primary panes:</p>
+<ul>
+<li><p><strong>Source pane</strong>: allows you to view and edit various code-related files.</p></li>
+<li><p><strong>Console pane</strong>: provides an area to interactively execute code.</p></li>
+<li><p><strong>Environment pane:</strong> displays currently saved R objects.</p></li>
+<li><p><strong>Output pane</strong>: contains the Files, Plots, Packages, and Help tabs.</p></li>
+</ul>
+<p><img src="rstudio-panes-labeled.jpeg" class="img-fluid" width="1000"></p>
+</section>
+</section>
+<section id="r-basics" class="level2">
+<h2 class="anchored" data-anchor-id="r-basics">R basics</h2>
+<section id="running-code" class="level3">
+<h3 class="anchored" data-anchor-id="running-code">Running code</h3>
+<p>There are a few ways to run code:</p>
+<ul>
+<li><p>Click the line and select CTRL + ENTER</p></li>
+<li><p>Highlight the line and select CTRL + ENTER</p></li>
+<li><p>Click the line and click ‘Run’ in the top menu bar</p></li>
+<li><p>In a R or Quarto markdown document, you can click the green ‘play’ button to run all of the code in the current chunk. Code chunks run from <code>```{r}</code> to the next <code>```</code> . Each chunk should have a unique name.</p></li>
+</ul>
+<p>You can also copy and paste (or type) code directly into the console pane after the ‘&gt;’ prompt. Select ENTER to run the code.</p>
+</section>
+<section id="using-functions" class="level3">
+<h3 class="anchored" data-anchor-id="using-functions">Using functions</h3>
+<p>To make something happen in R, you use a <strong>function</strong>. For example, the sqrt function calculates the square root of a given number. To use a function, you’ll need to write it’s name with parentheses.</p>
+<p>The inputs you give a function go inside those parentheses - these are called <strong>arguments</strong>.</p>
+<p>For example, we can use the <code>sqrt()</code> function to calculate the square root of 256, by providing that number as our argument.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">256</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16</code></pre>
+</div>
+</div>
+<p>In it’s simplest form, R code works like this:</p>
+<p><code>object &lt;- function(argument)</code></p>
+<p>where:</p>
+<ul>
+<li><p>an <strong>object</strong> holds a value e.g., the output of a function, a dataframe, a list.</p></li>
+<li><p>the <strong>left arrow operator <code>&lt;-</code></strong> assigns a value.</p></li>
+<li><p>A <strong>function</strong> does something e.g., performs a calculation, plots observations.</p></li>
+<li><p>An <strong>argument</strong> is an input or parameter e.g., the data or a setting you want to use.</p></li>
+</ul>
+</section>
+<section id="installing-loading-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-loading-packages">Installing &amp; loading packages</h3>
+</section>
+<section id="installing-and-loading-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-and-loading-packages">Installing and loading packages</h3>
+<p>R comes prepackaged with some default functions. You can install <strong>packages</strong> to get access to new collections of functions.</p>
+<p>We can install new packages using the <code>install.packages()</code> function.</p>
+<p>We only need to download and install a package <em>once</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Many popular R packages are hosted on CRAN (Comprehensive R Archive Network) and can be installed with the install.packages() function</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>However, <strong>every time</strong> we open RStudio, we need to <strong>load</strong> the packages we want to use in that session using the <code>library()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="creating-objects" class="level3">
+<h3 class="anchored" data-anchor-id="creating-objects">Creating objects</h3>
+<p>If you want to use the output of R functions later, you’ll need to save them. In R, you can save outputs and results by creating an <strong>object</strong>.</p>
+<p>To create an object, type a name for the object and use the &lt;- arrow to store a value in the object. You can call this literally anything you like, so long as it’s one string of characters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>my_favourite_number <span class="ot">&lt;-</span> <span class="dv">256</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>my_favourite_number <span class="co">#this object holds the value '256'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(my_favourite_number)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>my_new_favourite_number <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(my_favourite_number) <span class="co">#what value is stored in this new object?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="putting-it-all-together-to-create-art" class="level3">
+<h3 class="anchored" data-anchor-id="putting-it-all-together-to-create-art">Putting it all together to create aRt</h3>
+<p>Let’s install and load the <a href="https://flametree.djnavarro.net/articles/articles/getting-started.html">flametree</a> package to create a some tree aRt!</p>
+<p>Once you’ve run this code, see what happens when:</p>
+<ul>
+<li><p><strong>You change the names of the colours in the <code>palette</code> argument.</strong> You can find a list of <a href="https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf">R colour names</a> online, alongside a number of colour palette packages like <a href="https://www.datanovia.com/en/blog/the-a-z-of-rcolorbrewer-palette/">RColorBrewer,</a> <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">viridis</a>, and more. This tree is based on a <a href="https://github.com/karthik/wesanderson">Wes Anderson-inspired colour palette</a>.</p></li>
+<li><p><strong>You change the tree <a href="https://flametree.djnavarro.net/articles/articles/exploring-styles.html">style</a>.</strong></p></li>
+<li><p><strong>You change the numeric value of the <code>tree</code> parameter.</strong></p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into '/home/lauren/R/aarch64-unknown-linux-gnu-library/4.3'
+(as 'lib' is unspecified)</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/aRt-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="introducing-the-palmer-penguins" class="level2">
+<h2 class="anchored" data-anchor-id="introducing-the-palmer-penguins">Introducing the Palmer penguins</h2>
+<p>The <span class="highlight-blue">Palmer penguins</span> dataset contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica.</p>
+<p>This data was collected from 2007 to 2009 by the US Long Term Ecological Research Network.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lter_penguins.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="500"></p>
+</figure>
+</div>
+</section>
+<section id="creating-an-r-script" class="level2">
+<h2 class="anchored" data-anchor-id="creating-an-r-script">Creating an R script</h2>
+<p>Before we start working on our code, we want to create an .R document we can save it in!</p>
+<p><span class="highlight-blue"><strong>File &gt; New File &gt; R Script</strong></span></p>
+<p>To make sure your code is reproducible, it’s good practice to load all the packages you need at the <u>start</u> of your document, using the <code>library()</code> function.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tidyverse is a collection of packages used for data manipulation, filtering and visualisation. Today, we’ll use functions from tidyverse to import data and create some plots.</p>
+<p>It’s in the name - the first step to any data analysis is to make sure your data is tidy!</p>
+</section>
+<section id="tidy-data-principles" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-data-principles">Tidy data principles</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="85520b8f-4629-4763-8a2a-9ceff27458bf_rw_1920.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="tidy-datasets-are-all-alike" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-datasets-are-all-alike">Tidy datasets are all alike…</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="6e297111-efb7-4555-93d2-085071d1853c_rw_1920.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
+<p>The next step is to import our tidy data!</p>
+<p>If you’re using Posit Cloud, we need to upload our file with the <strong>Upload</strong> button in the Files pane.</p>
+<p>If you’re using RStudio Desktop, you’ll need to set your <strong>working directory</strong> to tell R where your files live.</p>
+<p>We can then use the <code>read_csv()</code> function to import a .csv file.</p>
+<p>When we import our data, we’re going to assign it to an <span class="highlight-blue">object</span> that we can use later on.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>penguin.data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="taking-a-look-at-our-imported-data" class="level2">
+<h2 class="anchored" data-anchor-id="taking-a-look-at-our-imported-data">Taking a look at our imported data</h2>
+<p>Let’s take a look at our new data object.</p>
+<div class="fragment">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Output</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>penguin.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>penguin.data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>penguin.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="taking-a-glimpse-at-our-imported-data" class="level2">
+<h2 class="anchored" data-anchor-id="taking-a-glimpse-at-our-imported-data">Taking a glimpse at our imported data</h2>
+<p>We can also use the <code>glimpse()</code> function to take a look at this object.</p>
+<div class="fragment">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Output</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguin.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguin.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-filtering" class="level2">
+<h2 class="anchored" data-anchor-id="data-filtering">Data filtering</h2>
+<p>We’ve seen some N/A values in the raw data. We can remove these with the <code>drop_na()</code> function.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="naniar.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="removing-na-values-with-drop_na" class="level2">
+<h2 class="anchored" data-anchor-id="removing-na-values-with-drop_na">Removing N/A values with <code>drop_na()</code></h2>
+<p>We’ve seen some N/A values in the raw data. We can remove these with the <code>drop_na()</code> function.</p>
+<div class="fragment">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Output</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>penguin_nafree.data <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(penguin.data)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>penguin_nafree.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>penguin_nafree.data <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(penguin.data)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>penguin_nafree.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-plots-with-ggplot" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="creating-plots-with-ggplot">Creating plots with ggplot()</h2>
+<p><code>ggplot()</code> is a function that creates plots.</p>
+<p>Like a piece of art, we start with a <strong>base canvas</strong> where we set up our framework. We then use a <code>+</code> symbol to <strong>add layers</strong> on top.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="9a306c0a-dac8-413d-ba2e-cc7fd4c4d5c8_rw_1920.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="800"></p>
+</figure>
+</div>
+</section>
+<section id="ggplot-components" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="ggplot-components">ggplot() components</h2>
+<p>Every ggplot has three components:</p>
+<ul>
+<li><code>data</code> - your filtered data, ready for visualisation.</li>
+<li><code>aes</code>thetic mappings - this defines <strong>which variables</strong> <strong>we plot.</strong></li>
+<li><code>geom</code> layer(s) - this defines how we <strong>visualise the observations</strong>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="grammar-of-graphics.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="geom-layers" class="level2">
+<h2 class="anchored" data-anchor-id="geom-layers">Geom layers</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="geom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
+</figure>
+</div>
+</section>
+<section id="example-1-creating-the-canvas-base" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-1-creating-the-canvas-base">Example 1: creating the canvas base</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-1-adding-a-geom-layer" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-1-adding-a-geom-layer">Example 1: adding a geom layer</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-1-point-colour-and-shape" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-1-point-colour-and-shape">Example 1: point colour and shape</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species, <span class="at">shape =</span> species),<span class="at">size =</span> <span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-1-custom-colour-scales" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-1-custom-colour-scales">Example 1: custom colour scales</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species, <span class="at">shape =</span> species),<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-1-adding-custom-axis-labels" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-1-adding-custom-axis-labels">Example 1: adding custom axis labels</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species, <span class="at">shape =</span> species),<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>)) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Bill length (mm)"</span>, <span class="at">y=</span><span class="st">"Bill depth (mm)"</span>, <span class="at">color =</span> <span class="st">"Penguin species"</span>, <span class="at">shape =</span> <span class="st">"Penguin species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-2-creating-the-canvas-base" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-2-creating-the-canvas-base">Example 2: creating the canvas base</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-2-adding-a-geom-layer" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-2-adding-a-geom-layer">Example 2: adding a geom layer</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-2-colouring-the-boxplots" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-2-colouring-the-boxplots">Example 2: colouring the boxplots</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>species)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>), <span class="at">name =</span> <span class="st">"Species"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-2-adding-axis-labels" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-2-adding-axis-labels">Example 2: adding axis labels</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>species)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>), <span class="at">name =</span> <span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Penguin species"</span>, <span class="at">y=</span><span class="st">"Flipper length (mm)"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-2-adding-jitter-points" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-2-adding-jitter-points">Example 2: adding jitter points</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>species)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>), <span class="at">name =</span> <span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Penguin species"</span>, <span class="at">y=</span><span class="st">"Flipper length (mm)"</span>) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color =</span> species), <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-3-creating-the-canvas-base" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-3-creating-the-canvas-base">Example 3: creating the canvas base</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-3-adding-a-geom-layer" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-3-adding-a-geom-layer">Example 3: adding a geom layer</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>sex),<span class="at">position=</span><span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-3-faceting-by-a-variable" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-3-faceting-by-a-variable">Example 3: faceting by a variable</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>sex),<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-3-colouring-the-bars" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-3-colouring-the-bars">Example 3: colouring the bars</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>sex),<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>island) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"lightpink1"</span>, <span class="st">"skyblue1"</span>), <span class="at">name =</span> <span class="st">"Sex"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-3-adding-labels-and-a-theme" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-3-adding-labels-and-a-theme">Example 3: adding labels and a theme</h2>
+<div class="cell" data-output-location="fragment">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>sex),<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>island) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"lightpink1"</span>, <span class="st">"skyblue1"</span>), <span class="at">name =</span> <span class="st">"Sex"</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Frequency"</span>, <span class="at">x=</span><span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-4-creating-a-bar-plot-with-error-bars" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-4-creating-a-bar-plot-with-error-bars">Example 4: creating a bar plot with error bars</h2>
+<div class="cell" data-output-location="slide">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">#calculating sd</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>penguin_summary.data <span class="ot">&lt;-</span> penguin_nafree.data <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb30-5"><a href="#cb30-5"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(body_mass_g),</span>
+<span id="cb30-6"><a href="#cb30-6"></a>    <span class="at">body_mass_g =</span> <span class="fu">mean</span>(body_mass_g)</span>
+<span id="cb30-7"><a href="#cb30-7"></a>  )</span>
+<span id="cb30-8"><a href="#cb30-8"></a></span>
+<span id="cb30-9"><a href="#cb30-9"></a><span class="co">#bar plot with error bars</span></span>
+<span id="cb30-10"><a href="#cb30-10"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_summary.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y=</span>body_mass_g)) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="#cb30-11"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill=</span>species),<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb30-12"><a href="#cb30-12"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>body_mass_g<span class="sc">-</span>sd, <span class="at">ymax=</span>body_mass_g<span class="sc">+</span>sd), <span class="at">width=</span>.<span class="dv">2</span>,</span>
+<span id="cb30-13"><a href="#cb30-13"></a>                <span class="at">position=</span><span class="fu">position_dodge</span>(.<span class="dv">9</span>)) <span class="sc">+</span> </span>
+<span id="cb30-14"><a href="#cb30-14"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>), <span class="at">name =</span> <span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
+<span id="cb30-15"><a href="#cb30-15"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Weight (g)"</span>, <span class="at">x=</span><span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
+<span id="cb30-16"><a href="#cb30-16"></a>  <span class="fu">theme_bw</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dealing-with-errors" class="level2">
+<h2 class="anchored" data-anchor-id="dealing-with-errors">Dealing with errors</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ron_swanson.gif" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="what-to-do-when-you-get-an-error" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="what-to-do-when-you-get-an-error">What to do when you get an error</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><p>Read the error message</p></li>
+<li><p>Google the error message</p></li>
+<li><p>Try the suggested solutions</p></li>
+<li><p>Read about the function</p></li>
+<li><p>Ask for help</p></li>
+</ul>
+<p><strong>Check the easy stuff:</strong></p>
+<p>✅ Did you forget to run any code?</p>
+<p>✅ Check for spelling mistakes (including capital letters)</p>
+<p>✅ Check your parentheses, quotation marks, and commas</p>
+</div><div class="column" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="blame_code.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="r-resources" class="level2">
+<h2 class="anchored" data-anchor-id="r-resources">R resources</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li><p><a href="https://posit.co/resources/cheatsheets/">Posit cheatsheets</a> will help you use your favourite tidyverse packages!</p></li>
+<li><p><a href="https://r4ds.had.co.nz/">R for Data Science</a>, <a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data Analysis</a>, and <a href="https://adv-r.hadley.nz/">Advanced R</a> are all free online books published by <a href="https://hadley.nz/">Hadley Wickham</a>*.</p></li>
+</ul>
+</div><div class="column" style="width:30%;">
+<div class="quarto-figure quarto-figure-right">
+<figure class="figure">
+<p><img src="cover (1).png" class="img-fluid quarto-figure quarto-figure-right figure-img" width="300"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
