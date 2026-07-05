@@ -138,11 +138,8 @@ ul.task-list li input[type="checkbox"] {
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./16S.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">What is 16S rRNA?</span></a>
-  </div>
-</li>
+ <span class="menu-text">slides.qmd</span>
+  </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fastq.html" class="sidebar-item-text sidebar-link">
@@ -153,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./day2.qmd" class="sidebar-item-text sidebar-link">
+            <a href="./day2_introduction.qmd" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 2</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -170,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./day3.qmd" class="sidebar-item-text sidebar-link">
+            <a href="./day3_introduction.qmd" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 3</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -203,10 +200,8 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule">Schedule</a>
   <ul class="collapse">
+  <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link" data-scroll-target="#before-you-start">Before you start</a></li>
   <li><a href="#day-1-from-raw-sequencing-data-to-asvs" id="toc-day-1-from-raw-sequencing-data-to-asvs" class="nav-link" data-scroll-target="#day-1-from-raw-sequencing-data-to-asvs">Day 1: From raw sequencing data to ASVs</a></li>
-  </ul></li>
-  <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link" data-scroll-target="#before-you-start">Before you start</a>
-  <ul class="collapse">
   <li><a href="#day-2-best-practices-for-quality-control" id="toc-day-2-best-practices-for-quality-control" class="nav-link" data-scroll-target="#day-2-best-practices-for-quality-control">Day 2: Best practices for quality control</a></li>
   <li><a href="#day-3-diversity-metrics-data-visualizations" id="toc-day-3-diversity-metrics-data-visualizations" class="nav-link" data-scroll-target="#day-3-diversity-metrics-data-visualizations">Day 3: Diversity metrics &amp; data visualizations</a></li>
   <li><a href="#day-4-show-tell-advanced-data-viz" id="toc-day-4-show-tell-advanced-data-viz" class="nav-link" data-scroll-target="#day-4-show-tell-advanced-data-viz">Day 4: Show &amp; tell + advanced data viz</a></li>
@@ -244,12 +239,16 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="kara_dna_edit.png" class="img-fluid" width="800"></p>
 <section id="schedule" class="level2">
 <h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
+<section id="before-you-start" class="level3">
+<h3 class="anchored" data-anchor-id="before-you-start">Before you start</h3>
+<ul>
+<li><p><strong>Follow the instructions in the <a href="./setup.html">Set-up</a> section</strong> to install <a href="https://cloud.r-project.org">R</a> and <a href="http://www.rstudio.com/download">RStudio</a> &amp; download the required packages and files .</p></li>
+<li><p>Decide whether you want to use our practice data, or your own sequencing data.</p></li>
+<li><p>Get comfortable - you will be following along in RStudio on your own computer!</p></li>
+</ul>
+</section>
 <section id="day-1-from-raw-sequencing-data-to-asvs" class="level3">
 <h3 class="anchored" data-anchor-id="day-1-from-raw-sequencing-data-to-asvs">Day 1: From raw sequencing data to ASVs</h3>
-</section>
-</section>
-<section id="before-you-start" class="level2">
-<h2 class="anchored" data-anchor-id="before-you-start">Before you start</h2>
 <p>Led by <a href="mailto:carrie.pratt@utoronto.ca"><strong>Dr.&nbsp;Carrie Pratt</strong></a> (Postdoctoral Fellow, University of Toronto Scarborough).</p>
 <table class="table-striped table-hover caption-top table">
 <tbody>
@@ -257,16 +256,11 @@ ul.task-list li input[type="checkbox"] {
 <td><a href="./day1_introduction.html">Day 1 Introduction</a></td>
 </tr>
 <tr class="even">
-<td><a href="./setup.html">Set-up</a></td>
-</tr>
-<tr class="odd">
-<td><a href="./16S.html">What is 16S rRNA?</a></td>
-</tr>
-<tr class="even">
 <td><a href="./fastq.html">Pre-processing sequencing data &amp; assigning taxonomy with dada2</a></td>
 </tr>
 </tbody>
 </table>
+</section>
 <section id="day-2-best-practices-for-quality-control" class="level3">
 <h3 class="anchored" data-anchor-id="day-2-best-practices-for-quality-control">Day 2: Best practices for quality control</h3>
 <p>Led by <a href="mailto:kara.reardon@mail.utoronto.ca"><strong>Kara Reardon</strong></a> (PhD Candidate, Microbiome Manipulation Lab, University of Toronto Scarborough).</p>
