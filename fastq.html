@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pre-processing sequencing data &amp; assigning taxonomy – Microbiome Data Analysis</title>
+<title>From raw sequencing data to ASVs – Microbiome Data Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -127,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day1_introduction.html">Day 1</a></li><li class="breadcrumb-item"><a href="./fastq.html">Pre-processing sequencing data &amp; assigning taxonomy</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day1_introduction.html">Day 1</a></li><li class="breadcrumb-item"><a href="./fastq.html">From raw sequencing data to ASVs</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -160,6 +160,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Introduction to R</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introtoseq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to 16S sequencing</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -177,14 +183,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./fastq.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Pre-processing sequencing data &amp; assigning taxonomy</span></a>
+ <span class="menu-text">From raw sequencing data to ASVs</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./day2_introduction.qmd" class="sidebar-item-text sidebar-link">
+            <a href="./day2_introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 2</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -193,7 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./phyloseq.html" class="sidebar-item-text sidebar-link">
+  <a href="./qc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data exploration, normalization, &amp; quality control</span></a>
   </div>
 </li>
@@ -201,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./day3_introduction.qmd" class="sidebar-item-text sidebar-link">
+            <a href="./day3_introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 3</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -247,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#learning-the-error-rates" id="toc-learning-the-error-rates" class="nav-link" data-scroll-target="#learning-the-error-rates">Learning the error rates</a></li>
   <li><a href="#inferring-sequence-variants" id="toc-inferring-sequence-variants" class="nav-link" data-scroll-target="#inferring-sequence-variants">Inferring sequence variants</a></li>
   </ul></li>
-  <li><a href="#constructing-the-asv-table" id="toc-constructing-the-asv-table" class="nav-link" data-scroll-target="#constructing-the-asv-table">Constructing the ASV table</a>
+  <li><a href="#constructing-an-asv-table" id="toc-constructing-an-asv-table" class="nav-link" data-scroll-target="#constructing-an-asv-table">Constructing an ASV table</a>
   <ul class="collapse">
   <li><a href="#merging-paired-reads" id="toc-merging-paired-reads" class="nav-link" data-scroll-target="#merging-paired-reads">Merging paired reads</a></li>
   <li><a href="#creating-the-asv-table" id="toc-creating-the-asv-table" class="nav-link" data-scroll-target="#creating-the-asv-table">Creating the ASV table</a></li>
@@ -262,9 +268,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day1_introduction.html">Day 1</a></li><li class="breadcrumb-item"><a href="./fastq.html">Pre-processing sequencing data &amp; assigning taxonomy</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day1_introduction.html">Day 1</a></li><li class="breadcrumb-item"><a href="./fastq.html">From raw sequencing data to ASVs</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Pre-processing sequencing data &amp; assigning taxonomy</h1>
+<h1 class="title">From raw sequencing data to ASVs</h1>
 </div>
 
 
@@ -437,7 +443,7 @@ Considerations for your own data
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">filterAndTrim</span>(fnFs, filtFs, fnRs, filtRs, <span class="at">truncLen=</span> <span class="fu">c</span>(<span class="dv">200</span>,<span class="dv">200</span>),</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">maxN=</span><span class="dv">0</span>, <span class="at">maxEE=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">truncQ=</span><span class="dv">2</span>, <span class="at">rm.phix=</span><span class="cn">TRUE</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">compress=</span><span class="cn">TRUE</span>, <span class="at">multithread=</span><span class="cn">TRUE</span>) <span class="co">#on Windows, set multithread=FALSE (only needed for filterAndTrim)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">compress=</span><span class="cn">TRUE</span>, <span class="at">multithread=</span><span class="cn">TRUE</span>) <span class="co">#on Windows, set multithread=FALSE</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -514,8 +520,8 @@ Adjustments for iSeq100 (2 x 150 bp) sequences
 </div>
 </section>
 </section>
-<section id="constructing-the-asv-table" class="level2">
-<h2 class="anchored" data-anchor-id="constructing-the-asv-table">Constructing the ASV table</h2>
+<section id="constructing-an-asv-table" class="level2">
+<h2 class="anchored" data-anchor-id="constructing-an-asv-table">Constructing an ASV table</h2>
 <section id="merging-paired-reads" class="level3">
 <h3 class="anchored" data-anchor-id="merging-paired-reads">Merging paired reads</h3>
 <p>This step merges the forward and reverse reads to together obtain the full sequence, based on overlapping regions. By default, this function searches for 12 basepairs that match exactly - this condition can be adjusted using the <code>minOverlap</code> parameter.</p>
