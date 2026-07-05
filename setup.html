@@ -170,55 +170,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day1_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 1</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./fastq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From raw sequencing data to ASVs</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 1</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day2_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 2</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./qc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data exploration, normalization, &amp; quality control</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 2</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day3_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 3</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dataviz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data viz</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 3</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -235,6 +196,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#before-you-start" id="toc-before-you-start" class="nav-link active" data-scroll-target="#before-you-start">Before you start</a></li>
+  <li><a href="#choosing-your-dataset" id="toc-choosing-your-dataset" class="nav-link" data-scroll-target="#choosing-your-dataset">Choosing your dataset</a>
+  <ul class="collapse">
+  <li><a href="#karas-compost-tea-experiment" id="toc-karas-compost-tea-experiment" class="nav-link" data-scroll-target="#karas-compost-tea-experiment">Kara’s compost tea experiment</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -284,17 +249,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li><p><strong>Create a folder to use as your working directory.</strong></p>
 <ul>
-<li>Create a folder called <strong>fastq</strong> to store your sequencing reads in</li>
-<li>Create a folder called <strong>db</strong> to store your database files in</li>
-</ul></li>
-<li><p>Optionally, you can download our example dataset to use for this workshop, which consists of:</p>
-<ul>
-<li>Sequencing reads (.fastq)</li>
-<li>A metadata table: <code>metadata.txt</code></li>
+<li><p>Create a folder called <strong>fastq</strong> to store your sequencing reads in</p></li>
+<li><p>Create a folder called <strong>db</strong> to store your database files in</p></li>
 </ul></li>
 </ul>
+</section>
+<section id="choosing-your-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-your-dataset">Choosing your dataset</h2>
+<p>In this workshop, you have the option of working with your own data, or an example dataset from Kara Reardon’s research.</p>
+<p>If you want to use your own data, create a folder for your <code>.fastq.gz</code> reads and make a metadata file that describes each of your samples.</p>
+<section id="karas-compost-tea-experiment" class="level3">
+<h3 class="anchored" data-anchor-id="karas-compost-tea-experiment">Kara’s compost tea experiment</h3>
+<p>If you want to use Kara’s data, you can download the following:</p>
+<pre><code>-   Sequencing reads (`.fastq.gz`)
+
+-   A metadata table: `metadata.txt`</code></pre>
+<p>With Kara’s dataset, we will investigate if there is any differences between bacterial communities in experimental compost teas brewed in the Bell lab. [Interested in understanding how different practices - used by organic growers in the field - may influence community composition &amp; beneficial impacts].</p>
+<p>We will compare bacterial diversity and composition across [experimental design e.g., samples harvested from compost teas brewed for 4 months in Winter 2025]. For each sampling time point, three replicates were sampled. Then, DNA was extracted from each sample and the 16S gene was amplified and sequenced on [Illumina platform specs].</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day3_introduction.html">Day 3</a></li><li class="breadcrumb-item"><a href="./dataviz.html">Data viz</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dataviz.html">Day 3</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -170,55 +170,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day1_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 1</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./fastq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From raw sequencing data to ASVs</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 1</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day2_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 2</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./qc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data exploration, normalization, &amp; quality control</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 2</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day3_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 3</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dataviz.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Data viz</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 3</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -234,7 +195,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#visualizing-our-data" id="toc-visualizing-our-data" class="nav-link active" data-scroll-target="#visualizing-our-data">Visualizing our data</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
+  <ul class="collapse">
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  </ul></li>
   <li><a href="#calculating-diversity-indices" id="toc-calculating-diversity-indices" class="nav-link" data-scroll-target="#calculating-diversity-indices">Calculating diversity indices</a>
   <ul class="collapse">
   <li><a href="#alpha-diversity" id="toc-alpha-diversity" class="nav-link" data-scroll-target="#alpha-diversity">Alpha diversity</a></li>
@@ -249,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day3_introduction.html">Day 3</a></li><li class="breadcrumb-item"><a href="./dataviz.html">Data viz</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Data viz</h1>
 </div>
@@ -268,19 +232,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="visualizing-our-data" class="level2">
-<h2 class="anchored" data-anchor-id="visualizing-our-data">Visualizing our data</h2>
-<p>So far, we have produced [rarefied normalized data tables]. You may want to subset data.</p>
-<p>In this session, we will visualize:</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In this session, we will:</p>
 <ul>
-<li><p>Alpha diversity</p></li>
-<li><p>Beta diversity</p></li>
-<li><p>Taxonomic composition</p></li>
-</ul>
-<p>Also determine:</p>
-<ul>
-<li><p>Core microbiome</p></li>
-<li><p>Do some stats…</p></li>
+<li><p>Define, calculate and interpret <strong>alpha-diversity</strong> indices.</p></li>
+<li><p>Explore <strong>beta-diversity</strong> using Principal Covariates Analysis (PCoA).</p></li>
+<li><p><strong>Visualize and interpret the bacterial community composition</strong> for the different samples and variables.</p></li>
+<li><p>Determine the <strong>core microbiome</strong>.</p></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled" title="Discussion point">
 <div class="callout-header d-flex align-content-center">
@@ -295,6 +254,14 @@ Discussion point
 <p>Most datasets will have have multiple variables with an underlying experimental design. What would be your first idea to analyze this data?</p>
 </div>
 </div>
+<section id="learning-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
+<p>By the end of today’s session, you should be able to:</p>
+<ul>
+<li><p>[Goal 1]</p></li>
+<li><p>[Goal 2]</p></li>
+</ul>
+</section>
 </section>
 <section id="calculating-diversity-indices" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-diversity-indices">Calculating diversity indices</h2>

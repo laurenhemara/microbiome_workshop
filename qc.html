@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day2_introduction.html">Day 2</a></li><li class="breadcrumb-item"><a href="./qc.html">Data exploration, normalization, &amp; quality control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./qc.html">Day 2</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -170,55 +170,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day1_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 1</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./fastq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From raw sequencing data to ASVs</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 1</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day2_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 2</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./qc.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Data exploration, normalization, &amp; quality control</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 2</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./day3_introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Day 3</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./dataviz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data viz</span></a>
-  </div>
-</li>
-      </ul>
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Day 3</span></span>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -234,9 +195,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#loading-required-packages-and-objects" id="toc-loading-required-packages-and-objects" class="nav-link active" data-scroll-target="#loading-required-packages-and-objects">Loading required packages and objects</a></li>
-  <li><a href="#exploring-our-data" id="toc-exploring-our-data" class="nav-link" data-scroll-target="#exploring-our-data">Exploring our data</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
   <ul class="collapse">
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
+  <li><a href="#loading-required-packages-and-objects" id="toc-loading-required-packages-and-objects" class="nav-link" data-scroll-target="#loading-required-packages-and-objects">Loading required packages and objects</a></li>
   <li><a href="#examining-the-sample-metadata" id="toc-examining-the-sample-metadata" class="nav-link" data-scroll-target="#examining-the-sample-metadata">Examining the sample metadata</a></li>
   <li><a href="#examining-the-taxa-table" id="toc-examining-the-taxa-table" class="nav-link" data-scroll-target="#examining-the-taxa-table">Examining the taxa table</a></li>
   <li><a href="#examining-the-asv-table" id="toc-examining-the-asv-table" class="nav-link" data-scroll-target="#examining-the-asv-table">Examining the ASV table</a></li>
@@ -266,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day2_introduction.html">Day 2</a></li><li class="breadcrumb-item"><a href="./qc.html">Data exploration, normalization, &amp; quality control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Data exploration, normalization, &amp; quality control</h1>
 </div>
@@ -285,8 +247,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="loading-required-packages-and-objects" class="level2">
-<h2 class="anchored" data-anchor-id="loading-required-packages-and-objects">Loading required packages and objects</h2>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In this session, we will: - <strong>Examine these data tables</strong>. - Perform necessary <strong>quality control checks</strong> (e.g., sparsity and sequencing depth). - <strong>Filter &amp; normalize our data</strong> by sample.</p>
+<p>So far, we have created two data tables using the DADA2 pipeline:</p>
+<ul>
+<li><p>An <strong>amplicon sequence variant (ASV) count table</strong> (<code>asv_count.data</code>) which records the numbers of times each <a href="https://www.nature.com/articles/ismej2017119">exact amplicon sequence variant</a> was observed in each sample.</p></li>
+<li><p>A <strong>taxonomy table</strong> (<code>taxa.data</code>) which records the taxonomic assignments for each ASV.</p></li>
+</ul>
+<p>We’ll also be working with a <strong>metadata table</strong> (<code>sample.data</code>) which represents metadata information for the different samples.</p>
+<section id="learning-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
+<p>By the end of today’s session, you should be able to:</p>
+<ul>
+<li><p>[Goal 1]</p></li>
+<li><p>[Goal 2]</p></li>
+</ul>
+</section>
+<section id="loading-required-packages-and-objects" class="level3">
+<h3 class="anchored" data-anchor-id="loading-required-packages-and-objects">Loading required packages and objects</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phyloseq)</span>
@@ -299,15 +278,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sample.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_metadata.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="exploring-our-data" class="level2">
-<h2 class="anchored" data-anchor-id="exploring-our-data">Exploring our data</h2>
-<p>So far, we have created two data tables using the DADA2 pipeline:</p>
-<ul>
-<li><p>An <strong>amplicon sequence variant (ASV) count table</strong> (<code>asv_count.data</code>) which records the numbers of times each <a href="https://www.nature.com/articles/ismej2017119">exact amplicon sequence variant</a> was observed in each sample.</p></li>
-<li><p>A <strong>taxonomy table</strong> (<code>taxa.data</code>) which records the taxonomic assignments for each ASV.</p></li>
-</ul>
-<p>We’ll also be working with a <strong>metadata table</strong> (<code>sample.data</code>) which represents metadata information for the different samples.</p>
-<p>In this session, we will <strong>examine these data tables</strong>, perform necessary <strong>quality control checks</strong>, and <strong>filter &amp; normalize our data</strong> so it’s ready to produce publication-worthy figures from.</p>
 <section id="examining-the-sample-metadata" class="level3">
 <h3 class="anchored" data-anchor-id="examining-the-sample-metadata">Examining the sample metadata</h3>
 <div class="cell">
