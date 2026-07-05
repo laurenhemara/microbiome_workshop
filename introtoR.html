@@ -204,7 +204,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#getting-started-with-rstudio" id="toc-getting-started-with-rstudio" class="nav-link" data-scroll-target="#getting-started-with-rstudio">Getting started with RStudio</a>
   <ul class="collapse">
   <li><a href="#rstudio-interface" id="toc-rstudio-interface" class="nav-link" data-scroll-target="#rstudio-interface">RStudio interface</a></li>
@@ -218,36 +217,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#creating-objects" id="toc-creating-objects" class="nav-link" data-scroll-target="#creating-objects">Creating objects</a></li>
   <li><a href="#putting-it-all-together-to-create-art" id="toc-putting-it-all-together-to-create-art" class="nav-link" data-scroll-target="#putting-it-all-together-to-create-art">Putting it all together to create aRt</a></li>
   </ul></li>
+  <li><a href="#creating-plots-with-ggplot" id="toc-creating-plots-with-ggplot" class="nav-link" data-scroll-target="#creating-plots-with-ggplot">Creating plots with ggplot</a>
+  <ul class="collapse">
   <li><a href="#introducing-the-palmer-penguins" id="toc-introducing-the-palmer-penguins" class="nav-link" data-scroll-target="#introducing-the-palmer-penguins">Introducing the Palmer penguins</a></li>
-  <li><a href="#creating-an-r-script" id="toc-creating-an-r-script" class="nav-link" data-scroll-target="#creating-an-r-script">Creating an R script</a></li>
-  <li><a href="#tidy-data-principles" id="toc-tidy-data-principles" class="nav-link" data-scroll-target="#tidy-data-principles">Tidy data principles</a></li>
-  <li><a href="#tidy-datasets-are-all-alike" id="toc-tidy-datasets-are-all-alike" class="nav-link" data-scroll-target="#tidy-datasets-are-all-alike">Tidy datasets are all alike…</a></li>
-  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing data</a></li>
-  <li><a href="#taking-a-look-at-our-imported-data" id="toc-taking-a-look-at-our-imported-data" class="nav-link" data-scroll-target="#taking-a-look-at-our-imported-data">Taking a look at our imported data</a></li>
-  <li><a href="#taking-a-glimpse-at-our-imported-data" id="toc-taking-a-glimpse-at-our-imported-data" class="nav-link" data-scroll-target="#taking-a-glimpse-at-our-imported-data">Taking a glimpse at our imported data</a></li>
-  <li><a href="#data-filtering" id="toc-data-filtering" class="nav-link" data-scroll-target="#data-filtering">Data filtering</a></li>
+  <li><a href="#creating-a-document-to-write-code-in" id="toc-creating-a-document-to-write-code-in" class="nav-link" data-scroll-target="#creating-a-document-to-write-code-in">Creating a document to write code in</a></li>
+  <li><a href="#taking-a-look-at-our-penguin-data" id="toc-taking-a-look-at-our-penguin-data" class="nav-link" data-scroll-target="#taking-a-look-at-our-penguin-data">Taking a look at our penguin data</a></li>
   <li><a href="#removing-na-values-with-drop_na" id="toc-removing-na-values-with-drop_na" class="nav-link" data-scroll-target="#removing-na-values-with-drop_na">Removing N/A values with <code>drop_na()</code></a></li>
-  <li><a href="#creating-plots-with-ggplot" id="toc-creating-plots-with-ggplot" class="nav-link" data-scroll-target="#creating-plots-with-ggplot">Creating plots with ggplot()</a></li>
+  <li><a href="#creating-plots-with-ggplot-1" id="toc-creating-plots-with-ggplot-1" class="nav-link" data-scroll-target="#creating-plots-with-ggplot-1">Creating plots with ggplot</a></li>
   <li><a href="#ggplot-components" id="toc-ggplot-components" class="nav-link" data-scroll-target="#ggplot-components">ggplot() components</a></li>
-  <li><a href="#geom-layers" id="toc-geom-layers" class="nav-link" data-scroll-target="#geom-layers">Geom layers</a></li>
-  <li><a href="#example-1-creating-the-canvas-base" id="toc-example-1-creating-the-canvas-base" class="nav-link" data-scroll-target="#example-1-creating-the-canvas-base">Example 1: creating the canvas base</a></li>
-  <li><a href="#example-1-adding-a-geom-layer" id="toc-example-1-adding-a-geom-layer" class="nav-link" data-scroll-target="#example-1-adding-a-geom-layer">Example 1: adding a geom layer</a></li>
-  <li><a href="#example-1-point-colour-and-shape" id="toc-example-1-point-colour-and-shape" class="nav-link" data-scroll-target="#example-1-point-colour-and-shape">Example 1: point colour and shape</a></li>
-  <li><a href="#example-1-custom-colour-scales" id="toc-example-1-custom-colour-scales" class="nav-link" data-scroll-target="#example-1-custom-colour-scales">Example 1: custom colour scales</a></li>
-  <li><a href="#example-1-adding-custom-axis-labels" id="toc-example-1-adding-custom-axis-labels" class="nav-link" data-scroll-target="#example-1-adding-custom-axis-labels">Example 1: adding custom axis labels</a></li>
-  <li><a href="#example-2-creating-the-canvas-base" id="toc-example-2-creating-the-canvas-base" class="nav-link" data-scroll-target="#example-2-creating-the-canvas-base">Example 2: creating the canvas base</a></li>
-  <li><a href="#example-2-adding-a-geom-layer" id="toc-example-2-adding-a-geom-layer" class="nav-link" data-scroll-target="#example-2-adding-a-geom-layer">Example 2: adding a geom layer</a></li>
-  <li><a href="#example-2-colouring-the-boxplots" id="toc-example-2-colouring-the-boxplots" class="nav-link" data-scroll-target="#example-2-colouring-the-boxplots">Example 2: colouring the boxplots</a></li>
-  <li><a href="#example-2-adding-axis-labels" id="toc-example-2-adding-axis-labels" class="nav-link" data-scroll-target="#example-2-adding-axis-labels">Example 2: adding axis labels</a></li>
-  <li><a href="#example-2-adding-jitter-points" id="toc-example-2-adding-jitter-points" class="nav-link" data-scroll-target="#example-2-adding-jitter-points">Example 2: adding jitter points</a></li>
-  <li><a href="#example-3-creating-the-canvas-base" id="toc-example-3-creating-the-canvas-base" class="nav-link" data-scroll-target="#example-3-creating-the-canvas-base">Example 3: creating the canvas base</a></li>
-  <li><a href="#example-3-adding-a-geom-layer" id="toc-example-3-adding-a-geom-layer" class="nav-link" data-scroll-target="#example-3-adding-a-geom-layer">Example 3: adding a geom layer</a></li>
-  <li><a href="#example-3-faceting-by-a-variable" id="toc-example-3-faceting-by-a-variable" class="nav-link" data-scroll-target="#example-3-faceting-by-a-variable">Example 3: faceting by a variable</a></li>
-  <li><a href="#example-3-colouring-the-bars" id="toc-example-3-colouring-the-bars" class="nav-link" data-scroll-target="#example-3-colouring-the-bars">Example 3: colouring the bars</a></li>
-  <li><a href="#example-3-adding-labels-and-a-theme" id="toc-example-3-adding-labels-and-a-theme" class="nav-link" data-scroll-target="#example-3-adding-labels-and-a-theme">Example 3: adding labels and a theme</a></li>
-  <li><a href="#example-4-creating-a-bar-plot-with-error-bars" id="toc-example-4-creating-a-bar-plot-with-error-bars" class="nav-link" data-scroll-target="#example-4-creating-a-bar-plot-with-error-bars">Example 4: creating a bar plot with error bars</a></li>
+  <li><a href="#example-creating-a-scatterplot" id="toc-example-creating-a-scatterplot" class="nav-link" data-scroll-target="#example-creating-a-scatterplot">Example: creating a scatterplot</a></li>
+  <li><a href="#example-creating-a-boxplot" id="toc-example-creating-a-boxplot" class="nav-link" data-scroll-target="#example-creating-a-boxplot">Example: creating a boxplot</a></li>
+  <li><a href="#example-creating-a-barplot" id="toc-example-creating-a-barplot" class="nav-link" data-scroll-target="#example-creating-a-barplot">Example: Creating a barplot</a></li>
+  </ul></li>
   <li><a href="#dealing-with-errors" id="toc-dealing-with-errors" class="nav-link" data-scroll-target="#dealing-with-errors">Dealing with errors</a></li>
-  <li><a href="#what-to-do-when-you-get-an-error" id="toc-what-to-do-when-you-get-an-error" class="nav-link" data-scroll-target="#what-to-do-when-you-get-an-error">What to do when you get an error</a></li>
   <li><a href="#r-resources" id="toc-r-resources" class="nav-link" data-scroll-target="#r-resources">R resources</a></li>
   </ul>
 </nav>
@@ -282,25 +264,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Tidy data principles</li>
 <li>Importing &amp; filtering data</li>
 <li>Creating plots with <code>ggplot()</code></li>
-</ul>
-</section>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Being able to work competently with R is incredibly useful and versatile. In addition to performing any statistical tests you like, R allows you to make professional-looking graphs and figures. If there is something you want to do with R, odds are you can do it. You just have to figure out how…</p>
-<p>When trying to figure out how to do something, I recommend the following approaches:</p>
-<ul>
-<li><p>Google search what you are trying to do, followed by “in R”. So for instance “Make box plot in R”. There is an extensive user community.</p></li>
-<li><p>If you see a command in a script you are following, and don’t know what it means, use the ‘?’ function. For example, running <code>?ggplot</code> will tell you all about the ggplot function, including its available parameters.</p></li>
-<li><p>Use existing tutorials and resources to give you a pipeline for processing data. Go through with the sample data first to make sure it all works. Then substitute your own data.</p></li>
-</ul>
-<p>Resources I would recommend include:</p>
-<ul>
-<li><p><a href="https://r4ds.hadley.nz/intro.html">R for Data Science</a>, <a href="https://ggplot2-book.org/">Elegant Graphics for Data Analysis</a>, and <a href="https://adv-r.hadley.nz/">Advanced R</a> by Hadley Wickham.</p></li>
-<li><p><a href="https://posit.co/resources/cheatsheets/">Cheatsheets</a> by Posit (formerly RStudio).</p></li>
-<li><p><a href="https://github.com/cxli233/FriendsDontLetFriends">Friends Don’t Let Friends Make Bad Graphs</a> by Chenxin Li.</p></li>
-<li><p><a href="https://github.com/cxli233/Online_R_learning">Online R Learning</a> by Chenxlin Li.</p></li>
-<li><p><a href="https://carpentries.org/">The Carpentries</a> workshops e.g., <a href="https://datacarpentry.github.io/R-ecology-lesson/">Data Analysis and Visualization in R for Ecologists</a>.</p></li>
-<li><p><a href="https://link.springer.com/book/10.1007/978-3-319-71404-2">Numerical Ecology in R</a> by Daniel Borcard, Francois Gillet, and Pierre Legendre.</p></li>
 </ul>
 </section>
 <section id="getting-started-with-rstudio" class="level2">
@@ -411,9 +374,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="introducing-the-palmer-penguins" class="level2">
-<h2 class="anchored" data-anchor-id="introducing-the-palmer-penguins">Introducing the Palmer penguins</h2>
-<p>The <span class="highlight-blue">Palmer penguins</span> dataset contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica.</p>
+<section id="creating-plots-with-ggplot" class="level2">
+<h2 class="anchored" data-anchor-id="creating-plots-with-ggplot">Creating plots with ggplot</h2>
+<section id="introducing-the-palmer-penguins" class="level3">
+<h3 class="anchored" data-anchor-id="introducing-the-palmer-penguins">Introducing the Palmer penguins</h3>
+<p>The <strong>Palmer penguins</strong> dataset contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica.</p>
 <p>This data was collected from 2007 to 2009 by the US Long Term Ecological Research Network.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -421,113 +386,96 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </section>
-<section id="creating-an-r-script" class="level2">
-<h2 class="anchored" data-anchor-id="creating-an-r-script">Creating an R script</h2>
-<p>Before we start working on our code, we want to create an .R document we can save it in!</p>
-<p><span class="highlight-blue"><strong>File &gt; New File &gt; R Script</strong></span></p>
-<p>To make sure your code is reproducible, it’s good practice to load all the packages you need at the <u>start</u> of your document, using the <code>library()</code> function.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Tidyverse is a collection of packages used for data manipulation, filtering and visualisation. Today, we’ll use functions from tidyverse to import data and create some plots.</p>
-<p>It’s in the name - the first step to any data analysis is to make sure your data is tidy!</p>
-</section>
-<section id="tidy-data-principles" class="level2">
-<h2 class="anchored" data-anchor-id="tidy-data-principles">Tidy data principles</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="85520b8f-4629-4763-8a2a-9ceff27458bf_rw_1920.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
+<section id="creating-a-document-to-write-code-in" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-document-to-write-code-in">Creating a document to write code in</h3>
+<p>Before we start working on our code, we want to create an .qmd document we can save it in!</p>
+<p>[<strong>File &gt; New File &gt; Quarto Document</strong>]</p>
+<p>To make sure your code is reproducible, it’s good practice to load all the packages you need at the <strong>start</strong> of your document, using the <code>library()</code> function.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into '/home/lauren/R/aarch64-unknown-linux-gnu-library/4.3'
+(as 'lib' is unspecified)</code></pre>
 </div>
-</section>
-<section id="tidy-datasets-are-all-alike" class="level2">
-<h2 class="anchored" data-anchor-id="tidy-datasets-are-all-alike">Tidy datasets are all alike…</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="6e297111-efb7-4555-93d2-085071d1853c_rw_1920.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+Installing package into '/home/lauren/R/aarch64-unknown-linux-gnu-library/4.3'
+(as 'lib' is unspecified)</code></pre>
 </div>
+</div>
+<p>Tidyverse is a collection of packages used for data manipulation, filtering, and visualization. Today, we’ll use functions from tidyverse to import data and create some plots.</p>
 </section>
-<section id="importing-data" class="level2">
-<h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
-<p>The next step is to import our tidy data!</p>
-<p>If you’re using Posit Cloud, we need to upload our file with the <strong>Upload</strong> button in the Files pane.</p>
-<p>If you’re using RStudio Desktop, you’ll need to set your <strong>working directory</strong> to tell R where your files live.</p>
-<p>We can then use the <code>read_csv()</code> function to import a .csv file.</p>
-<p>When we import our data, we’re going to assign it to an <span class="highlight-blue">object</span> that we can use later on.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>penguin.data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="taking-a-look-at-our-imported-data" class="level2">
-<h2 class="anchored" data-anchor-id="taking-a-look-at-our-imported-data">Taking a look at our imported data</h2>
+<section id="taking-a-look-at-our-penguin-data" class="level3">
+<h3 class="anchored" data-anchor-id="taking-a-look-at-our-penguin-data">Taking a look at our penguin data</h3>
 <p>Let’s take a look at our new data object.</p>
-<div class="fragment">
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Output</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>penguin.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>penguin.data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"penguins.csv"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>penguin.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+1 Adelie  Torgersen           39.1          18.7               181        3750
+2 Adelie  Torgersen           39.5          17.4               186        3800
+3 Adelie  Torgersen           40.3          18                 195        3250
+4 Adelie  Torgersen           NA            NA                  NA          NA
+5 Adelie  Torgersen           36.7          19.3               193        3450
+6 Adelie  Torgersen           39.3          20.6               190        3650
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-</section>
-<section id="taking-a-glimpse-at-our-imported-data" class="level2">
-<h2 class="anchored" data-anchor-id="taking-a-glimpse-at-our-imported-data">Taking a glimpse at our imported data</h2>
 <p>We can also use the <code>glimpse()</code> function to take a look at this object.</p>
-<div class="fragment">
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Output</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguin.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguin.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 344
+Columns: 8
+$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…
+$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …
+$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …
+$ flipper_length_mm &lt;int&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…
+$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …
+$ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male…
+$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
 </div>
 </div>
 </section>
-<section id="data-filtering" class="level2">
-<h2 class="anchored" data-anchor-id="data-filtering">Data filtering</h2>
+<section id="removing-na-values-with-drop_na" class="level3">
+<h3 class="anchored" data-anchor-id="removing-na-values-with-drop_na">Removing N/A values with <code>drop_na()</code></h3>
 <p>We’ve seen some N/A values in the raw data. We can remove these with the <code>drop_na()</code> function.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="naniar.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-</section>
-<section id="removing-na-values-with-drop_na" class="level2">
-<h2 class="anchored" data-anchor-id="removing-na-values-with-drop_na">Removing N/A values with <code>drop_na()</code></h2>
-<p>We’ve seen some N/A values in the raw data. We can remove these with the <code>drop_na()</code> function.</p>
-<div class="fragment">
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Output</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>penguin_nafree.data <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(penguin.data)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>penguin_nafree.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>penguin_nafree.data <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(penguin.data)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>penguin_nafree.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 333 × 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7               181        3750
+ 2 Adelie  Torgersen           39.5          17.4               186        3800
+ 3 Adelie  Torgersen           40.3          18                 195        3250
+ 4 Adelie  Torgersen           36.7          19.3               193        3450
+ 5 Adelie  Torgersen           39.3          20.6               190        3650
+ 6 Adelie  Torgersen           38.9          17.8               181        3625
+ 7 Adelie  Torgersen           39.2          19.6               195        4675
+ 8 Adelie  Torgersen           41.1          17.6               182        3200
+ 9 Adelie  Torgersen           38.6          21.2               191        3800
+10 Adelie  Torgersen           34.6          21.1               198        4400
+# ℹ 323 more rows
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
 </section>
-<section id="creating-plots-with-ggplot" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="creating-plots-with-ggplot">Creating plots with ggplot()</h2>
+<section id="creating-plots-with-ggplot-1" class="level3">
+<h3 class="anchored" data-anchor-id="creating-plots-with-ggplot-1">Creating plots with ggplot</h3>
 <p><code>ggplot()</code> is a function that creates plots.</p>
 <p>Like a piece of art, we start with a <strong>base canvas</strong> where we set up our framework. We then use a <code>+</code> symbol to <strong>add layers</strong> on top.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -536,8 +484,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </section>
-<section id="ggplot-components" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="ggplot-components">ggplot() components</h2>
+<section id="ggplot-components" class="level3">
+<h3 class="anchored" data-anchor-id="ggplot-components">ggplot() components</h3>
 <p>Every ggplot has three components:</p>
 <ul>
 <li><code>data</code> - your filtered data, ready for visualisation.</li>
@@ -549,153 +497,171 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="grammar-of-graphics.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-</section>
-<section id="geom-layers" class="level2">
-<h2 class="anchored" data-anchor-id="geom-layers">Geom layers</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="geom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
 </figure>
 </div>
 </section>
-<section id="example-1-creating-the-canvas-base" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-1-creating-the-canvas-base">Example 1: creating the canvas base</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="example-creating-a-scatterplot" class="level3">
+<h3 class="anchored" data-anchor-id="example-creating-a-scatterplot">Example: creating a scatterplot</h3>
+<p><strong>Creating the base:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding a geom layer:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding point colour and shape by species:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding a custom colour palette:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding custom axis labels:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
-<section id="example-1-adding-a-geom-layer" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-1-adding-a-geom-layer">Example 1: adding a geom layer</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="example-creating-a-boxplot" class="level3">
+<h3 class="anchored" data-anchor-id="example-creating-a-boxplot">Example: creating a boxplot</h3>
+<p><strong>Creating the base:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding a geom layer:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Colouring the boxplots by species:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding axis labels:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding jitter points:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
-<section id="example-1-point-colour-and-shape" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-1-point-colour-and-shape">Example 1: point colour and shape</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species, <span class="at">shape =</span> species),<span class="at">size =</span> <span class="dv">2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="example-creating-a-barplot" class="level3">
+<h3 class="anchored" data-anchor-id="example-creating-a-barplot">Example: Creating a barplot</h3>
+<p><strong>Creating the base:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding a geom layer:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Faceting by a variable:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Colouring the bars by sex:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Adding labels and a theme:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="introtoR_files/figure-html/peng15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
-<section id="example-1-custom-colour-scales" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-1-custom-colour-scales">Example 1: custom colour scales</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species, <span class="at">shape =</span> species),<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-1-adding-custom-axis-labels" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-1-adding-custom-axis-labels">Example 1: adding custom axis labels</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species, <span class="at">shape =</span> species),<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>)) <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Bill length (mm)"</span>, <span class="at">y=</span><span class="st">"Bill depth (mm)"</span>, <span class="at">color =</span> <span class="st">"Penguin species"</span>, <span class="at">shape =</span> <span class="st">"Penguin species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-2-creating-the-canvas-base" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-2-creating-the-canvas-base">Example 2: creating the canvas base</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-2-adding-a-geom-layer" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-2-adding-a-geom-layer">Example 2: adding a geom layer</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-2-colouring-the-boxplots" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-2-colouring-the-boxplots">Example 2: colouring the boxplots</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>species)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>), <span class="at">name =</span> <span class="st">"Species"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-2-adding-axis-labels" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-2-adding-axis-labels">Example 2: adding axis labels</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>species)) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>), <span class="at">name =</span> <span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Penguin species"</span>, <span class="at">y=</span><span class="st">"Flipper length (mm)"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-2-adding-jitter-points" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-2-adding-jitter-points">Example 2: adding jitter points</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color=</span>species)) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>), <span class="at">name =</span> <span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Penguin species"</span>, <span class="at">y=</span><span class="st">"Flipper length (mm)"</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color =</span> species), <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-3-creating-the-canvas-base" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-3-creating-the-canvas-base">Example 3: creating the canvas base</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-3-adding-a-geom-layer" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-3-adding-a-geom-layer">Example 3: adding a geom layer</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>sex),<span class="at">position=</span><span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-3-faceting-by-a-variable" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-3-faceting-by-a-variable">Example 3: faceting by a variable</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>sex),<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-3-colouring-the-bars" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-3-colouring-the-bars">Example 3: colouring the bars</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>sex),<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>island) <span class="sc">+</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"lightpink1"</span>, <span class="st">"skyblue1"</span>), <span class="at">name =</span> <span class="st">"Sex"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-3-adding-labels-and-a-theme" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-3-adding-labels-and-a-theme">Example 3: adding labels and a theme</h2>
-<div class="cell" data-output-location="fragment">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_nafree.data, <span class="fu">aes</span>(<span class="at">x =</span> species)) <span class="sc">+</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill=</span>sex),<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>island) <span class="sc">+</span></span>
-<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"lightpink1"</span>, <span class="st">"skyblue1"</span>), <span class="at">name =</span> <span class="st">"Sex"</span>) <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Frequency"</span>, <span class="at">x=</span><span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
-<span id="cb29-6"><a href="#cb29-6"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="example-4-creating-a-bar-plot-with-error-bars" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-4-creating-a-bar-plot-with-error-bars">Example 4: creating a bar plot with error bars</h2>
-<div class="cell" data-output-location="slide">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">#calculating sd</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>penguin_summary.data <span class="ot">&lt;-</span> penguin_nafree.data <span class="sc">%&gt;%</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb30-5"><a href="#cb30-5"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(body_mass_g),</span>
-<span id="cb30-6"><a href="#cb30-6"></a>    <span class="at">body_mass_g =</span> <span class="fu">mean</span>(body_mass_g)</span>
-<span id="cb30-7"><a href="#cb30-7"></a>  )</span>
-<span id="cb30-8"><a href="#cb30-8"></a></span>
-<span id="cb30-9"><a href="#cb30-9"></a><span class="co">#bar plot with error bars</span></span>
-<span id="cb30-10"><a href="#cb30-10"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguin_summary.data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y=</span>body_mass_g)) <span class="sc">+</span></span>
-<span id="cb30-11"><a href="#cb30-11"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill=</span>species),<span class="at">position=</span><span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb30-12"><a href="#cb30-12"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>body_mass_g<span class="sc">-</span>sd, <span class="at">ymax=</span>body_mass_g<span class="sc">+</span>sd), <span class="at">width=</span>.<span class="dv">2</span>,</span>
-<span id="cb30-13"><a href="#cb30-13"></a>                <span class="at">position=</span><span class="fu">position_dodge</span>(.<span class="dv">9</span>)) <span class="sc">+</span> </span>
-<span id="cb30-14"><a href="#cb30-14"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"darkorchid"</span>,<span class="st">"cyan4"</span>), <span class="at">name =</span> <span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
-<span id="cb30-15"><a href="#cb30-15"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Weight (g)"</span>, <span class="at">x=</span><span class="st">"Penguin species"</span>) <span class="sc">+</span></span>
-<span id="cb30-16"><a href="#cb30-16"></a>  <span class="fu">theme_bw</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="dealing-with-errors" class="level2">
 <h2 class="anchored" data-anchor-id="dealing-with-errors">Dealing with errors</h2>
@@ -704,46 +670,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="ron_swanson.gif" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-</section>
-<section id="what-to-do-when-you-get-an-error" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="what-to-do-when-you-get-an-error">What to do when you get an error</h2>
-<div class="columns">
-<div class="column" style="width:40%;">
+<p><strong>What to do when you get an error:</strong> - Read the error message</p>
 <ul>
-<li><p>Read the error message</p></li>
 <li><p>Google the error message</p></li>
 <li><p>Try the suggested solutions</p></li>
 <li><p>Read about the function</p></li>
 <li><p>Ask for help</p></li>
 </ul>
 <p><strong>Check the easy stuff:</strong></p>
-<p>✅ Did you forget to run any code?</p>
-<p>✅ Check for spelling mistakes (including capital letters)</p>
-<p>✅ Check your parentheses, quotation marks, and commas</p>
-</div><div class="column" style="width:60%;">
+<ul>
+<li><p>Did you forget to run any code?</p></li>
+<li><p>Check for spelling mistakes (including capital letters)</p></li>
+<li><p>Check your parentheses, quotation marks, and commas</p></li>
+</ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="blame_code.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-</div>
-</div>
 </section>
 <section id="r-resources" class="level2">
 <h2 class="anchored" data-anchor-id="r-resources">R resources</h2>
-<div class="columns">
-<div class="column" style="width:70%;">
 <ul>
 <li><p><a href="https://posit.co/resources/cheatsheets/">Posit cheatsheets</a> will help you use your favourite tidyverse packages!</p></li>
 <li><p><a href="https://r4ds.had.co.nz/">R for Data Science</a>, <a href="https://ggplot2-book.org/">ggplot2: Elegant Graphics for Data Analysis</a>, and <a href="https://adv-r.hadley.nz/">Advanced R</a> are all free online books published by <a href="https://hadley.nz/">Hadley Wickham</a>*.</p></li>
+<li><p><a href="https://github.com/cxli233/FriendsDontLetFriends">Friends Don’t Let Friends Make Bad Graphs</a> by Chenxin Li.</p></li>
 </ul>
-</div><div class="column" style="width:30%;">
 <div class="quarto-figure quarto-figure-right">
 <figure class="figure">
 <p><img src="cover (1).png" class="img-fluid quarto-figure quarto-figure-right figure-img" width="300"></p>
 </figure>
-</div>
-</div>
 </div>
 
 

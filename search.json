@@ -26,7 +26,7 @@
     "href": "setup.html#choosing-your-dataset",
     "title": "Set-up",
     "section": "Choosing your dataset",
-    "text": "Choosing your dataset\nIn this workshop, you have the option of working with your own data, or an example dataset from Kara Reardon’s research.\nIf you want to use your own data, create a folder for your .fastq.gz reads and make a metadata file that describes each of your samples.\n\nKara’s compost tea experiment\nIf you want to use Kara’s data, you can download the following:\n-   Sequencing reads (`.fastq.gz`)\n\n-   A metadata table: `metadata.txt`\nWith Kara’s dataset, we will investigate if there is any differences between bacterial communities in experimental compost teas brewed in the Bell lab. [Interested in understanding how different practices - used by organic growers in the field - may influence community composition & beneficial impacts].\nWe will compare bacterial diversity and composition across [experimental design e.g., samples harvested from compost teas brewed for 4 months in Winter 2025]. For each sampling time point, three replicates were sampled. Then, DNA was extracted from each sample and the 16S gene was amplified and sequenced on [Illumina platform specs].",
+    "text": "Choosing your dataset\nIn this workshop, you have the option of working with your own data, or an example dataset from Kara Reardon’s research.\n\nUsing your own data\nIf you want to use your own data, have your .fastq.gz reads ready and make a metadata file that describes each of your samples (including key variables). Make sure this data file is tidy.\n\n\n\n\n\n\n\n\n\n\n\n\nKara’s compost tea experiment\nIf you want to use Kara’s data, you can download the following:\n-   Sequencing reads (`.fastq.gz`)\n\n-   A metadata table: `metadata.txt`\nWith Kara’s dataset, we will investigate if there is any differences between bacterial communities in experimental compost teas brewed in the Bell lab. [Interested in understanding how different practices - used by organic growers in the field - may influence community composition & beneficial impacts].\nWe will compare bacterial diversity and composition across [experimental design e.g., samples harvested from compost teas brewed for 4 months in Winter 2025]. For each sampling time point, three replicates were sampled. Then, DNA was extracted from each sample and the 16S gene was amplified and sequenced on [Illumina platform specs].",
     "crumbs": [
       "Overview",
       "Set-up"
@@ -69,17 +69,6 @@
     ]
   },
   {
-    "objectID": "introtoR.html#introduction",
-    "href": "introtoR.html#introduction",
-    "title": "Introduction to R",
-    "section": "Introduction",
-    "text": "Introduction\nBeing able to work competently with R is incredibly useful and versatile. In addition to performing any statistical tests you like, R allows you to make professional-looking graphs and figures. If there is something you want to do with R, odds are you can do it. You just have to figure out how…\nWhen trying to figure out how to do something, I recommend the following approaches:\n\nGoogle search what you are trying to do, followed by “in R”. So for instance “Make box plot in R”. There is an extensive user community.\nIf you see a command in a script you are following, and don’t know what it means, use the ‘?’ function. For example, running ?ggplot will tell you all about the ggplot function, including its available parameters.\nUse existing tutorials and resources to give you a pipeline for processing data. Go through with the sample data first to make sure it all works. Then substitute your own data.\n\nResources I would recommend include:\n\nR for Data Science, Elegant Graphics for Data Analysis, and Advanced R by Hadley Wickham.\nCheatsheets by Posit (formerly RStudio).\nFriends Don’t Let Friends Make Bad Graphs by Chenxin Li.\nOnline R Learning by Chenxlin Li.\nThe Carpentries workshops e.g., Data Analysis and Visualization in R for Ecologists.\nNumerical Ecology in R by Daniel Borcard, Francois Gillet, and Pierre Legendre.",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
     "objectID": "introtoR.html#getting-started-with-rstudio",
     "href": "introtoR.html#getting-started-with-rstudio",
     "title": "Introduction to R",
@@ -102,308 +91,11 @@
     ]
   },
   {
-    "objectID": "introtoR.html#introducing-the-palmer-penguins",
-    "href": "introtoR.html#introducing-the-palmer-penguins",
-    "title": "Introduction to R",
-    "section": "Introducing the Palmer penguins",
-    "text": "Introducing the Palmer penguins\nThe Palmer penguins dataset contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica.\nThis data was collected from 2007 to 2009 by the US Long Term Ecological Research Network.",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#creating-an-r-script",
-    "href": "introtoR.html#creating-an-r-script",
-    "title": "Introduction to R",
-    "section": "Creating an R script",
-    "text": "Creating an R script\nBefore we start working on our code, we want to create an .R document we can save it in!\nFile &gt; New File &gt; R Script\nTo make sure your code is reproducible, it’s good practice to load all the packages you need at the start of your document, using the library() function.\ninstall.packages(\"tidyverse\")\nlibrary(tidyverse)\nTidyverse is a collection of packages used for data manipulation, filtering and visualisation. Today, we’ll use functions from tidyverse to import data and create some plots.\nIt’s in the name - the first step to any data analysis is to make sure your data is tidy!",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#tidy-data-principles",
-    "href": "introtoR.html#tidy-data-principles",
-    "title": "Introduction to R",
-    "section": "Tidy data principles",
-    "text": "Tidy data principles",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#tidy-datasets-are-all-alike",
-    "href": "introtoR.html#tidy-datasets-are-all-alike",
-    "title": "Introduction to R",
-    "section": "Tidy datasets are all alike…",
-    "text": "Tidy datasets are all alike…",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#importing-data",
-    "href": "introtoR.html#importing-data",
-    "title": "Introduction to R",
-    "section": "Importing data",
-    "text": "Importing data\nThe next step is to import our tidy data!\nIf you’re using Posit Cloud, we need to upload our file with the Upload button in the Files pane.\nIf you’re using RStudio Desktop, you’ll need to set your working directory to tell R where your files live.\nWe can then use the read_csv() function to import a .csv file.\nWhen we import our data, we’re going to assign it to an object that we can use later on.\npenguin.data &lt;- read_csv(\"penguins.csv\")",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#taking-a-look-at-our-imported-data",
-    "href": "introtoR.html#taking-a-look-at-our-imported-data",
-    "title": "Introduction to R",
-    "section": "Taking a look at our imported data",
-    "text": "Taking a look at our imported data\nLet’s take a look at our new data object.\n\n\nCodeOutput\n\n\npenguin.data\n\n\n\nlibrary(tidyverse)\npenguin.data &lt;- read_csv(\"penguins.csv\")\npenguin.data",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#taking-a-glimpse-at-our-imported-data",
-    "href": "introtoR.html#taking-a-glimpse-at-our-imported-data",
-    "title": "Introduction to R",
-    "section": "Taking a glimpse at our imported data",
-    "text": "Taking a glimpse at our imported data\nWe can also use the glimpse() function to take a look at this object.\n\n\nCodeOutput\n\n\nglimpse(penguin.data)\n\n\n\nglimpse(penguin.data)",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#data-filtering",
-    "href": "introtoR.html#data-filtering",
-    "title": "Introduction to R",
-    "section": "Data filtering",
-    "text": "Data filtering\nWe’ve seen some N/A values in the raw data. We can remove these with the drop_na() function.",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#removing-na-values-with-drop_na",
-    "href": "introtoR.html#removing-na-values-with-drop_na",
-    "title": "Introduction to R",
-    "section": "Removing N/A values with drop_na()",
-    "text": "Removing N/A values with drop_na()\nWe’ve seen some N/A values in the raw data. We can remove these with the drop_na() function.\n\n\nCodeOutput\n\n\npenguin_nafree.data &lt;- drop_na(penguin.data)\npenguin_nafree.data\n\n\n\npenguin_nafree.data &lt;- drop_na(penguin.data)\npenguin_nafree.data",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
     "objectID": "introtoR.html#creating-plots-with-ggplot",
     "href": "introtoR.html#creating-plots-with-ggplot",
     "title": "Introduction to R",
-    "section": "Creating plots with ggplot()",
-    "text": "Creating plots with ggplot()\nggplot() is a function that creates plots.\nLike a piece of art, we start with a base canvas where we set up our framework. We then use a + symbol to add layers on top.",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#ggplot-components",
-    "href": "introtoR.html#ggplot-components",
-    "title": "Introduction to R",
-    "section": "ggplot() components",
-    "text": "ggplot() components\nEvery ggplot has three components:\n\ndata - your filtered data, ready for visualisation.\naesthetic mappings - this defines which variables we plot.\ngeom layer(s) - this defines how we visualise the observations.",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#geom-layers",
-    "href": "introtoR.html#geom-layers",
-    "title": "Introduction to R",
-    "section": "Geom layers",
-    "text": "Geom layers",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-1-creating-the-canvas-base",
-    "href": "introtoR.html#example-1-creating-the-canvas-base",
-    "title": "Introduction to R",
-    "section": "Example 1: creating the canvas base",
-    "text": "Example 1: creating the canvas base\n\nggplot(data = penguin_nafree.data, aes(x = bill_length_mm, y = bill_depth_mm))",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-1-adding-a-geom-layer",
-    "href": "introtoR.html#example-1-adding-a-geom-layer",
-    "title": "Introduction to R",
-    "section": "Example 1: adding a geom layer",
-    "text": "Example 1: adding a geom layer\n\nggplot(data = penguin_nafree.data, aes(x = bill_length_mm, y = bill_depth_mm)) +\n  geom_point(size = 2)",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-1-point-colour-and-shape",
-    "href": "introtoR.html#example-1-point-colour-and-shape",
-    "title": "Introduction to R",
-    "section": "Example 1: point colour and shape",
-    "text": "Example 1: point colour and shape\n\nggplot(data = penguin_nafree.data, aes(x = bill_length_mm, y = bill_depth_mm)) +\n  geom_point(aes(color = species, shape = species),size = 2)",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-1-custom-colour-scales",
-    "href": "introtoR.html#example-1-custom-colour-scales",
-    "title": "Introduction to R",
-    "section": "Example 1: custom colour scales",
-    "text": "Example 1: custom colour scales\n\nggplot(data = penguin_nafree.data, aes(x = bill_length_mm, y = bill_depth_mm)) +\n  geom_point(aes(color = species, shape = species),size = 2) +\n  scale_color_manual(values = c(\"darkorange\",\"darkorchid\",\"cyan4\"))",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-1-adding-custom-axis-labels",
-    "href": "introtoR.html#example-1-adding-custom-axis-labels",
-    "title": "Introduction to R",
-    "section": "Example 1: adding custom axis labels",
-    "text": "Example 1: adding custom axis labels\n\nggplot(data = penguin_nafree.data, aes(x = bill_length_mm, y = bill_depth_mm)) +\n  geom_point(aes(color = species, shape = species),size = 2) +\n  scale_color_manual(values = c(\"darkorange\",\"darkorchid\",\"cyan4\")) +\n  labs(x=\"Bill length (mm)\", y=\"Bill depth (mm)\", color = \"Penguin species\", shape = \"Penguin species\")",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-2-creating-the-canvas-base",
-    "href": "introtoR.html#example-2-creating-the-canvas-base",
-    "title": "Introduction to R",
-    "section": "Example 2: creating the canvas base",
-    "text": "Example 2: creating the canvas base\n\nggplot(data = penguin_nafree.data, aes(x = species, y = flipper_length_mm))",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-2-adding-a-geom-layer",
-    "href": "introtoR.html#example-2-adding-a-geom-layer",
-    "title": "Introduction to R",
-    "section": "Example 2: adding a geom layer",
-    "text": "Example 2: adding a geom layer\n\nggplot(data = penguin_nafree.data, aes(x = species, y = flipper_length_mm)) +\n  geom_boxplot()",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-2-colouring-the-boxplots",
-    "href": "introtoR.html#example-2-colouring-the-boxplots",
-    "title": "Introduction to R",
-    "section": "Example 2: colouring the boxplots",
-    "text": "Example 2: colouring the boxplots\n\nggplot(data = penguin_nafree.data, aes(x = species, y = flipper_length_mm)) +\n  geom_boxplot(aes(color=species)) +\n  scale_color_manual(values = c(\"darkorange\",\"darkorchid\",\"cyan4\"), name = \"Species\")",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-2-adding-axis-labels",
-    "href": "introtoR.html#example-2-adding-axis-labels",
-    "title": "Introduction to R",
-    "section": "Example 2: adding axis labels",
-    "text": "Example 2: adding axis labels\n\nggplot(data = penguin_nafree.data, aes(x = species, y = flipper_length_mm)) +\n  geom_boxplot(aes(color=species)) +\n  scale_color_manual(values = c(\"darkorange\",\"darkorchid\",\"cyan4\"), name = \"Penguin species\") +\n  labs(x=\"Penguin species\", y=\"Flipper length (mm)\")",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-2-adding-jitter-points",
-    "href": "introtoR.html#example-2-adding-jitter-points",
-    "title": "Introduction to R",
-    "section": "Example 2: adding jitter points",
-    "text": "Example 2: adding jitter points\n\nggplot(data = penguin_nafree.data, aes(x = species, y = flipper_length_mm)) +\n  geom_boxplot(aes(color=species)) +\n  scale_color_manual(values = c(\"darkorange\",\"darkorchid\",\"cyan4\"), name = \"Penguin species\") +\n  labs(x=\"Penguin species\", y=\"Flipper length (mm)\") +\n  geom_jitter(aes(color = species), alpha = 0.5)",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-3-creating-the-canvas-base",
-    "href": "introtoR.html#example-3-creating-the-canvas-base",
-    "title": "Introduction to R",
-    "section": "Example 3: creating the canvas base",
-    "text": "Example 3: creating the canvas base\n\nggplot(data = penguin_nafree.data, aes(x = species))",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-3-adding-a-geom-layer",
-    "href": "introtoR.html#example-3-adding-a-geom-layer",
-    "title": "Introduction to R",
-    "section": "Example 3: adding a geom layer",
-    "text": "Example 3: adding a geom layer\n\nggplot(data = penguin_nafree.data, aes(x = species)) +\n  geom_bar(aes(fill=sex),position=\"dodge\")",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-3-faceting-by-a-variable",
-    "href": "introtoR.html#example-3-faceting-by-a-variable",
-    "title": "Introduction to R",
-    "section": "Example 3: faceting by a variable",
-    "text": "Example 3: faceting by a variable\n\nggplot(data = penguin_nafree.data, aes(x = species)) +\n  geom_bar(aes(fill=sex),position=\"dodge\") +\n  facet_wrap(~island)",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-3-colouring-the-bars",
-    "href": "introtoR.html#example-3-colouring-the-bars",
-    "title": "Introduction to R",
-    "section": "Example 3: colouring the bars",
-    "text": "Example 3: colouring the bars\n\nggplot(data = penguin_nafree.data, aes(x = species)) +\n  geom_bar(aes(fill=sex),position=\"dodge\") +\n  facet_wrap(~island) +\n  scale_fill_manual(values = c(\"lightpink1\", \"skyblue1\"), name = \"Sex\")",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-3-adding-labels-and-a-theme",
-    "href": "introtoR.html#example-3-adding-labels-and-a-theme",
-    "title": "Introduction to R",
-    "section": "Example 3: adding labels and a theme",
-    "text": "Example 3: adding labels and a theme\n\nggplot(data = penguin_nafree.data, aes(x = species)) +\n  geom_bar(aes(fill=sex),position=\"dodge\") +\n  facet_wrap(~island) +\n  scale_fill_manual(values = c(\"lightpink1\", \"skyblue1\"), name = \"Sex\") +\n  labs(y=\"Frequency\", x=\"Penguin species\") +\n  theme_bw()",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#example-4-creating-a-bar-plot-with-error-bars",
-    "href": "introtoR.html#example-4-creating-a-bar-plot-with-error-bars",
-    "title": "Introduction to R",
-    "section": "Example 4: creating a bar plot with error bars",
-    "text": "Example 4: creating a bar plot with error bars\n\n#calculating sd\npenguin_summary.data &lt;- penguin_nafree.data %&gt;%\n  group_by(species) %&gt;%\n  summarise(\n    sd = sd(body_mass_g),\n    body_mass_g = mean(body_mass_g)\n  )\n\n#bar plot with error bars\nggplot(data = penguin_summary.data, aes(x = species, y=body_mass_g)) +\n  geom_col(aes(fill=species),position=\"dodge\") +\n  geom_errorbar(aes(ymin=body_mass_g-sd, ymax=body_mass_g+sd), width=.2,\n                position=position_dodge(.9)) + \n  scale_fill_manual(values = c(\"darkorange\",\"darkorchid\",\"cyan4\"), name = \"Penguin species\") +\n  labs(y=\"Weight (g)\", x=\"Penguin species\") +\n  theme_bw()",
+    "section": "Creating plots with ggplot",
+    "text": "Creating plots with ggplot\n\nIntroducing the Palmer penguins\nThe Palmer penguins dataset contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica.\nThis data was collected from 2007 to 2009 by the US Long Term Ecological Research Network.\n\n\n\n\n\n\n\nCreating a document to write code in\nBefore we start working on our code, we want to create an .qmd document we can save it in!\n[File &gt; New File &gt; Quarto Document]\nTo make sure your code is reproducible, it’s good practice to load all the packages you need at the start of your document, using the library() function.\n\n\nInstalling package into '/home/lauren/R/aarch64-unknown-linux-gnu-library/4.3'\n(as 'lib' is unspecified)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\nInstalling package into '/home/lauren/R/aarch64-unknown-linux-gnu-library/4.3'\n(as 'lib' is unspecified)\n\n\nTidyverse is a collection of packages used for data manipulation, filtering, and visualization. Today, we’ll use functions from tidyverse to import data and create some plots.\n\n\nTaking a look at our penguin data\nLet’s take a look at our new data object.\n\n\n# A tibble: 6 × 8\n  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n  &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n1 Adelie  Torgersen           39.1          18.7               181        3750\n2 Adelie  Torgersen           39.5          17.4               186        3800\n3 Adelie  Torgersen           40.3          18                 195        3250\n4 Adelie  Torgersen           NA            NA                  NA          NA\n5 Adelie  Torgersen           36.7          19.3               193        3450\n6 Adelie  Torgersen           39.3          20.6               190        3650\n# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;\n\n\nWe can also use the glimpse() function to take a look at this object.\n\n\nRows: 344\nColumns: 8\n$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…\n$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…\n$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …\n$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …\n$ flipper_length_mm &lt;int&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…\n$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …\n$ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male…\n$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…\n\n\n\n\nRemoving N/A values with drop_na()\nWe’ve seen some N/A values in the raw data. We can remove these with the drop_na() function.\n\n\n\n\n\n\n\n# A tibble: 333 × 8\n   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;\n 1 Adelie  Torgersen           39.1          18.7               181        3750\n 2 Adelie  Torgersen           39.5          17.4               186        3800\n 3 Adelie  Torgersen           40.3          18                 195        3250\n 4 Adelie  Torgersen           36.7          19.3               193        3450\n 5 Adelie  Torgersen           39.3          20.6               190        3650\n 6 Adelie  Torgersen           38.9          17.8               181        3625\n 7 Adelie  Torgersen           39.2          19.6               195        4675\n 8 Adelie  Torgersen           41.1          17.6               182        3200\n 9 Adelie  Torgersen           38.6          21.2               191        3800\n10 Adelie  Torgersen           34.6          21.1               198        4400\n# ℹ 323 more rows\n# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;\n\n\n\n\nCreating plots with ggplot\nggplot() is a function that creates plots.\nLike a piece of art, we start with a base canvas where we set up our framework. We then use a + symbol to add layers on top.\n\n\n\n\n\n\n\nggplot() components\nEvery ggplot has three components:\n\ndata - your filtered data, ready for visualisation.\naesthetic mappings - this defines which variables we plot.\ngeom layer(s) - this defines how we visualise the observations.\n\n\n\n\n\n\n\n\n\n\n\n\n\nExample: creating a scatterplot\nCreating the base:\n\n\n\n\n\n\n\n\n\nAdding a geom layer:\n\n\n\n\n\n\n\n\n\nAdding point colour and shape by species:\n\n\n\n\n\n\n\n\n\nAdding a custom colour palette:\n\n\n\n\n\n\n\n\n\nAdding custom axis labels:\n\n\n\n\n\n\n\n\n\n\n\nExample: creating a boxplot\nCreating the base:\n\n\n\n\n\n\n\n\n\nAdding a geom layer:\n\n\n\n\n\n\n\n\n\nColouring the boxplots by species:\n\n\n\n\n\n\n\n\n\nAdding axis labels:\n\n\n\n\n\n\n\n\n\nAdding jitter points:\n\n\n\n\n\n\n\n\n\n\n\nExample: Creating a barplot\nCreating the base:\n\n\n\n\n\n\n\n\n\nAdding a geom layer:\n\n\n\n\n\n\n\n\n\nFaceting by a variable:\n\n\n\n\n\n\n\n\n\nColouring the bars by sex:\n\n\n\n\n\n\n\n\n\nAdding labels and a theme:",
     "crumbs": [
       "Overview",
       "Introduction to R"
@@ -414,18 +106,7 @@
     "href": "introtoR.html#dealing-with-errors",
     "title": "Introduction to R",
     "section": "Dealing with errors",
-    "text": "Dealing with errors",
-    "crumbs": [
-      "Overview",
-      "Introduction to R"
-    ]
-  },
-  {
-    "objectID": "introtoR.html#what-to-do-when-you-get-an-error",
-    "href": "introtoR.html#what-to-do-when-you-get-an-error",
-    "title": "Introduction to R",
-    "section": "What to do when you get an error",
-    "text": "What to do when you get an error\n\n\n\nRead the error message\nGoogle the error message\nTry the suggested solutions\nRead about the function\nAsk for help\n\nCheck the easy stuff:\n✅ Did you forget to run any code?\n✅ Check for spelling mistakes (including capital letters)\n✅ Check your parentheses, quotation marks, and commas",
+    "text": "Dealing with errors\n\n\n\n\n\nWhat to do when you get an error: - Read the error message\n\nGoogle the error message\nTry the suggested solutions\nRead about the function\nAsk for help\n\nCheck the easy stuff:\n\nDid you forget to run any code?\nCheck for spelling mistakes (including capital letters)\nCheck your parentheses, quotation marks, and commas",
     "crumbs": [
       "Overview",
       "Introduction to R"
@@ -436,7 +117,7 @@
     "href": "introtoR.html#r-resources",
     "title": "Introduction to R",
     "section": "R resources",
-    "text": "R resources\n\n\n\nPosit cheatsheets will help you use your favourite tidyverse packages!\nR for Data Science, ggplot2: Elegant Graphics for Data Analysis, and Advanced R are all free online books published by Hadley Wickham*.",
+    "text": "R resources\n\nPosit cheatsheets will help you use your favourite tidyverse packages!\nR for Data Science, ggplot2: Elegant Graphics for Data Analysis, and Advanced R are all free online books published by Hadley Wickham*.\nFriends Don’t Let Friends Make Bad Graphs by Chenxin Li.",
     "crumbs": [
       "Overview",
       "Introduction to R"
@@ -628,7 +309,7 @@
     "href": "qc.html",
     "title": "Data exploration, normalization, & quality control",
     "section": "",
-    "text": "In this session, we will: - Examine these data tables. - Perform necessary quality control checks (e.g., sparsity and sequencing depth). - Filter & normalize our data by sample.\nSo far, we have created two data tables using the DADA2 pipeline:\n\nAn amplicon sequence variant (ASV) count table (asv_count.data) which records the numbers of times each exact amplicon sequence variant was observed in each sample.\nA taxonomy table (taxa.data) which records the taxonomic assignments for each ASV.\n\nWe’ll also be working with a metadata table (sample.data) which represents metadata information for the different samples.\n\n\nBy the end of today’s session, you should be able to:\n\nExamine and interpret the key features of ASV datasets\nEvaluate the quality of ASV datasets\nPerform data manipulation for quality control and determine when this is appropriate\n\n\n\n\n\nlibrary(tidyverse)\nlibrary(phyloseq)\n\n#import our asv and taxa tables\nasv_count.data &lt;- read.table(file=\"asv_count_table.txt\", sep = \" \", header = TRUE, quote = \"\\\"\", check.names = FALSE, stringsAsFactors = FALSE)\n\ntaxa.data &lt;- read.table(file = \"taxonomy_table.txt\"), sep = \" \", header = TRUE, quote = \"\\\"\", check.names = FALSE, stringsAsFactors = FALSE)\n\nsample.data &lt;- read.csv(\"sample_metadata.csv\")\n\n\n\n\n\n#check the first few rows of the data\nhead(metadata.data)\n\n#check the number of samples\ndim(metadata.data)[1]\n\n#check the number of variables\ndim(metadata.data)[2] \n\n#check the numbers of samples per variable\nsummary(metadata.data)\n\n\n\n\n\n\n\nDiscussion point\n\n\n\nMost datasets will have have multiple variables with an underlying experimental design. What would be your first idea to analyze this data?\n\n\n\n\n\nThe taxonomy table (taxa.data) represents the assignment for the different ASVs at domain, phylum, class, order, family, genus and species levels.\n\n\n\n#check the first few rows of the data\nhead(taxa.data)\ntaxa.data[1:5, 1:6]\n\n#check the number of x\ndim(taxa.data)[1]\n\n#check the number of y\ndim(taxa.data)[2] \n\n#check the numbers of samples per variable\nsummary(taxa.data)\n\n\n\n\nFrom our ‘raw’ taxonomy table (taxa.data), we are going to explicitly define ASVs with no taxonomy data as “unclassified”.\n\n#check the first few rows of the data\nhead(taxa.data)\n\n#set the ASV IDs as row names\nrownames(taxa.data) &lt;- taxa.data[,1] \n\n#what does this do?\ntaxa.data &lt;- taxa.data[,-c(1,1)]\n\n#classify ASVs without any taxonomy data as \"unclassified\"\ntaxa.data[taxa.data == \"\" | is.na(taxa.data)] &lt;- \"unclassified\"\n\nNext, we will remove unwanted classifications or ASVs. This includes:\n\nUnclassified sequences (with no taxonomy data).\nArchaeal sequences.\nMitochondrial sequence contamination.\nChloroplastic sequence contamination (particularly when sampling microbiomes associated with plants).\n\n\n#defining a list of unclassified ASVs\nunclassified.ASVs &lt;- subset(taxa.data, Phylum == \"unclassified\")\n#check the first few rows of the data\nhead(unclassified.taxa)\n\n#defining a list of archaeal ASVs\narchaea.ASVs &lt;- subset(taxa.data, Kingdom == \"Archaea\")\n\n#defining a list of mitochondrial ASVs\nmitochondria.ASVs &lt;- subset(taxa.data, Family == \"Mitochondria\")\n\n#defining a list of chloroplastic ASVs\nchloroplast.ASVs &lt;- subset(taxa.data, Order == \"Chloroplast\")\n\n#to remove\nun.1&lt;-union(rownames(unclassified.taxa),rownames(mitochondria.taxa))\nun.2&lt;-union(rownames(archaea.taxa),un.1)\nun.3&lt;-union(rownames(chloroplast.taxa),un.2)\n \n#check this works as an alternative\n#create a list of ASVs to remove from the taxonomy table\nASVs_to_remove\n&lt;- list(\n      rownames(archaea.ASVs), \n      rownames(unclassified.ASVs),\n      rownames(chloroplast.ASVs),\n      rownames(mitochondria.ASVs)\n) %&gt;% reduce(union)\n\nASVs_to_remove\n\n#remove row names (i.e., ASVs) that are listed in ASVs_to_remove, creating a filtered taxonomy table\nfiltered_taxa.data &lt;- taxa.data[-which(rownames(taxa.data) %in% ASVs_to_remove),]\n\nNow we have a filtered taxonomy table (filtered_taxa.data) that we have removed unwanted ASVs from.\nCheck the dimensions of the filtered taxonomy table:\n\n#check the first few rows of the data\nhead(filtered_taxa.data)\n\n#check the number of x\ndim(filtered_taxa.data)[1]\n\n#check the number of y\ndim(filtered_taxa.data)[2] \n\n#check the numbers of samples per variable\nsummary(filtered_taxa.data)\n\n\n\n\n\nThe ASV table (asv_count.data) is the abundance table that contains counts corresponding to the number of times each ASV is observed in each sample.\n\n\nThe ASV table has samples in rows and variables (ASVs) in columns.\nCheck the first few rows of the ASV table:\n\n#check how the raw ASV table looks in the first five rows and first 6 columns\nasv_count.data[1:5, 1:6]\n\nCheck the total number of reads:\n\n#check the total number of sequences/reads in the ASV table\nsum(asv_count.data)\n\nCheck the number of samples & ASVs:\n\n#check the number of samples (i.e., rows) in the ASV table\ndim(asv_count.data)[1] \n\n#check the number of ASVs (i.e., columns) in the OTU table\ndim(asv_count.data)[2]\n\n\n\n\nWe have already filtered out unwanted classifications and ASVs from the taxonomy table to create filtered_taxa.data. Next, we’ll update the ASV table to match by remvoving the same unwanted ASVs.\n\n#keep ASV columns from the ASV table that match the row names in the filtered taxa table\nfiltered_asv_count.data &lt;- asv_count.data[,which(colnames(asv_count.data) %in% rownames(filtered_taxa.data))]\n\nCheck the dimensions of the filtered taxonomy table:\n\n#check the first few rows of the data\nhead(filtered_asv_count.data)\n\n#check the total number of sequences/reads in the ASV table\nsum(filtered_asv_count.data)\n\n#check the number of samples (i.e., rows) in the ASV table\ndim(filtered_asv_count.data)[1] \n\n#check the number of ASVs (i.e., columns) in the ASV table\ndim(filtered_asv_count.data)[2]\n\n#check the numbers of samples per variable\nsummary(filtered_asv_count.data)\n\n\n\n\nMicrobiome datasets are usually sparse and have an uneven library size.\nCheck the number of zeros & percentage of zeros in the ASV table:\n\n#check the number of zeros in the ASV table\nsum(filtered_asv_count.data == 0)\n\n#check the percentage of zeros in the ASV table\nsum(filtered_asv_count.data == 0) / (nb_var * nb_samples) * 100\n\n\n\n\n\n\n\nDiscussion point\n\n\n\n\nWhat is the meaning of a zero value in an ASV table?\nCan we consider it to be a true zero?\nDo you think it is important to filter the data and why?\n\n\n\n\n\n\n\n\n\nAnswers\n\n\n\n\n\n\nA zero value in the ASV table means that we could not sequence any read for a specific ASV in a given sample. This means that the ASV is not present in the given sample, or that the sequencing depth was not enough to find it.\nBecause of this, we usually don’t know if it is a true zero or not.\nThe issue of whether something is truly absent (or not) is problematic, especially when we have to compare rare ASVs. Furthermore, some statistical approaches cannot handle highly sparse data set (e.g., Principal Component Analysis). For microbiome data analysis, zeros values can be difficult to analyse and interpret and data should be filtered if the percentage of zeros is relatively high.\n\n\n\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\n\nMicrobial ecologists usually remove singletons (ASVs for which only one read has been identified in the full ASV table), as these are likely to be artifacts.\nAnother option for data filtering could be to remove ASVs that have a total count (per ASV, over all samples) lower than a defined value.\nAs a reminder, chimeric amplification products have been already removed in DADA2 pipeline.\n\n\n\nPlot the ASV occurrence frequency as a histogram:\n\nhist(as.matrix(filtered_asv_count.data), \n     max(filtered_asv_count.data), \n     right = FALSE, \n     las = 1, \n     xlab = \"Occurrence value\", \n     ylab = \"Frequency\", \n     main = \"Occurrence frequency\")\n\nThere will likely be a lot of low occurrences (such as 0, 1, or 2 counts per ASV and per sample) and few abundant ASVs.\nGet the minimum total ASV count over all samples:\n\nmin(colSums(filtered_asv_count.data))\n\nCheck how frequently ASVs are shared between samples:\n\nnon_zero &lt;- 0*1:nb_var\n\nfor (i in 1:nb_var){\n  non_zero[i]&lt;-sum(filtered_asv_count.data[,i] != 0)\n  }\n\nplot(non_zero, xlab = \"ASV\", ylab = \"Frequency\", main = \"Number of non zero values\", las = 1)\n\nIt is likely that the majority of ASVs are found only in a few samples. In other words, very few ASVs will be found at high frequencies or across all samples.\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nIf you have replicate samples, you could think about filtering out rare ASVs that are not shared between at least 2 or 3 samples.\n\n\n\n\n\nSequencing depth and library size represent the number of counts per sample. This number can vary a lot among the different samples (up to 10-fold).\nDifferences in library size can be due to technical biases or errors introduced when creating DNA sequencing libraries in the lab: - The PCR amplification step can introduce some difference among samples because PCR amplification can be more orless efficient according to the sequence itself. - After cleaning up PCR amplicons from each sample, we typically measure the DNA concentration. Depending on the method used (e.g., band brightness, NanoDrop, Qubit), this may not be a highly accurate or sensitive measure. - Then, according to these concentrations, we pool the different samples into one ‘equimolar’ mix, which can also introduce some error.\n\n\n\n\n\n\nDiscussion point\n\n\n\nWhy do you think it is important to look at sequencing depth?\n\n\n\n\n\n\n\n\nAnswers\n\n\n\n\n\n\nIt is important to know if we sequenced enough to capture all the diversity present in our environment.\nTo compare samples to each other, we need to have a comparable library size between samples.\n\n\n\n\n\n\n\nCheck the number of ASV counts per sample:\n\n#calculate the number of counts per sample\nlibrary_size &lt;- rowSums(filtered_asv_count.data)\nsummary(library_size)\n\n#check if any samples have zero counts\nlibrary_size[library_size == 0]\n\n#plot the number of counts per sample as a histogram\nplot(library_size, ylim=c(0,25000), main=c(\"Number of counts per sample\"), xlab=c(\"Samples\"))\n\n#check the minimum library size\nmin(library_size)\n\n#check the maximum library size\nmax(library_size)\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nDo your samples have differences in the library size? If you want to compare samples to each other (hint: you do), it will be an issue to have different library sizes. To fix this, we will normalize our library sizes.\nIf any of your samples have no counts at all, they should be removed from analysis.",
+    "text": "So far, we have created two data tables using the DADA2 pipeline:\n\nAn amplicon sequence variant (ASV) count table (asv_count.data) which records the numbers of times each exact amplicon sequence variant was observed in each sample.\nA taxonomy table (taxa.data) which records the taxonomic assignments for each ASV.\n\nWe’ll also be working with a metadata table (sample.data) which represents metadata information for the different samples.\nIn this session, we will:\n\nExamine these data tables.\nPerform necessary quality control checks (e.g., sparsity and sequencing depth).\nFilter & normalize our data by sample.\n\n\n\nBy the end of today’s session, you should be able to:\n\nExamine and interpret the key features of ASV datasets\nEvaluate the quality of ASV datasets\nPerform data manipulation for quality control and determine when this is appropriate\n\n\n\n\nLoad the required packages and objects:\n\nlibrary(tidyverse)\nlibrary(phyloseq)\n\n#import our asv and taxa tables\nasv_count.data &lt;- read.table(file=\"asv_count_table.txt\", sep = \" \", header = TRUE, quote = \"\\\"\", check.names = FALSE, stringsAsFactors = FALSE)\n\ntaxa.data &lt;- read.table(file = \"taxonomy_table.txt\"), sep = \" \", header = TRUE, quote = \"\\\"\", check.names = FALSE, stringsAsFactors = FALSE)\n\nsample.data &lt;- read.csv(\"sample_metadata.csv\")\n\nExamine the metadata object:\n\n#check the first few rows of the data\nhead(metadata.data)\n\n#check the number of samples\ndim(metadata.data)[1]\n\n#check the number of variables\ndim(metadata.data)[2] \n\n#check the numbers of samples per variable\nsummary(metadata.data)\n\n\n\n\n\n\n\nDiscussion point\n\n\n\nMost datasets will have have multiple variables with an underlying experimental design. What would be your first idea to analyze this data?\n\n\n\n\n\nThe taxonomy table (taxa.data) represents the assignment for the different ASVs at domain, phylum, class, order, family, genus and species levels.\n\n\n\n#check the first few rows of the data\nhead(taxa.data)\ntaxa.data[1:5, 1:6]\n\n#check the number of x\ndim(taxa.data)[1]\n\n#check the number of y\ndim(taxa.data)[2] \n\n#check the numbers of samples per variable\nsummary(taxa.data)\n\n\n\n\nFrom our ‘raw’ taxonomy table (taxa.data), we are going to explicitly define ASVs with no taxonomy data as “unclassified”.\n\n#check the first few rows of the data\nhead(taxa.data)\n\n#set the ASV IDs as row names\nrownames(taxa.data) &lt;- taxa.data[,1] \n\n#what does this do?\ntaxa.data &lt;- taxa.data[,-c(1,1)]\n\n#classify ASVs without any taxonomy data as \"unclassified\"\ntaxa.data[taxa.data == \"\" | is.na(taxa.data)] &lt;- \"unclassified\"\n\nNext, we will remove unwanted classifications or ASVs. This includes:\n\nUnclassified sequences (with no taxonomy data).\nArchaeal sequences.\nMitochondrial sequence contamination.\nChloroplastic sequence contamination (particularly when sampling microbiomes associated with plants).\n\n\n#defining a list of unclassified ASVs\nunclassified.ASVs &lt;- subset(taxa.data, Phylum == \"unclassified\")\n#check the first few rows of the data\nhead(unclassified.taxa)\n\n#defining a list of archaeal ASVs\narchaea.ASVs &lt;- subset(taxa.data, Kingdom == \"Archaea\")\n\n#defining a list of mitochondrial ASVs\nmitochondria.ASVs &lt;- subset(taxa.data, Family == \"Mitochondria\")\n\n#defining a list of chloroplastic ASVs\nchloroplast.ASVs &lt;- subset(taxa.data, Order == \"Chloroplast\")\n\n#to remove\nun.1&lt;-union(rownames(unclassified.taxa),rownames(mitochondria.taxa))\nun.2&lt;-union(rownames(archaea.taxa),un.1)\nun.3&lt;-union(rownames(chloroplast.taxa),un.2)\n \n#check this works as an alternative\n#create a list of ASVs to remove from the taxonomy table\nASVs_to_remove\n&lt;- list(\n      rownames(archaea.ASVs), \n      rownames(unclassified.ASVs),\n      rownames(chloroplast.ASVs),\n      rownames(mitochondria.ASVs)\n) %&gt;% reduce(union)\n\nASVs_to_remove\n\n#remove row names (i.e., ASVs) that are listed in ASVs_to_remove, creating a filtered taxonomy table\nfiltered_taxa.data &lt;- taxa.data[-which(rownames(taxa.data) %in% ASVs_to_remove),]\n\nNow we have a filtered taxonomy table (filtered_taxa.data) that we have removed unwanted ASVs from.\nCheck the dimensions of the filtered taxonomy table:\n\n#check the first few rows of the data\nhead(filtered_taxa.data)\n\n#check the number of x\ndim(filtered_taxa.data)[1]\n\n#check the number of y\ndim(filtered_taxa.data)[2] \n\n#check the numbers of samples per variable\nsummary(filtered_taxa.data)\n\n\n\n\n\nThe ASV table (asv_count.data) is the abundance table that contains counts corresponding to the number of times each ASV is observed in each sample.\n\n\nThe ASV table has samples in rows and variables (ASVs) in columns.\nCheck the first few rows of the ASV table:\n\n#check how the raw ASV table looks in the first five rows and first 6 columns\nasv_count.data[1:5, 1:6]\n\nCheck the total number of reads:\n\n#check the total number of sequences/reads in the ASV table\nsum(asv_count.data)\n\nCheck the number of samples & ASVs:\n\n#check the number of samples (i.e., rows) in the ASV table\ndim(asv_count.data)[1] \n\n#check the number of ASVs (i.e., columns) in the OTU table\ndim(asv_count.data)[2]\n\n\n\n\nWe have already filtered out unwanted classifications and ASVs from the taxonomy table to create filtered_taxa.data. Next, we’ll update the ASV table to match by remvoving the same unwanted ASVs.\n\n#keep ASV columns from the ASV table that match the row names in the filtered taxa table\nfiltered_asv_count.data &lt;- asv_count.data[,which(colnames(asv_count.data) %in% rownames(filtered_taxa.data))]\n\nCheck the dimensions of the filtered taxonomy table:\n\n#check the first few rows of the data\nhead(filtered_asv_count.data)\n\n#check the total number of sequences/reads in the ASV table\nsum(filtered_asv_count.data)\n\n#check the number of samples (i.e., rows) in the ASV table\ndim(filtered_asv_count.data)[1] \n\n#check the number of ASVs (i.e., columns) in the ASV table\ndim(filtered_asv_count.data)[2]\n\n#check the numbers of samples per variable\nsummary(filtered_asv_count.data)\n\n\n\n\nMicrobiome datasets are usually sparse and have an uneven library size.\nCheck the number of zeros & percentage of zeros in the ASV table:\n\n#check the number of zeros in the ASV table\nsum(filtered_asv_count.data == 0)\n\n#check the percentage of zeros in the ASV table\nsum(filtered_asv_count.data == 0) / (nb_var * nb_samples) * 100\n\n\n\n\n\n\n\nDiscussion point\n\n\n\n\nWhat is the meaning of a zero value in an ASV table?\nCan we consider it to be a true zero?\nDo you think it is important to filter the data and why?\n\n\n\n\n\n\n\n\n\nAnswers\n\n\n\n\n\n\nA zero value in the ASV table means that we could not sequence any read for a specific ASV in a given sample. This means that the ASV is not present in the given sample, or that the sequencing depth was not enough to find it.\nBecause of this, we usually don’t know if it is a true zero or not.\nThe issue of whether something is truly absent (or not) is problematic, especially when we have to compare rare ASVs. Furthermore, some statistical approaches cannot handle highly sparse data set (e.g., Principal Component Analysis). For microbiome data analysis, zeros values can be difficult to analyse and interpret and data should be filtered if the percentage of zeros is relatively high.\n\n\n\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\n\nMicrobial ecologists usually remove singletons (ASVs for which only one read has been identified in the full ASV table), as these are likely to be artifacts.\nAnother option for data filtering could be to remove ASVs that have a total count (per ASV, over all samples) lower than a defined value.\nAs a reminder, chimeric amplification products have been already removed in DADA2 pipeline.\n\n\n\nPlot the ASV occurrence frequency as a histogram:\n\nhist(as.matrix(filtered_asv_count.data), \n     max(filtered_asv_count.data), \n     right = FALSE, \n     las = 1, \n     xlab = \"Occurrence value\", \n     ylab = \"Frequency\", \n     main = \"Occurrence frequency\")\n\nThere will likely be a lot of low occurrences (such as 0, 1, or 2 counts per ASV and per sample) and few abundant ASVs.\nGet the minimum total ASV count over all samples:\n\nmin(colSums(filtered_asv_count.data))\n\nCheck how frequently ASVs are shared between samples:\n\nnon_zero &lt;- 0*1:nb_var\n\nfor (i in 1:nb_var){\n  non_zero[i]&lt;-sum(filtered_asv_count.data[,i] != 0)\n  }\n\nplot(non_zero, xlab = \"ASV\", ylab = \"Frequency\", main = \"Number of non zero values\", las = 1)\n\nIt is likely that the majority of ASVs are found only in a few samples. In other words, very few ASVs will be found at high frequencies or across all samples.\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nIf you have replicate samples, you could think about filtering out rare ASVs that are not shared between at least 2 or 3 samples.\n\n\n\n\n\nSequencing depth and library size represent the number of counts per sample. This number can vary a lot among the different samples (up to 10-fold).\nDifferences in library size can be due to technical biases or errors introduced when creating DNA sequencing libraries in the lab: - The PCR amplification step can introduce some difference among samples because PCR amplification can be more orless efficient according to the sequence itself. - After cleaning up PCR amplicons from each sample, we typically measure the DNA concentration. Depending on the method used (e.g., band brightness, NanoDrop, Qubit), this may not be a highly accurate or sensitive measure. - Then, according to these concentrations, we pool the different samples into one ‘equimolar’ mix, which can also introduce some error.\n\n\n\n\n\n\nDiscussion point\n\n\n\nWhy do you think it is important to look at sequencing depth?\n\n\n\n\n\n\n\n\nAnswers\n\n\n\n\n\n\nIt is important to know if we sequenced enough to capture all the diversity present in our environment.\nTo compare samples to each other, we need to have a comparable library size between samples.\n\n\n\n\n\n\n\nCheck the number of ASV counts per sample:\n\n#calculate the number of counts per sample\nlibrary_size &lt;- rowSums(filtered_asv_count.data)\nsummary(library_size)\n\n#check if any samples have zero counts\nlibrary_size[library_size == 0]\n\n#plot the number of counts per sample as a histogram\nplot(library_size, ylim=c(0,25000), main=c(\"Number of counts per sample\"), xlab=c(\"Samples\"))\n\n#check the minimum library size\nmin(library_size)\n\n#check the maximum library size\nmax(library_size)\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nDo your samples have differences in the library size? If you want to compare samples to each other (hint: you do), it will be an issue to have different library sizes. To fix this, we will normalize our library sizes.\nIf any of your samples have no counts at all, they should be removed from analysis.",
     "crumbs": [
       "Day 2: Data exploration, normalization, & quality control"
     ]
@@ -638,7 +319,7 @@
     "href": "qc.html#overview",
     "title": "Data exploration, normalization, & quality control",
     "section": "",
-    "text": "In this session, we will: - Examine these data tables. - Perform necessary quality control checks (e.g., sparsity and sequencing depth). - Filter & normalize our data by sample.\nSo far, we have created two data tables using the DADA2 pipeline:\n\nAn amplicon sequence variant (ASV) count table (asv_count.data) which records the numbers of times each exact amplicon sequence variant was observed in each sample.\nA taxonomy table (taxa.data) which records the taxonomic assignments for each ASV.\n\nWe’ll also be working with a metadata table (sample.data) which represents metadata information for the different samples.\n\n\nBy the end of today’s session, you should be able to:\n\nExamine and interpret the key features of ASV datasets\nEvaluate the quality of ASV datasets\nPerform data manipulation for quality control and determine when this is appropriate\n\n\n\n\n\nlibrary(tidyverse)\nlibrary(phyloseq)\n\n#import our asv and taxa tables\nasv_count.data &lt;- read.table(file=\"asv_count_table.txt\", sep = \" \", header = TRUE, quote = \"\\\"\", check.names = FALSE, stringsAsFactors = FALSE)\n\ntaxa.data &lt;- read.table(file = \"taxonomy_table.txt\"), sep = \" \", header = TRUE, quote = \"\\\"\", check.names = FALSE, stringsAsFactors = FALSE)\n\nsample.data &lt;- read.csv(\"sample_metadata.csv\")\n\n\n\n\n\n#check the first few rows of the data\nhead(metadata.data)\n\n#check the number of samples\ndim(metadata.data)[1]\n\n#check the number of variables\ndim(metadata.data)[2] \n\n#check the numbers of samples per variable\nsummary(metadata.data)\n\n\n\n\n\n\n\nDiscussion point\n\n\n\nMost datasets will have have multiple variables with an underlying experimental design. What would be your first idea to analyze this data?\n\n\n\n\n\nThe taxonomy table (taxa.data) represents the assignment for the different ASVs at domain, phylum, class, order, family, genus and species levels.\n\n\n\n#check the first few rows of the data\nhead(taxa.data)\ntaxa.data[1:5, 1:6]\n\n#check the number of x\ndim(taxa.data)[1]\n\n#check the number of y\ndim(taxa.data)[2] \n\n#check the numbers of samples per variable\nsummary(taxa.data)\n\n\n\n\nFrom our ‘raw’ taxonomy table (taxa.data), we are going to explicitly define ASVs with no taxonomy data as “unclassified”.\n\n#check the first few rows of the data\nhead(taxa.data)\n\n#set the ASV IDs as row names\nrownames(taxa.data) &lt;- taxa.data[,1] \n\n#what does this do?\ntaxa.data &lt;- taxa.data[,-c(1,1)]\n\n#classify ASVs without any taxonomy data as \"unclassified\"\ntaxa.data[taxa.data == \"\" | is.na(taxa.data)] &lt;- \"unclassified\"\n\nNext, we will remove unwanted classifications or ASVs. This includes:\n\nUnclassified sequences (with no taxonomy data).\nArchaeal sequences.\nMitochondrial sequence contamination.\nChloroplastic sequence contamination (particularly when sampling microbiomes associated with plants).\n\n\n#defining a list of unclassified ASVs\nunclassified.ASVs &lt;- subset(taxa.data, Phylum == \"unclassified\")\n#check the first few rows of the data\nhead(unclassified.taxa)\n\n#defining a list of archaeal ASVs\narchaea.ASVs &lt;- subset(taxa.data, Kingdom == \"Archaea\")\n\n#defining a list of mitochondrial ASVs\nmitochondria.ASVs &lt;- subset(taxa.data, Family == \"Mitochondria\")\n\n#defining a list of chloroplastic ASVs\nchloroplast.ASVs &lt;- subset(taxa.data, Order == \"Chloroplast\")\n\n#to remove\nun.1&lt;-union(rownames(unclassified.taxa),rownames(mitochondria.taxa))\nun.2&lt;-union(rownames(archaea.taxa),un.1)\nun.3&lt;-union(rownames(chloroplast.taxa),un.2)\n \n#check this works as an alternative\n#create a list of ASVs to remove from the taxonomy table\nASVs_to_remove\n&lt;- list(\n      rownames(archaea.ASVs), \n      rownames(unclassified.ASVs),\n      rownames(chloroplast.ASVs),\n      rownames(mitochondria.ASVs)\n) %&gt;% reduce(union)\n\nASVs_to_remove\n\n#remove row names (i.e., ASVs) that are listed in ASVs_to_remove, creating a filtered taxonomy table\nfiltered_taxa.data &lt;- taxa.data[-which(rownames(taxa.data) %in% ASVs_to_remove),]\n\nNow we have a filtered taxonomy table (filtered_taxa.data) that we have removed unwanted ASVs from.\nCheck the dimensions of the filtered taxonomy table:\n\n#check the first few rows of the data\nhead(filtered_taxa.data)\n\n#check the number of x\ndim(filtered_taxa.data)[1]\n\n#check the number of y\ndim(filtered_taxa.data)[2] \n\n#check the numbers of samples per variable\nsummary(filtered_taxa.data)\n\n\n\n\n\nThe ASV table (asv_count.data) is the abundance table that contains counts corresponding to the number of times each ASV is observed in each sample.\n\n\nThe ASV table has samples in rows and variables (ASVs) in columns.\nCheck the first few rows of the ASV table:\n\n#check how the raw ASV table looks in the first five rows and first 6 columns\nasv_count.data[1:5, 1:6]\n\nCheck the total number of reads:\n\n#check the total number of sequences/reads in the ASV table\nsum(asv_count.data)\n\nCheck the number of samples & ASVs:\n\n#check the number of samples (i.e., rows) in the ASV table\ndim(asv_count.data)[1] \n\n#check the number of ASVs (i.e., columns) in the OTU table\ndim(asv_count.data)[2]\n\n\n\n\nWe have already filtered out unwanted classifications and ASVs from the taxonomy table to create filtered_taxa.data. Next, we’ll update the ASV table to match by remvoving the same unwanted ASVs.\n\n#keep ASV columns from the ASV table that match the row names in the filtered taxa table\nfiltered_asv_count.data &lt;- asv_count.data[,which(colnames(asv_count.data) %in% rownames(filtered_taxa.data))]\n\nCheck the dimensions of the filtered taxonomy table:\n\n#check the first few rows of the data\nhead(filtered_asv_count.data)\n\n#check the total number of sequences/reads in the ASV table\nsum(filtered_asv_count.data)\n\n#check the number of samples (i.e., rows) in the ASV table\ndim(filtered_asv_count.data)[1] \n\n#check the number of ASVs (i.e., columns) in the ASV table\ndim(filtered_asv_count.data)[2]\n\n#check the numbers of samples per variable\nsummary(filtered_asv_count.data)\n\n\n\n\nMicrobiome datasets are usually sparse and have an uneven library size.\nCheck the number of zeros & percentage of zeros in the ASV table:\n\n#check the number of zeros in the ASV table\nsum(filtered_asv_count.data == 0)\n\n#check the percentage of zeros in the ASV table\nsum(filtered_asv_count.data == 0) / (nb_var * nb_samples) * 100\n\n\n\n\n\n\n\nDiscussion point\n\n\n\n\nWhat is the meaning of a zero value in an ASV table?\nCan we consider it to be a true zero?\nDo you think it is important to filter the data and why?\n\n\n\n\n\n\n\n\n\nAnswers\n\n\n\n\n\n\nA zero value in the ASV table means that we could not sequence any read for a specific ASV in a given sample. This means that the ASV is not present in the given sample, or that the sequencing depth was not enough to find it.\nBecause of this, we usually don’t know if it is a true zero or not.\nThe issue of whether something is truly absent (or not) is problematic, especially when we have to compare rare ASVs. Furthermore, some statistical approaches cannot handle highly sparse data set (e.g., Principal Component Analysis). For microbiome data analysis, zeros values can be difficult to analyse and interpret and data should be filtered if the percentage of zeros is relatively high.\n\n\n\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\n\nMicrobial ecologists usually remove singletons (ASVs for which only one read has been identified in the full ASV table), as these are likely to be artifacts.\nAnother option for data filtering could be to remove ASVs that have a total count (per ASV, over all samples) lower than a defined value.\nAs a reminder, chimeric amplification products have been already removed in DADA2 pipeline.\n\n\n\nPlot the ASV occurrence frequency as a histogram:\n\nhist(as.matrix(filtered_asv_count.data), \n     max(filtered_asv_count.data), \n     right = FALSE, \n     las = 1, \n     xlab = \"Occurrence value\", \n     ylab = \"Frequency\", \n     main = \"Occurrence frequency\")\n\nThere will likely be a lot of low occurrences (such as 0, 1, or 2 counts per ASV and per sample) and few abundant ASVs.\nGet the minimum total ASV count over all samples:\n\nmin(colSums(filtered_asv_count.data))\n\nCheck how frequently ASVs are shared between samples:\n\nnon_zero &lt;- 0*1:nb_var\n\nfor (i in 1:nb_var){\n  non_zero[i]&lt;-sum(filtered_asv_count.data[,i] != 0)\n  }\n\nplot(non_zero, xlab = \"ASV\", ylab = \"Frequency\", main = \"Number of non zero values\", las = 1)\n\nIt is likely that the majority of ASVs are found only in a few samples. In other words, very few ASVs will be found at high frequencies or across all samples.\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nIf you have replicate samples, you could think about filtering out rare ASVs that are not shared between at least 2 or 3 samples.\n\n\n\n\n\nSequencing depth and library size represent the number of counts per sample. This number can vary a lot among the different samples (up to 10-fold).\nDifferences in library size can be due to technical biases or errors introduced when creating DNA sequencing libraries in the lab: - The PCR amplification step can introduce some difference among samples because PCR amplification can be more orless efficient according to the sequence itself. - After cleaning up PCR amplicons from each sample, we typically measure the DNA concentration. Depending on the method used (e.g., band brightness, NanoDrop, Qubit), this may not be a highly accurate or sensitive measure. - Then, according to these concentrations, we pool the different samples into one ‘equimolar’ mix, which can also introduce some error.\n\n\n\n\n\n\nDiscussion point\n\n\n\nWhy do you think it is important to look at sequencing depth?\n\n\n\n\n\n\n\n\nAnswers\n\n\n\n\n\n\nIt is important to know if we sequenced enough to capture all the diversity present in our environment.\nTo compare samples to each other, we need to have a comparable library size between samples.\n\n\n\n\n\n\n\nCheck the number of ASV counts per sample:\n\n#calculate the number of counts per sample\nlibrary_size &lt;- rowSums(filtered_asv_count.data)\nsummary(library_size)\n\n#check if any samples have zero counts\nlibrary_size[library_size == 0]\n\n#plot the number of counts per sample as a histogram\nplot(library_size, ylim=c(0,25000), main=c(\"Number of counts per sample\"), xlab=c(\"Samples\"))\n\n#check the minimum library size\nmin(library_size)\n\n#check the maximum library size\nmax(library_size)\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nDo your samples have differences in the library size? If you want to compare samples to each other (hint: you do), it will be an issue to have different library sizes. To fix this, we will normalize our library sizes.\nIf any of your samples have no counts at all, they should be removed from analysis.",
+    "text": "So far, we have created two data tables using the DADA2 pipeline:\n\nAn amplicon sequence variant (ASV) count table (asv_count.data) which records the numbers of times each exact amplicon sequence variant was observed in each sample.\nA taxonomy table (taxa.data) which records the taxonomic assignments for each ASV.\n\nWe’ll also be working with a metadata table (sample.data) which represents metadata information for the different samples.\nIn this session, we will:\n\nExamine these data tables.\nPerform necessary quality control checks (e.g., sparsity and sequencing depth).\nFilter & normalize our data by sample.\n\n\n\nBy the end of today’s session, you should be able to:\n\nExamine and interpret the key features of ASV datasets\nEvaluate the quality of ASV datasets\nPerform data manipulation for quality control and determine when this is appropriate\n\n\n\n\nLoad the required packages and objects:\n\nlibrary(tidyverse)\nlibrary(phyloseq)\n\n#import our asv and taxa tables\nasv_count.data &lt;- read.table(file=\"asv_count_table.txt\", sep = \" \", header = TRUE, quote = \"\\\"\", check.names = FALSE, stringsAsFactors = FALSE)\n\ntaxa.data &lt;- read.table(file = \"taxonomy_table.txt\"), sep = \" \", header = TRUE, quote = \"\\\"\", check.names = FALSE, stringsAsFactors = FALSE)\n\nsample.data &lt;- read.csv(\"sample_metadata.csv\")\n\nExamine the metadata object:\n\n#check the first few rows of the data\nhead(metadata.data)\n\n#check the number of samples\ndim(metadata.data)[1]\n\n#check the number of variables\ndim(metadata.data)[2] \n\n#check the numbers of samples per variable\nsummary(metadata.data)\n\n\n\n\n\n\n\nDiscussion point\n\n\n\nMost datasets will have have multiple variables with an underlying experimental design. What would be your first idea to analyze this data?\n\n\n\n\n\nThe taxonomy table (taxa.data) represents the assignment for the different ASVs at domain, phylum, class, order, family, genus and species levels.\n\n\n\n#check the first few rows of the data\nhead(taxa.data)\ntaxa.data[1:5, 1:6]\n\n#check the number of x\ndim(taxa.data)[1]\n\n#check the number of y\ndim(taxa.data)[2] \n\n#check the numbers of samples per variable\nsummary(taxa.data)\n\n\n\n\nFrom our ‘raw’ taxonomy table (taxa.data), we are going to explicitly define ASVs with no taxonomy data as “unclassified”.\n\n#check the first few rows of the data\nhead(taxa.data)\n\n#set the ASV IDs as row names\nrownames(taxa.data) &lt;- taxa.data[,1] \n\n#what does this do?\ntaxa.data &lt;- taxa.data[,-c(1,1)]\n\n#classify ASVs without any taxonomy data as \"unclassified\"\ntaxa.data[taxa.data == \"\" | is.na(taxa.data)] &lt;- \"unclassified\"\n\nNext, we will remove unwanted classifications or ASVs. This includes:\n\nUnclassified sequences (with no taxonomy data).\nArchaeal sequences.\nMitochondrial sequence contamination.\nChloroplastic sequence contamination (particularly when sampling microbiomes associated with plants).\n\n\n#defining a list of unclassified ASVs\nunclassified.ASVs &lt;- subset(taxa.data, Phylum == \"unclassified\")\n#check the first few rows of the data\nhead(unclassified.taxa)\n\n#defining a list of archaeal ASVs\narchaea.ASVs &lt;- subset(taxa.data, Kingdom == \"Archaea\")\n\n#defining a list of mitochondrial ASVs\nmitochondria.ASVs &lt;- subset(taxa.data, Family == \"Mitochondria\")\n\n#defining a list of chloroplastic ASVs\nchloroplast.ASVs &lt;- subset(taxa.data, Order == \"Chloroplast\")\n\n#to remove\nun.1&lt;-union(rownames(unclassified.taxa),rownames(mitochondria.taxa))\nun.2&lt;-union(rownames(archaea.taxa),un.1)\nun.3&lt;-union(rownames(chloroplast.taxa),un.2)\n \n#check this works as an alternative\n#create a list of ASVs to remove from the taxonomy table\nASVs_to_remove\n&lt;- list(\n      rownames(archaea.ASVs), \n      rownames(unclassified.ASVs),\n      rownames(chloroplast.ASVs),\n      rownames(mitochondria.ASVs)\n) %&gt;% reduce(union)\n\nASVs_to_remove\n\n#remove row names (i.e., ASVs) that are listed in ASVs_to_remove, creating a filtered taxonomy table\nfiltered_taxa.data &lt;- taxa.data[-which(rownames(taxa.data) %in% ASVs_to_remove),]\n\nNow we have a filtered taxonomy table (filtered_taxa.data) that we have removed unwanted ASVs from.\nCheck the dimensions of the filtered taxonomy table:\n\n#check the first few rows of the data\nhead(filtered_taxa.data)\n\n#check the number of x\ndim(filtered_taxa.data)[1]\n\n#check the number of y\ndim(filtered_taxa.data)[2] \n\n#check the numbers of samples per variable\nsummary(filtered_taxa.data)\n\n\n\n\n\nThe ASV table (asv_count.data) is the abundance table that contains counts corresponding to the number of times each ASV is observed in each sample.\n\n\nThe ASV table has samples in rows and variables (ASVs) in columns.\nCheck the first few rows of the ASV table:\n\n#check how the raw ASV table looks in the first five rows and first 6 columns\nasv_count.data[1:5, 1:6]\n\nCheck the total number of reads:\n\n#check the total number of sequences/reads in the ASV table\nsum(asv_count.data)\n\nCheck the number of samples & ASVs:\n\n#check the number of samples (i.e., rows) in the ASV table\ndim(asv_count.data)[1] \n\n#check the number of ASVs (i.e., columns) in the OTU table\ndim(asv_count.data)[2]\n\n\n\n\nWe have already filtered out unwanted classifications and ASVs from the taxonomy table to create filtered_taxa.data. Next, we’ll update the ASV table to match by remvoving the same unwanted ASVs.\n\n#keep ASV columns from the ASV table that match the row names in the filtered taxa table\nfiltered_asv_count.data &lt;- asv_count.data[,which(colnames(asv_count.data) %in% rownames(filtered_taxa.data))]\n\nCheck the dimensions of the filtered taxonomy table:\n\n#check the first few rows of the data\nhead(filtered_asv_count.data)\n\n#check the total number of sequences/reads in the ASV table\nsum(filtered_asv_count.data)\n\n#check the number of samples (i.e., rows) in the ASV table\ndim(filtered_asv_count.data)[1] \n\n#check the number of ASVs (i.e., columns) in the ASV table\ndim(filtered_asv_count.data)[2]\n\n#check the numbers of samples per variable\nsummary(filtered_asv_count.data)\n\n\n\n\nMicrobiome datasets are usually sparse and have an uneven library size.\nCheck the number of zeros & percentage of zeros in the ASV table:\n\n#check the number of zeros in the ASV table\nsum(filtered_asv_count.data == 0)\n\n#check the percentage of zeros in the ASV table\nsum(filtered_asv_count.data == 0) / (nb_var * nb_samples) * 100\n\n\n\n\n\n\n\nDiscussion point\n\n\n\n\nWhat is the meaning of a zero value in an ASV table?\nCan we consider it to be a true zero?\nDo you think it is important to filter the data and why?\n\n\n\n\n\n\n\n\n\nAnswers\n\n\n\n\n\n\nA zero value in the ASV table means that we could not sequence any read for a specific ASV in a given sample. This means that the ASV is not present in the given sample, or that the sequencing depth was not enough to find it.\nBecause of this, we usually don’t know if it is a true zero or not.\nThe issue of whether something is truly absent (or not) is problematic, especially when we have to compare rare ASVs. Furthermore, some statistical approaches cannot handle highly sparse data set (e.g., Principal Component Analysis). For microbiome data analysis, zeros values can be difficult to analyse and interpret and data should be filtered if the percentage of zeros is relatively high.\n\n\n\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\n\nMicrobial ecologists usually remove singletons (ASVs for which only one read has been identified in the full ASV table), as these are likely to be artifacts.\nAnother option for data filtering could be to remove ASVs that have a total count (per ASV, over all samples) lower than a defined value.\nAs a reminder, chimeric amplification products have been already removed in DADA2 pipeline.\n\n\n\nPlot the ASV occurrence frequency as a histogram:\n\nhist(as.matrix(filtered_asv_count.data), \n     max(filtered_asv_count.data), \n     right = FALSE, \n     las = 1, \n     xlab = \"Occurrence value\", \n     ylab = \"Frequency\", \n     main = \"Occurrence frequency\")\n\nThere will likely be a lot of low occurrences (such as 0, 1, or 2 counts per ASV and per sample) and few abundant ASVs.\nGet the minimum total ASV count over all samples:\n\nmin(colSums(filtered_asv_count.data))\n\nCheck how frequently ASVs are shared between samples:\n\nnon_zero &lt;- 0*1:nb_var\n\nfor (i in 1:nb_var){\n  non_zero[i]&lt;-sum(filtered_asv_count.data[,i] != 0)\n  }\n\nplot(non_zero, xlab = \"ASV\", ylab = \"Frequency\", main = \"Number of non zero values\", las = 1)\n\nIt is likely that the majority of ASVs are found only in a few samples. In other words, very few ASVs will be found at high frequencies or across all samples.\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nIf you have replicate samples, you could think about filtering out rare ASVs that are not shared between at least 2 or 3 samples.\n\n\n\n\n\nSequencing depth and library size represent the number of counts per sample. This number can vary a lot among the different samples (up to 10-fold).\nDifferences in library size can be due to technical biases or errors introduced when creating DNA sequencing libraries in the lab: - The PCR amplification step can introduce some difference among samples because PCR amplification can be more orless efficient according to the sequence itself. - After cleaning up PCR amplicons from each sample, we typically measure the DNA concentration. Depending on the method used (e.g., band brightness, NanoDrop, Qubit), this may not be a highly accurate or sensitive measure. - Then, according to these concentrations, we pool the different samples into one ‘equimolar’ mix, which can also introduce some error.\n\n\n\n\n\n\nDiscussion point\n\n\n\nWhy do you think it is important to look at sequencing depth?\n\n\n\n\n\n\n\n\nAnswers\n\n\n\n\n\n\nIt is important to know if we sequenced enough to capture all the diversity present in our environment.\nTo compare samples to each other, we need to have a comparable library size between samples.\n\n\n\n\n\n\n\nCheck the number of ASV counts per sample:\n\n#calculate the number of counts per sample\nlibrary_size &lt;- rowSums(filtered_asv_count.data)\nsummary(library_size)\n\n#check if any samples have zero counts\nlibrary_size[library_size == 0]\n\n#plot the number of counts per sample as a histogram\nplot(library_size, ylim=c(0,25000), main=c(\"Number of counts per sample\"), xlab=c(\"Samples\"))\n\n#check the minimum library size\nmin(library_size)\n\n#check the maximum library size\nmax(library_size)\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nDo your samples have differences in the library size? If you want to compare samples to each other (hint: you do), it will be an issue to have different library sizes. To fix this, we will normalize our library sizes.\nIf any of your samples have no counts at all, they should be removed from analysis.",
     "crumbs": [
       "Day 2: Data exploration, normalization, & quality control"
     ]
@@ -658,7 +339,7 @@
     "href": "qc.html#end-products",
     "title": "Data exploration, normalization, & quality control",
     "section": "End products",
-    "text": "End products\nFrom our ‘raw’ data tables, we have produced the following end products:\n\nAn amplicon sequence variant (ASV) count table (asv_relative_abundance.data) which has:\n\nBeen filtered to remove unwanted ASVs\nBeen normalized to rarefy samples\nHad counts converted to relative abundance (%)\n\nA taxonomy table (filtered_taxa.data) which records the taxonomic assignments for each ASV which has:\n\nBeen filtered to remove unwanted ASVs\n\n\nTBD (filtered metadata? I feel like this only matters if we remove whole samples e.g., controls after initial vis. yet to be discussed.)\nThe most important thing to do at this stage is to save and export our data so we can analyze it later.\n\n#export your ASV table to a file\nwrite.table(asv_relative_abundance.data, file=\"filtered_asv_relative_abundance_table.txt\")\n\n# Export your ASV names (i.e., your taxonomy file) to a file\nwrite.table(filtered_taxa.data, file = \"filtered_taxonomy_table.txt\")",
+    "text": "End products\nFrom our ‘raw’ data tables, we have produced the following end products:\n\nAn amplicon sequence variant (ASV) count table (asv_relative_abundance.data) which has:\n\nBeen filtered to remove unwanted ASVs\nBeen normalized to rarefy samples\nHad counts converted to relative abundance (%)\n\nA taxonomy table (filtered_taxa.data) which records the taxonomic assignments for each ASV which has:\n\nBeen filtered to remove unwanted ASVs\n\n\nThe most important thing to do at this stage is to save and export our data so we can analyze it later.\n\n#export your ASV table to a file\nwrite.table(asv_relative_abundance.data, file=\"filtered_asv_relative_abundance_table.txt\")\n\n# Export your ASV names (i.e., your taxonomy file) to a file\nwrite.table(filtered_taxa.data, file = \"filtered_taxonomy_table.txt\")",
     "crumbs": [
       "Day 2: Data exploration, normalization, & quality control"
     ]
@@ -668,7 +349,7 @@
     "href": "qc.html#other-quality-control-considerations",
     "title": "Data exploration, normalization, & quality control",
     "section": "Other quality control considerations",
-    "text": "Other quality control considerations\n\nPositive controls & mock data with DADA2\n(e.g., Zymo)\nThoughts and code for this??\n\n\nNegative controls\nIt is important to include negative controls throughout the extraction and amplification process. These can include blank samples that go through the extraction process, and no-template controls that go through the amplification process. These negatives can then be used to ensure these steps are not amplifying unwanted DNA from the laboratory environment\n\nView(asv_relative_abundance.data) # Sample names as columns\n\n\nScroll to BLANK or NEG samples\nOrder from high to low to see counts for most abundant ASVs\nInterpret:\n\n\nReads should be below 1000 per ASV\nSample should contain less than 100 different ASVs\nIf higher than these benchmarks, this could be problematic for interpreting ASVs in actual samples and further steps should be taken to account for these ASVs\n\n\nRemoving contaminants with the decontam package",
+    "text": "Other quality control considerations\n\nPositive controls & mock data with DADA2\n\n\nNegative controls\nIt is important to include negative controls throughout the extraction and amplification process. These can include blank samples that go through the extraction process, and no-template controls that go through the amplification process. These negatives can then be used to ensure these steps are not amplifying unwanted DNA from the laboratory environment\n\nView(asv_relative_abundance.data) # Sample names as columns\n\n\nScroll to BLANK or NEG samples\nOrder from high to low to see counts for most abundant ASVs\nInterpret:\n\n\nReads should be below 1000 per ASV\nSample should contain less than 100 different ASVs\nIf higher than these benchmarks, this could be problematic for interpreting ASVs in actual samples and further steps should be taken to account for these ASVs\n\n\n\n\n\n\n\nConsiderations for your own data\n\n\n\nYou can identify and even remove contaminants from your dataset with the decontam package.",
     "crumbs": [
       "Day 2: Data exploration, normalization, & quality control"
     ]

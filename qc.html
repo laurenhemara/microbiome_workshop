@@ -206,7 +206,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a>
   <ul class="collapse">
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
-  <li><a href="#loading-required-packages-and-objects" id="toc-loading-required-packages-and-objects" class="nav-link" data-scroll-target="#loading-required-packages-and-objects">Loading required packages and objects</a></li>
   <li><a href="#examining-the-sample-metadata" id="toc-examining-the-sample-metadata" class="nav-link" data-scroll-target="#examining-the-sample-metadata">Examining the sample metadata</a></li>
   <li><a href="#examining-the-taxa-table" id="toc-examining-the-taxa-table" class="nav-link" data-scroll-target="#examining-the-taxa-table">Examining the taxa table</a></li>
   <li><a href="#examining-the-asv-table" id="toc-examining-the-asv-table" class="nav-link" data-scroll-target="#examining-the-asv-table">Examining the ASV table</a></li>
@@ -251,13 +250,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>In this session, we will: - <strong>Examine these data tables</strong>. - Perform necessary <strong>quality control checks</strong> (e.g., sparsity and sequencing depth). - <strong>Filter &amp; normalize our data</strong> by sample.</p>
 <p>So far, we have created two data tables using the DADA2 pipeline:</p>
 <ul>
 <li><p>An <strong>amplicon sequence variant (ASV) count table</strong> (<code>asv_count.data</code>) which records the numbers of times each <a href="https://www.nature.com/articles/ismej2017119">exact amplicon sequence variant</a> was observed in each sample.</p></li>
 <li><p>A <strong>taxonomy table</strong> (<code>taxa.data</code>) which records the taxonomic assignments for each ASV.</p></li>
 </ul>
 <p>We’ll also be working with a <strong>metadata table</strong> (<code>sample.data</code>) which represents metadata information for the different samples.</p>
+<p>In this session, we will:</p>
+<ul>
+<li><p><strong>Examine these data tables</strong>.</p></li>
+<li><p>Perform necessary <strong>quality control checks</strong> (e.g., sparsity and sequencing depth).</p></li>
+<li><p><strong>Filter &amp; normalize our data</strong> by sample.</p></li>
+</ul>
 <section id="learning-objectives" class="level3">
 <h3 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
 <p>By the end of today’s session, you should be able to:</p>
@@ -267,8 +271,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Perform data manipulation for quality control and determine when this is appropriate</p></li>
 </ul>
 </section>
-<section id="loading-required-packages-and-objects" class="level3">
-<h3 class="anchored" data-anchor-id="loading-required-packages-and-objects">Loading required packages and objects</h3>
+<section id="examining-the-sample-metadata" class="level3">
+<h3 class="anchored" data-anchor-id="examining-the-sample-metadata">Examining the sample metadata</h3>
+<p><strong>Load the required packages and objects:</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phyloseq)</span>
@@ -280,9 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sample.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_metadata.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="examining-the-sample-metadata" class="level3">
-<h3 class="anchored" data-anchor-id="examining-the-sample-metadata">Examining the sample metadata</h3>
+<p><strong>Examine the metadata object:</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check the first few rows of the data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(metadata.data)</span>
@@ -726,7 +729,6 @@ Considerations for your own data
 <li>Been filtered to remove unwanted ASVs</li>
 </ul></li>
 </ul>
-<p>TBD (filtered metadata? I feel like this only matters if we remove whole samples e.g., controls after initial vis. yet to be discussed.)</p>
 <p>The <em>most</em> important thing to do at this stage is to <strong>save and export our data</strong> so we can analyze it later.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export your ASV table to a file</span></span>
@@ -740,8 +742,6 @@ Considerations for your own data
 <h2 class="anchored" data-anchor-id="other-quality-control-considerations">Other quality control considerations</h2>
 <section id="positive-controls-mock-data-with-dada2" class="level3">
 <h3 class="anchored" data-anchor-id="positive-controls-mock-data-with-dada2">Positive controls &amp; mock data with DADA2</h3>
-<p>(e.g., Zymo)</p>
-<p>Thoughts and code for this??</p>
 </section>
 <section id="negative-controls" class="level3">
 <h3 class="anchored" data-anchor-id="negative-controls">Negative controls</h3>
@@ -759,11 +759,21 @@ Considerations for your own data
 <li>Sample should contain less than 100 different ASVs</li>
 <li>If higher than these benchmarks, this could be problematic for interpreting ASVs in actual samples and further steps should be taken to account for these ASVs</li>
 </ul>
-<section id="removing-contaminants-with-the-decontam-package" class="level4">
-<h4 class="anchored" data-anchor-id="removing-contaminants-with-the-decontam-package">Removing contaminants with the decontam package</h4>
+<div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Considerations for your own data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can identify and even remove contaminants from your dataset with the <code>decontam</code> package.</p>
+</div>
+</div>
 
 
-</section>
 </section>
 </section>
 

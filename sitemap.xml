@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://laurenhemara.github.io/microbiome_workshop/setup.html</loc>
-    <lastmod>2026-07-05T20:57:45.885Z</lastmod>
+    <lastmod>2026-07-05T22:09:47.402Z</lastmod>
   </url>
   <url>
     <loc>https://laurenhemara.github.io/microbiome_workshop/phyloseq.html</loc>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://laurenhemara.github.io/microbiome_workshop/introtoR.html</loc>
-    <lastmod>2026-07-03T12:20:52.282Z</lastmod>
+    <lastmod>2026-07-05T22:14:17.106Z</lastmod>
   </url>
   <url>
     <loc>https://laurenhemara.github.io/microbiome_workshop/fastq.html</loc>
@@ -30,6 +30,6 @@
   </url>
   <url>
     <loc>https://laurenhemara.github.io/microbiome_workshop/qc.html</loc>
-    <lastmod>2026-07-05T21:38:01.972Z</lastmod>
+    <lastmod>2026-07-05T22:14:14.815Z</lastmod>
   </url>
 </urlset>
