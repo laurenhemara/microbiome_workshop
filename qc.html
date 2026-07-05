@@ -209,14 +209,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#rarefying-the-abundance-data" id="toc-rarefying-the-abundance-data" class="nav-link" data-scroll-target="#rarefying-the-abundance-data">Rarefying the abundance data</a></li>
   <li><a href="#calculating-the-relative-abundance-of-counts" id="toc-calculating-the-relative-abundance-of-counts" class="nav-link" data-scroll-target="#calculating-the-relative-abundance-of-counts">Calculating the relative abundance of counts</a></li>
   <li><a href="#removing-counts-that-are-below-a-defined-minimum" id="toc-removing-counts-that-are-below-a-defined-minimum" class="nav-link" data-scroll-target="#removing-counts-that-are-below-a-defined-minimum">Removing counts that are below a defined minimum</a></li>
-  <li><a href="#removing-counts-that-are-not-shared-by-a-defined-percentage-of-the-samples" id="toc-removing-counts-that-are-not-shared-by-a-defined-percentage-of-the-samples" class="nav-link" data-scroll-target="#removing-counts-that-are-not-shared-by-a-defined-percentage-of-the-samples">Removing counts that are not shared by a defined percentage of the samples</a></li>
   </ul></li>
   <li><a href="#end-products" id="toc-end-products" class="nav-link" data-scroll-target="#end-products">End products</a></li>
-  <li><a href="#creating-a-phyloseq-object-for-analysis" id="toc-creating-a-phyloseq-object-for-analysis" class="nav-link" data-scroll-target="#creating-a-phyloseq-object-for-analysis">Creating a phyloseq object for analysis</a>
-  <ul class="collapse">
-  <li><a href="#examining-the-phyloseq-object" id="toc-examining-the-phyloseq-object" class="nav-link" data-scroll-target="#examining-the-phyloseq-object">Examining the phyloseq object</a></li>
-  <li><a href="#karas-phyloseq-sanity-checks" id="toc-karas-phyloseq-sanity-checks" class="nav-link" data-scroll-target="#karas-phyloseq-sanity-checks">Kara’s phyloseq sanity checks</a></li>
-  </ul></li>
   <li><a href="#other-quality-control-considerations" id="toc-other-quality-control-considerations" class="nav-link" data-scroll-target="#other-quality-control-considerations">Other quality control considerations</a>
   <ul class="collapse">
   <li><a href="#positive-controls-mock-data-with-dada2" id="toc-positive-controls-mock-data-with-dada2" class="nav-link" data-scroll-target="#positive-controls-mock-data-with-dada2">Positive controls &amp; mock data with DADA2</a></li>
@@ -260,8 +254,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
 <p>By the end of today’s session, you should be able to:</p>
 <ul>
-<li><p>[Goal 1]</p></li>
-<li><p>[Goal 2]</p></li>
+<li><p>Interpret multidimensional data from genomic sequencing and how to successfully align all features for microbiome analysis</p></li>
+<li><p>Examine typical aspects of microbiome genomic sequence output and critically evaluate the quality</p></li>
+<li><p>Apply key data manipulation steps and determine when each is appropriate</p></li>
+<li><p>Evaluate experimental hypotheses through data summary and subsetting</p></li>
 </ul>
 </section>
 <section id="loading-required-packages-and-objects" class="level3">
@@ -688,11 +684,24 @@ Considerations for your own data
 </section>
 <section id="removing-counts-that-are-below-a-defined-minimum" class="level3">
 <h3 class="anchored" data-anchor-id="removing-counts-that-are-below-a-defined-minimum">Removing counts that are below a defined minimum</h3>
-<p>?</p>
-</section>
-<section id="removing-counts-that-are-not-shared-by-a-defined-percentage-of-the-samples" class="level3">
-<h3 class="anchored" data-anchor-id="removing-counts-that-are-not-shared-by-a-defined-percentage-of-the-samples">Removing counts that are not shared by a defined percentage of the samples</h3>
-<p>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#minimum number of reads in a sample </span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(<span class="fu">rowSums</span>(red.asv)) </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#remove samples with 0 reads </span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>noze.asv <span class="ot">&lt;-</span> red.asv[<span class="fu">rowSums</span>(red.asv) <span class="sc">&gt;</span> <span class="dv">0</span>, ] </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#use this new object downstream with rarefaction and relative abundance </span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#how many samples were removed?</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(red.asv) <span class="sc">-</span> <span class="fu">nrow</span>(noze.asv) </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co">#ensure no samples have 0 reads</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>lib_sizes[<span class="fu">rowSums</span>(noze.asv) <span class="sc">==</span> <span class="dv">0</span>] </span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="co">#check new minimum is above zero</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(<span class="fu">rowSums</span>(noze.asv)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 <section id="end-products" class="level2">
@@ -712,135 +721,13 @@ Considerations for your own data
 </ul>
 <p>TBD (filtered metadata? I feel like this only matters if we remove whole samples e.g., controls after initial vis. yet to be discussed.)</p>
 <p>The <em>most</em> important thing to do at this stage is to <strong>save and export our data</strong> so we can analyze it later.</p>
-<p>There are two ways we can do this:</p>
-<ul>
-<li>Exporting the tables to <code>.txt</code> or <code>.csv</code> files.</li>
-<li>Importing the <strong>processed</strong> ASV count table, taxonomy table, and sample metadata into a <a href="https://joey711.github.io/phyloseq/">phyloseq</a> object (which we save as an <code>.RData</code> file).</li>
-</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export your ASV table to a file</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(asv_relative_abundance.data, <span class="at">file=</span><span class="st">"filtered_asv_relative_abundance_table.txt"</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Export your ASV names (i.e., your taxonomy file) to a file</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(filtered_taxa.data, <span class="at">file =</span> <span class="st">"filtered_taxonomy_table.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export your ASV table to a file</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(asv_relative_abundance.data, <span class="at">file=</span><span class="st">"filtered_asv_relative_abundance_table.txt"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Export your ASV names (i.e., your taxonomy file) to a file</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(filtered_taxa.data, <span class="at">file =</span> <span class="st">"filtered_taxonomy_table.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="creating-a-phyloseq-object-for-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-phyloseq-object-for-analysis">Creating a phyloseq object for analysis</h2>
-<p>Microbial ecologists usually use the <code>vegan</code> and <code>phyloseq</code> packages to analyse the ASV count data. From the three data tables (<code>taxa</code>, <code>seqtab.nochim</code>, and <code>metadata.data</code>), we will make the phyloseq object <code>ps</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import your sample metadata</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sample.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_metadata.csv"</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sample.data) <span class="ot">&lt;-</span> sample.data<span class="sc">$</span>sample_names</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#check sample names in OTU object</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>otus <span class="ot">&lt;-</span> <span class="fu">otu_table</span>(seqtab.nochim, <span class="at">taxa_are_rows=</span><span class="cn">FALSE</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_names</span>(otus)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#create a phyloseq object</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>ps <span class="ot">&lt;-</span> <span class="fu">phyloseq</span>(<span class="fu">otu_table</span>(seqtab.nochim, <span class="at">taxa_are_rows=</span><span class="cn">FALSE</span>), </span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>               <span class="fu">sample_data</span>(sample.data), </span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>               <span class="fu">tax_table</span>(taxa))</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#define ASVs</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>dna <span class="ot">&lt;-</span> Biostrings<span class="sc">::</span><span class="fu">DNAStringSet</span>(<span class="fu">taxa_names</span>(ps))</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dna) <span class="ot">&lt;-</span> <span class="fu">taxa_names</span>(ps)</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>ps <span class="ot">&lt;-</span> <span class="fu">merge_phyloseq</span>(ps, dna)</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="fu">taxa_names</span>(ps) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"ASV"</span>, <span class="fu">seq</span>(<span class="fu">ntaxa</span>(ps)))</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>ps</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#export taxa table from phyloseq</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>ps_taxa.data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">taxa</span>(ps))</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(ps_taxa.data,<span class="st">"phyloseq_taxa_table.csv"</span>)</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="co">#export normalized abundance table</span></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>ps_asv_count.data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">abundances</span>(ps))</span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(ps_asv_count.data,<span class="st">"phyloseq_asv_count_table.csv"</span>)</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="co">#export the fasta sequences associated with your ASVs</span></span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="fu">refseq</span>(ps)</span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>ps <span class="sc">%&gt;%</span></span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">refseq</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>      Biostrings<span class="sc">::</span><span class="fu">writeXStringSet</span>(<span class="st">"phyloseq_asv_sequences.fna"</span>, <span class="at">append=</span><span class="cn">FALSE</span>,</span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">compress=</span><span class="cn">FALSE</span>, <span class="at">compression_level=</span><span class="cn">NA</span>, <span class="at">format=</span><span class="st">"fasta"</span>)</span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="co">#save your phyloseq object as a .RData </span></span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(ps,<span class="at">file=</span><span class="st">"ps.RData"</span>)</span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a><span class="co">#we can load this object later using the load() function</span></span>
-<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"ps.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="examining-the-phyloseq-object" class="level3">
-<h3 class="anchored" data-anchor-id="examining-the-phyloseq-object">Examining the phyloseq object</h3>
-<p>This phyloseq object - called ‘ps’ - now contains lots of data. We can look at different aspects of that data using some phyloseq functions:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_table</span>(ps)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">otu_table</span>(ps)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_data</span>(ps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The same way we examined our metadata, taxa table, and ASV table above, we can examine these same attributes in the phyloseq object.</p>
-<p><strong>Examining the sample metadata:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check the first few rows of the data</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">sample_data</span>(ps))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of samples</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">sample_data</span>(ps))[<span class="dv">1</span>] </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of variables</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">sample_data</span>(ps))[<span class="dv">2</span>]</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#check the numbers of samples per variable</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">sample_data</span>(ps)<span class="sc">$</span>site)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Examining the ASV table:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check how the raw ASV table looks in the first five rows and first 6 columns</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">otu_table</span>(ps)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of samples (i.e., rows) in the ASV table</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nsamples</span>(ps)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of ASVs (i.e., columns) in the OTU table</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ntaxa</span>(ps) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Examining the taxonomy table:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check how the raw taxonomy table looks in the first five rows and first 6 columns</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_table</span>(ps)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="karas-phyloseq-sanity-checks" class="level3">
-<h3 class="anchored" data-anchor-id="karas-phyloseq-sanity-checks">Kara’s phyloseq sanity checks</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert dataframes to matrices</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>asv.matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(asv.table)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>taxon.matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(red.taxon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Phyloseq</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>physeq <span class="ot">&lt;-</span> <span class="fu">phyloseq</span>(</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">otu_table</span>(asv.matrix, <span class="at">taxa_are_rows =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_table</span>(taxon.matrix),</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_data</span>(raref.metadat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Align sample names in phyloseq with metadata</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>metadat.physeq <span class="ot">&lt;-</span> raref.metadat[<span class="fu">sample_names</span>(physeq), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(<span class="fu">taxa_names</span>(physeq), <span class="fu">rownames</span>(<span class="fu">tax_table</span>(physeq))) <span class="co"># should be TRUE</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(<span class="fu">sample_names</span>(physeq), <span class="fu">rownames</span>(metadat.physeq)) <span class="co"># should be TRUE</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Other checks</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rownames</span>(<span class="fu">otu_table</span>(physeq)))</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(<span class="fu">rownames</span>(<span class="fu">otu_table</span>(physeq))))</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu">taxa_are_rows</span>(physeq)</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">rownames</span>(<span class="fu">otu_table</span>(physeq)) <span class="sc">==</span> <span class="st">""</span>)</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">duplicated</span>(<span class="fu">rownames</span>(<span class="fu">otu_table</span>(physeq))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
 </section>
 <section id="other-quality-control-considerations" class="level2">
 <h2 class="anchored" data-anchor-id="other-quality-control-considerations">Other quality control considerations</h2>
@@ -853,7 +740,7 @@ Considerations for your own data
 <h3 class="anchored" data-anchor-id="negative-controls">Negative controls</h3>
 <p>It is important to include negative controls throughout the extraction and amplification process. These can include blank samples that go through the extraction process, and no-template controls that go through the amplification process. These negatives can then be used to ensure these steps are not amplifying unwanted DNA from the laboratory environment</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(asv_relative_abundance.data) <span class="co"># Sample names as columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(asv_relative_abundance.data) <span class="co"># Sample names as columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>Scroll to BLANK or NEG samples</li>
