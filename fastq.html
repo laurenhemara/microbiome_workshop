@@ -258,8 +258,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#merging-paired-reads" id="toc-merging-paired-reads" class="nav-link" data-scroll-target="#merging-paired-reads">Merging paired reads</a></li>
   <li><a href="#creating-the-asv-table" id="toc-creating-the-asv-table" class="nav-link" data-scroll-target="#creating-the-asv-table">Creating the ASV table</a></li>
   <li><a href="#removing-chimeras" id="toc-removing-chimeras" class="nav-link" data-scroll-target="#removing-chimeras">Removing chimeras</a></li>
-  <li><a href="#checkpoint-tracking-reads-through-the-pipeline" id="toc-checkpoint-tracking-reads-through-the-pipeline" class="nav-link" data-scroll-target="#checkpoint-tracking-reads-through-the-pipeline">Checkpoint: tracking reads through the pipeline</a></li>
   </ul></li>
+  <li><a href="#checkpoint-tracking-reads-through-the-pipeline" id="toc-checkpoint-tracking-reads-through-the-pipeline" class="nav-link" data-scroll-target="#checkpoint-tracking-reads-through-the-pipeline">Checkpoint: tracking reads through the pipeline</a></li>
   <li><a href="#assigning-taxonomy" id="toc-assigning-taxonomy" class="nav-link" data-scroll-target="#assigning-taxonomy">Assigning taxonomy</a></li>
   <li><a href="#saving-your-data" id="toc-saving-your-data" class="nav-link" data-scroll-target="#saving-your-data">Saving your data</a></li>
   </ul>
@@ -625,8 +625,9 @@ Considerations for your own data
 </div>
 </div>
 </section>
-<section id="checkpoint-tracking-reads-through-the-pipeline" class="level3">
-<h3 class="anchored" data-anchor-id="checkpoint-tracking-reads-through-the-pipeline">Checkpoint: tracking reads through the pipeline</h3>
+</section>
+<section id="checkpoint-tracking-reads-through-the-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="checkpoint-tracking-reads-through-the-pipeline">Checkpoint: tracking reads through the pipeline</h2>
 <p>As a final check of our progress, we’ll look at the number of reads that made it through each step in the pipeline:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>getN <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">getUniques</span>(x))</span>
@@ -649,7 +650,6 @@ Considerations for your own data
 <p>This is a great place to do a last sanity check. Outside of filtering, there should no step in which a majority of reads are lost. If a majority of reads failed to merge, you may need to revisit the <code>truncLen</code> parameter used in the filtering step and make sure that the truncated reads span your amplicon. If a majority of reads were removed as chimeric, you may need to revisit the removal of primers, as the ambiguous nucleotides in unremoved primers interfere with chimera identification.</p>
 </div>
 </div>
-</section>
 </section>
 <section id="assigning-taxonomy" class="level2">
 <h2 class="anchored" data-anchor-id="assigning-taxonomy">Assigning taxonomy</h2>
