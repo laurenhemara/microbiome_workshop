@@ -283,8 +283,8 @@ Discussion point
 <p>Alpha diversity represents diversity within a sample. In other words, <strong>what</strong> is there and <strong>how much</strong> is there in terms of species. It is not always easy to define a species. Fortunately, we can calculate alpha diversity at different taxonomic levels. In this tutorial, we are looking at the ASV level.</p>
 <p>Several alpha diversity indices can be calculated. Each index take into account different factors, which gives them unique advantages for assessing diversity within a sample:</p>
 <ul>
-<li><p><strong>Richness</strong> represents the total number of species observed within a sample.</p></li>
-<li><p><strong>Chao1</strong> estimates total richness and prioritizes detection of rare species within a sample.</p></li>
+<li><p><strong>Richness</strong> represents the total number of of distinct units observed within a sample. In our case, these are ASVs.</p></li>
+<li><p><strong>Chao1</strong> estimates total richness. This prioritizes detection of rare species within a sample.</p></li>
 <li><p><strong>Pielou’s evenness</strong> provides information about the equity in species abundance in each sample. In other words, do all species have similar abundances, or do some species dominate?</p></li>
 <li><p><strong>Shannon</strong> index is based on richness &amp; evenness and prioritizes spread of species within a sample.</p></li>
 </ul>
@@ -300,7 +300,8 @@ Considerations around when to use raw or filtered data
 <div class="callout-body-container callout-body">
 <p>Alpha diversity should be calculated from the <strong>raw</strong> data (<code>object</code>).</p>
 <p>It is important to not use filtered data because many richness estimates are modeled on singletons and doubletons in the ASV count table. This means we need them to keep them in the dataset to meaningfully estimate richness.</p>
-<p>SImilarly, we typically do not use normalized data because we are not comparing samples to each other, but rather assessing diversity <strong>within</strong> each sample.</p>
+<p>Similarly, we typically do not use normalized data because we are not comparing samples to each other, but rather assessing diversity <strong>within</strong> each sample.</p>
+<p>Note: these are really metrics to help contrast our samples within an experiment. Alpha diversity metrics should not be considered “true” values or be compared across studies.</p>
 </div>
 </div>
 <p>Here, we are going to generate <a href="https://joey711.github.io/phyloseq/plot_richness-examples.html">alpha-diversity plots following this tutoria</a>l.</p>
@@ -467,9 +468,16 @@ Considerations around when to use raw or filtered data
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>asv.bray.table[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="visualization-using-principal-components-analysis-pcoa" class="level4">
-<h4 class="anchored" data-anchor-id="visualization-using-principal-components-analysis-pcoa">Visualization using Principal Components Analysis (PCoA)</h4>
-<p>A Principals Component Analysis, or PCoA, is an ordination technique that lets us visualize high-dimensional data. In a nutshell, it reduces high-dimensional data into a smaller number of dimensions so we can plot it in 2D.</p>
+<section id="visualizing-high-dimensional-data-with-ordination-techniques" class="level4">
+<h4 class="anchored" data-anchor-id="visualizing-high-dimensional-data-with-ordination-techniques">Visualizing high-dimensional data with ordination techniques</h4>
+<p>Ordinations techniques let us visualize high-dimensional data through dimensional reduction. In a nutshell, these techniques reduce high-dimensional data into a smaller number of dimensions so we can actually visualize them in 2D (or 3D). We can then compare samples based on relatedness.</p>
+<p>The dimensions are whatever you’ve measured in each sample - in this case, these are our counts for each ASV.</p>
+<p>There are several ordination techniques we could potentially use to do this:</p>
+<ul>
+<li><p>Principal Components Analysis</p></li>
+<li><p>non-metric multidimensional scaling (nMDS)</p></li>
+</ul>
+<p>[make and compare both; today we’re looking specifically at PCoA; provide code for nMDS; requisite tests e.g., stress tests for nMDS].</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#kara</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>asv.pcoa <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(asv.bray, <span class="at">k=</span>(<span class="fu">nrow</span>(asv.perc)<span class="sc">-</span><span class="dv">1</span>), <span class="at">eig=</span><span class="cn">TRUE</span>)</span>

@@ -433,10 +433,12 @@ Discussion point
 <p><strong>Check the number of samples &amp; ASVs:</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of samples (i.e., rows) in the ASV table</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(asv_count.data)[<span class="dv">1</span>] </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of ASVs (i.e., columns) in the OTU table</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(asv_count.data)[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>nb_samples <span class="ot">&lt;-</span> <span class="fu">dim</span>(asv_count.data)[<span class="dv">1</span>] </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>nb_samples</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of ASVs (i.e., columns) in the OTU table</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>nb_var <span class="ot">&lt;-</span> <span class="fu">dim</span>(asv_count.data)[<span class="dv">2</span>]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>nb_var</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="filtering-out-unwanted-asvs-1" class="level4">
@@ -653,6 +655,7 @@ Considerations for your own data
 </div>
 <p>The key to interpreting these curves is to identify where ASV richness plateaus. If the sequencing depth is sufficient, we should observe a plateau. This means that even if we sequence <em>new</em> reads from that sample, they will belong to ASVs already observed. In other word, all the diversity present in a sample is <strong>already captured</strong> and we have sequenced the community deeply enough.</p>
 <p>The sequencing depth at which ASV richness plateaus can serve as the cut-of point for normalization. This allows us to retain the maximum amount of ASV diversity, while creating <strong>even</strong> sequence depth across samples for downstream processing. Rarefying is ideal for beta diversity analyses.</p>
+<p>Note: we <em>cannot</em> use rarefaction curves to estimate total richness of a sample - we primarily look at these as a general data vibe check.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
