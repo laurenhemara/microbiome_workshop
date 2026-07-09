@@ -387,12 +387,26 @@ Adjustments for iSeq100 (2 x 150 bp) sequences
 <p>We’ll start by visualizing the quality profiles of the forward reads:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQualityProfile</span>(fnFs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="fastq_files/figure-html/qualplotF-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>In gray-scale is a heat map of the frequency of each quality score at each base position. The mean quality score at each position is shown by the green line, and the quartiles of the quality score distribution are shown by the orange lines.</p>
 <p>These forward reads are of good quality. We generally suggest you trim the last few nucleotides to avoid errors and reduced quality that can arise at the end of a sequence (after &gt;200 cycles). These quality profiles do not suggest that any additional trimming is needed. We will truncate the forward reads at position 240 (trimming the last 10 nucleotides).</p>
 <p>Now we visualize the quality profile of the reverse reads:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQualityProfile</span>(fnRs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="fastq_files/figure-html/qualplotR-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>It’s common for Illumina sequencing to produce reverse reads that are of lower quality - especially at the end. This isn’t too worrisome, as DADA2 incorporates quality information into its error model which makes the algorithm robust to lower quality sequence. However, trimming where the average qualities crash will improve the algorithm’s sensitivity to rare sequence variants. Based on these profiles, we will truncate the reverse reads at position 160 where the quality distribution crashes.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
