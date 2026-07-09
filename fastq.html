@@ -753,19 +753,19 @@ Considerations for your own data
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>asv_count.data <span class="ot">&lt;-</span> seqtab.nochim</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check number of columns</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>ncol</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(asv_count.data)</span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#assign numbers to each unique column i.e., ASV, starting with ASV1</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>final.asv.names <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"ASV"</span>,<span class="at">sep =</span> <span class="st">""</span>,<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(asv_count.data)))</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#assign numbers to each column (i.e., each ASV), starting with ASV1</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>ASV_ID <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"ASV"</span>,<span class="at">sep =</span> <span class="st">""</span>,<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(asv_count.data)))</span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#replace the column names with ASV numbers</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(asv_count.data) <span class="ot">&lt;-</span> final.asv.names</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(asv_count.data) <span class="ot">&lt;-</span> ASV_ID</span>
 <span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#export your ASV table to a file</span></span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(asv_count.data, <span class="at">file=</span><span class="st">"asv_count_table.txt"</span>)</span>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Export your ASV names and the associated taxonomy to a file</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>taxa.data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(final.asv.names,taxa)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>taxa.data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ASV_ID,taxa)</span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(taxa.data, <span class="at">file =</span> <span class="st">"taxonomy_table.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
