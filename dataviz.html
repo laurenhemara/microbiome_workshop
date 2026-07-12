@@ -204,7 +204,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#calculating-diversity-indices" id="toc-calculating-diversity-indices" class="nav-link" data-scroll-target="#calculating-diversity-indices">Calculating diversity indices</a>
   <ul class="collapse">
   <li><a href="#alpha-diversity" id="toc-alpha-diversity" class="nav-link" data-scroll-target="#alpha-diversity">Alpha diversity</a></li>
-  <li><a href="#calculating-alpha-diversity-metrics" id="toc-calculating-alpha-diversity-metrics" class="nav-link" data-scroll-target="#calculating-alpha-diversity-metrics">Calculating alpha diversity metrics</a></li>
   <li><a href="#beta-diversity" id="toc-beta-diversity" class="nav-link" data-scroll-target="#beta-diversity">Beta diversity</a></li>
   </ul></li>
   <li><a href="#visualizing-taxonomic-composition" id="toc-visualizing-taxonomic-composition" class="nav-link" data-scroll-target="#visualizing-taxonomic-composition">Visualizing taxonomic composition</a></li>
@@ -323,25 +322,24 @@ Considerations around when to use raw or filtered data
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#import our ASV, taxa, and metadata tables</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>rarefied_filtered_asv_count.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"rarefied_filtered_asv_abundance_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>asv_relative_abundance.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"relative_rarefied_filtered_asv_abundance_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>filtered_taxa.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"filtered_taxonomy_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>meta.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_metadata.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dunn.test)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PMCMR)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#import our ASV, taxa, and metadata tables</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>rarefied_filtered_asv_count.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"rarefied_filtered_asv_abundance_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>asv_relative_abundance.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"relative_rarefied_filtered_asv_abundance_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>filtered_taxa.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"filtered_taxonomy_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>meta.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_metadata.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="calculating-alpha-diversity-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="calculating-alpha-diversity-metrics">Calculating alpha diversity metrics</h3>
 <p>Here we are using the <code>estimateR()</code> and <code>diversity()</code> functions from the <code>vegan</code> package to calculate alpha diversity metrics.</p>
 <p><strong>Calculate richness:</strong> The <code>estimateR()</code> function estimates two richness types: bias-corrected Chao <a href="https://pubmed.ncbi.nlm.nih.gov/24945937/">Chiu et al., 2014</a> and ACE <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/j.1365-2656.2005.00940.x">O’Hara 2005</a>.</p>
 <div class="cell">
@@ -558,27 +556,28 @@ Considerations for your own data
 </section>
 <section id="post-hoc-tests" class="level5">
 <h5 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc tests</h5>
-<p>An omnibus test (e.g., ANOVA or Kruskal-Wallis) may tell us that there is significant difference between the treatments, but we don’t know <strong>which treatment</strong> is significantly different from the others. In order to know what are the differences among the treatments/variable levels, we can perform a post-hoc test:</p>
+<p>An omnibus test (e.g., ANOVA or Kruskal-Wallis) may tell us that there is significant difference between the treatments, but it can’t tell us <strong>which treatment</strong> is significantly different from the others. In order to compare groups and find exactly which groups within a variable are different from each other, we can perform a post-hoc test:</p>
 <ul>
-<li>For normally distributed data, we can test for significance between samples using a <strong>parametric test</strong> (Tukey’s Honest Significant Difference).
+<li><p>For normally distributed data, we can test for significance between samples using a <strong>parametric test</strong> (e.g., Tukey’s Honest Significant Difference).</p>
 <ul>
-<li><code>TukeyHSD(metric_aov)</code></li>
+<li><code>HSD.test(metric_aov, "Variable", group=T)$groups</code></li>
 </ul></li>
-<li>For data that is not normally distributed, we can test for significance between samples using a <strong>non-parametric test</strong> (e.g., Dunn, Nemenyi).</li>
+<li><p>For data that is not normally distributed, we can test for significance between samples using a <strong>non-parametric test</strong> (e.g., A Dunn test with <code>FSA</code> package, or a Nemenyi test with the <code>PMCMRplus</code> package).</p>
+<ul>
+<li><code>dunnTest(alpha_metric ~ Variable, data=alpha_diversity)</code></li>
+</ul></li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
+<div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Considerations for your own data
+Stop &amp; think
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li>How many levels does your variable of interest have? There is little use to performing a post-hoc test on a variable with only two levels.</li>
-</ul>
+<p>Before performing a post-hoc test, think about how many levels your variable of interest has. It’s pretty much useless to perform a post-hoc test on a variable with only two levels - just use a pairwise comparison test to compare group means.</p>
 </div>
 </div>
 </section>
@@ -764,7 +763,7 @@ Number of permutations: 9999
 
 adonis2(formula = rarefied_filtered_asv_count.data ~ Oxygen_Level, data = meta.data, permutations = 9999, method = "bray")
          Df SumOfSqs      R2      F Pr(&gt;F)
-Model     2   0.8584 0.10893 0.9168 0.7151
+Model     2   0.8584 0.10893 0.9168 0.7143
 Residual 15   7.0220 0.89107              
 Total    17   7.8804 1.00000              </code></pre>
 </div>
