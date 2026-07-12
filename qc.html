@@ -249,9 +249,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We’ll also be working with a <strong>metadata table</strong> (<code>meta.data</code>) which represents metadata information for the different samples.</p>
 <p>In this session, we will:</p>
 <ul>
-<li><p>Examine these data tables.</p></li>
-<li><p>Perform necessary quality control checks (e.g., sparsity and sequencing depth).</p></li>
-<li><p>Filter &amp; normalize our databy sample.</p></li>
+<li><p>*<strong>Examine</strong> these data tables.</p></li>
+<li><p><strong>Perform necessary quality control checks</strong> (e.g., sparsity and sequencing depth).</p></li>
+<li><p><strong>Filter &amp; normalize</strong> our data.</p></li>
 </ul>
 <section id="learning-objectives" class="level3">
 <h3 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
@@ -354,9 +354,8 @@ Stop &amp; think
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p>The code below should remove ASVs classified as coming from chloroplasts and mitochondria.</p></li>
-<li><p>These reads can show up in our 16S sequencing data because environmental samples can have DNA from non-microbial organisms, such as plant roots, leaves, or eukaryotic tissue.</p></li>
-<li><p>16S rRNA amplicon sequencing amplifies DNA from chloroplasts and mitochondria because these organelles evolved from prokaryotic organisms (see: (the endosymbiosis theory)[https://www.sciencedirect.com/science/article/pii/S1369527414001283]).</p></li>
+<li><p>The code below should remove ASVs classified as coming from chloroplasts and mitochondria. These reads can show up in our 16S sequencing data because environmental samples can have DNA from non-microbial organisms, such as plant roots, leaves, or eukaryotic tissue.</p></li>
+<li><p>16S rRNA amplicon sequencing amplifies DNA from chloroplasts and mitochondria because these organelles evolved from prokaryotic organisms (see: <a href="https://www.sciencedirect.com/science/article/pii/S1369527414001283">the endosymbiosis theory</a>).</p></li>
 <li><p>The highly conserved regions of 16S serve as consistent targets for sequencing, but they are also highly conserved in non-target organelles, so we must filter out off-target kingdoms of life.</p></li>
 <li><p><strong>How do we make sure reads were reasonably removed?</strong></p></li>
 </ul>
@@ -386,13 +385,14 @@ Stop &amp; think
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rownames</span>(mitochondria.ASVs)</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">reduce</span>(union)</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>ASVs_to_remove</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#remove row names (i.e., ASVs) that are listed in ASVs_to_remove, creating a filtered taxonomy table</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>filtered_taxa.data <span class="ot">&lt;-</span> taxa.data[<span class="sc">-</span><span class="fu">which</span>(<span class="fu">rownames</span>(taxa.data) <span class="sc">%in%</span> ASVs_to_remove),]</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of ASVs</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(filtered_taxa.data)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#check which ASVs will be removed</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>ASVs_to_remove</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#remove row names (i.e., ASVs) that are listed in ASVs_to_remove, creating a filtered taxonomy table</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>filtered_taxa.data <span class="ot">&lt;-</span> taxa.data[<span class="sc">-</span><span class="fu">which</span>(<span class="fu">rownames</span>(taxa.data) <span class="sc">%in%</span> ASVs_to_remove),]</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of ASVs</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(filtered_taxa.data)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we have a filtered taxonomy table (<code>filtered_taxa.data</code>) that we have removed unwanted ASVs from.</p>
 <p><strong>Check the dimensions of the filtered taxonomy table:</strong></p>
@@ -427,7 +427,7 @@ Stop &amp; think
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of samples (i.e., rows) in the ASV table</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(asv_count.data)[<span class="dv">1</span>] </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of ASVs (i.e., columns) in the OTU table</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of ASVs (i.e., columns) in the ASV table</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(asv_count.data)[<span class="dv">2</span>]</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#check the total number of sequences/reads in the ASV table</span></span>
@@ -464,7 +464,19 @@ Stop &amp; think
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#check the number of ASVs (i.e., columns) in the ASV table</span></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>nb_var <span class="ot">&lt;-</span> <span class="fu">dim</span>(filtered_asv_count.data)[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Stop &amp; think
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>How have the dimensions of our data object changed after filtering?</p>
+</div>
+</div>
 </section>
 <section id="checking-sparsity" class="level4">
 <h4 class="anchored" data-anchor-id="checking-sparsity">Checking sparsity</h4>
@@ -506,7 +518,7 @@ Stop &amp; think
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Answers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -515,7 +527,7 @@ Answers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><p>A zero value in the ASV table means that we could not sequence any read for a specific ASV in a given sample. This means that the ASV is not present in the given sample, or that the sequencing depth was not enough to find it.</p></li>
@@ -526,14 +538,16 @@ Answers
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Considerations for your own data
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <ul>
 <li>Microbial ecologists usually remove singletons (ASVs for which only one read has been identified in the full ASV table), as these are likely to be artifacts.</li>
@@ -541,6 +555,7 @@ Considerations for your own data
 <li>Another option for data filtering could be to remove ASVs that have a total count (per ASV, over all samples) lower than a defined value.</li>
 <li>As a reminder, chimeric amplification products have been already removed in DADA2 pipeline.</li>
 </ul>
+</div>
 </div>
 </div>
 <p><strong>Plot the ASV occurrence frequency as a histogram:</strong></p>
@@ -611,7 +626,7 @@ Stop &amp; think
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Answers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -620,7 +635,7 @@ Answers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li>It is important to know if we sequenced enough to capture all the diversity present in our environment.</li>
@@ -707,14 +722,17 @@ Considerations for your own data
 <section id="rarefying-the-abundance-data" class="level3">
 <h3 class="anchored" data-anchor-id="rarefying-the-abundance-data">Rarefying the abundance data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set.seed() is a 'pseudo'-random number generator,  which ensures your code is reproducible &amp; that you can repeat this rarefaction process identically each time the code is run</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">137</span>) </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check many samples have above 500 reads</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(library_size <span class="sc">&gt;=</span> <span class="dv">500</span>) </span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set.seed() is a 'pseudo'-random number generator</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#this ensures your code is reproducible so you can repeat</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#this rarefaction process identically each time the code is run</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">137</span>) </span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#create a rarefied ASV table</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>rarefied_filtered_asv_count.data <span class="ot">&lt;-</span> <span class="fu">rrarefy</span>(filtered_asv_count.data,<span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#check many samples have above 500 reads</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(library_size <span class="sc">&gt;=</span> <span class="dv">500</span>) </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#create a rarefied ASV table</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>rarefied_filtered_asv_count.data <span class="ot">&lt;-</span> <span class="fu">rrarefy</span>(filtered_asv_count.data,<span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calculating-the-relative-abundance-of-counts" class="level3">

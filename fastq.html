@@ -721,9 +721,12 @@ Adjustments for ITS sequencing
 <pre><code>Identified 9251 bimeras out of 12180 input sequences.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the percentage of sequences that are non-chimeric</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(seqtab.nochim)<span class="sc">/</span><span class="fu">sum</span>(seqtab2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>percent_nonchim <span class="ot">&lt;-</span> (<span class="fu">sum</span>(seqtab.nochim)<span class="sc">/</span><span class="fu">sum</span>(seqtab2))<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#report the percentage of sequences that are non-chimeric</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Percentage of sequences that are non-chimeric = "</span>,<span class="fu">signif</span>(percent_nonchim,<span class="dv">3</span>),<span class="st">"%"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4571335</code></pre>
+<pre><code>[1] "Percentage of sequences that are non-chimeric = 45.7%"</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
@@ -763,7 +766,7 @@ Considerations for your own data
 1KFlemo_1N 36978    35916     35698     34924  34209   14181</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
+<div class="callout callout-style-default callout-warning callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>

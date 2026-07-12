@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data viz – Microbiome Data Analysis</title>
+<title>Diversity metrics &amp; data visualizations – Microbiome Data Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -201,12 +201,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   </ul></li>
-  <li><a href="#calculating-diversity-indices" id="toc-calculating-diversity-indices" class="nav-link" data-scroll-target="#calculating-diversity-indices">Calculating diversity indices</a>
+  <li><a href="#alpha-diversity" id="toc-alpha-diversity" class="nav-link" data-scroll-target="#alpha-diversity">Alpha diversity</a>
   <ul class="collapse">
-  <li><a href="#alpha-diversity" id="toc-alpha-diversity" class="nav-link" data-scroll-target="#alpha-diversity">Alpha diversity</a></li>
-  <li><a href="#beta-diversity" id="toc-beta-diversity" class="nav-link" data-scroll-target="#beta-diversity">Beta diversity</a></li>
+  <li><a href="#calculating-alpha-diversity-indices" id="toc-calculating-alpha-diversity-indices" class="nav-link" data-scroll-target="#calculating-alpha-diversity-indices">Calculating alpha diversity indices</a></li>
+  <li><a href="#visualizing-alpha-diversity-metrics" id="toc-visualizing-alpha-diversity-metrics" class="nav-link" data-scroll-target="#visualizing-alpha-diversity-metrics">Visualizing alpha diversity metrics</a></li>
+  <li><a href="#statistical-analyses" id="toc-statistical-analyses" class="nav-link" data-scroll-target="#statistical-analyses">Statistical analyses</a></li>
+  <li><a href="#visualizing-alpha-diversity-metrics-with-statistics" id="toc-visualizing-alpha-diversity-metrics-with-statistics" class="nav-link" data-scroll-target="#visualizing-alpha-diversity-metrics-with-statistics">Visualizing alpha diversity metrics with statistics</a></li>
+  </ul></li>
+  <li><a href="#beta-diversity" id="toc-beta-diversity" class="nav-link" data-scroll-target="#beta-diversity">Beta diversity</a>
+  <ul class="collapse">
+  <li><a href="#visualizing-high-dimensional-data-with-ordination-techniques" id="toc-visualizing-high-dimensional-data-with-ordination-techniques" class="nav-link" data-scroll-target="#visualizing-high-dimensional-data-with-ordination-techniques">Visualizing high-dimensional data with ordination techniques</a></li>
+  <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis">Statistical analysis</a></li>
   </ul></li>
   <li><a href="#visualizing-taxonomic-composition" id="toc-visualizing-taxonomic-composition" class="nav-link" data-scroll-target="#visualizing-taxonomic-composition">Visualizing taxonomic composition</a></li>
+  <li><a href="#determining-the-core-microbiome" id="toc-determining-the-core-microbiome" class="nav-link" data-scroll-target="#determining-the-core-microbiome">Determining the core microbiome</a></li>
   </ul>
 </nav>
     </div>
@@ -215,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data viz</h1>
+<h1 class="title">Diversity metrics &amp; data visualizations</h1>
 </div>
 
 
@@ -279,16 +287,11 @@ Discussion point
 </ul>
 </section>
 </section>
-<section id="calculating-diversity-indices" class="level2">
-<h2 class="anchored" data-anchor-id="calculating-diversity-indices">Calculating diversity indices</h2>
-<p>Two common diversity measures reported in microbiome studies are <strong>alpha</strong> and <strong>beta</strong> <strong>diversity</strong>:</p>
-<ul>
-<li><p>Alpha diversity describes the species richness, evenness, or presence alone <strong>within a sample</strong>.</p></li>
-<li><p>Beta-diversity measures compare the similarity of two or more <strong>communities</strong>.</p></li>
-</ul>
-<section id="alpha-diversity" class="level3">
-<h3 class="anchored" data-anchor-id="alpha-diversity">Alpha diversity</h3>
-<p>Alpha diversity represents diversity within a sample. In other words, <strong>what</strong> is there and <strong>how much</strong> is there in terms of species. It is not always easy to define a species. Fortunately, we can calculate alpha diversity at different taxonomic levels. In this tutorial, we are looking at the ASV level.</p>
+<section id="alpha-diversity" class="level2">
+<h2 class="anchored" data-anchor-id="alpha-diversity">Alpha diversity</h2>
+<section id="calculating-alpha-diversity-indices" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-alpha-diversity-indices">Calculating alpha diversity indices</h3>
+<p>Alpha diversity represents diversity <strong>within a sample.</strong> In other words, <strong>what</strong> is there and <strong>how much</strong> is there in terms of species. It is not always easy to define a species. Fortunately, we can calculate alpha diversity at different taxonomic levels. In this tutorial, we are looking at the ASV level.</p>
 <p>Several alpha diversity indices can be calculated. Each index take into account different factors, which gives them unique advantages for assessing diversity within a sample:</p>
 <ul>
 <li><p><strong>Richness</strong> represents the total number of of distinct units observed within a sample. In our case, these are ASVs.</p></li>
@@ -369,8 +372,9 @@ Considerations around when to use raw or filtered data
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#if you don't want to visualize your controls, drop rows with N/A values to remove them</span></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(alpha_diversity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="visualizing-alpha-diversity-metrics" class="level4">
-<h4 class="anchored" data-anchor-id="visualizing-alpha-diversity-metrics">Visualizing alpha diversity metrics</h4>
+</section>
+<section id="visualizing-alpha-diversity-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-alpha-diversity-metrics">Visualizing alpha diversity metrics</h3>
 <p><strong>Plot richness (number of species observed):</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the four alpha diversity indices</span></span>
@@ -466,10 +470,10 @@ Discussion point
 </div>
 </div>
 </section>
-<section id="statistical-analyses" class="level4">
-<h4 class="anchored" data-anchor-id="statistical-analyses">Statistical analyses</h4>
-<section id="checking-the-normality-assumption" class="level5">
-<h5 class="anchored" data-anchor-id="checking-the-normality-assumption">Checking the normality assumption</h5>
+<section id="statistical-analyses" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-analyses">Statistical analyses</h3>
+<section id="checking-the-normality-assumption" class="level4">
+<h4 class="anchored" data-anchor-id="checking-the-normality-assumption">Checking the normality assumption</h4>
 <p>Now we’ll use statistical tests to test whether there are any significant differences between treatments. For this step, we’ll be looking at the <strong>Shannon diversity metric</strong>.</p>
 <p><em>Before</em> running significance tests, we need to know if data is normally distributed, which will tell use whether to use a parametric or non-parametric test. To test if the data are normally distributed, we will use the Shapiro-Wilk Normality test.</p>
 <ul>
@@ -525,8 +529,8 @@ W = 0.89843, p-value = 0.07584</code></pre>
 </div>
 </div>
 </section>
-<section id="performing-an-omnibus-test" class="level5">
-<h5 class="anchored" data-anchor-id="performing-an-omnibus-test">Performing an omnibus test</h5>
+<section id="performing-an-omnibus-test" class="level4">
+<h4 class="anchored" data-anchor-id="performing-an-omnibus-test">Performing an omnibus test</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#for normally distributed data, we can perform an ANOVA omnibus test</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>shannon_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(alpha_shannon <span class="sc">~</span> Oxygen_Level, <span class="at">data =</span> alpha_diversity)</span>
@@ -554,8 +558,8 @@ Considerations for your own data
 </div>
 </div>
 </section>
-<section id="post-hoc-tests" class="level5">
-<h5 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc tests</h5>
+<section id="post-hoc-tests" class="level4">
+<h4 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc tests</h4>
 <p>An omnibus test (e.g., ANOVA or Kruskal-Wallis) may tell us that there is significant difference between the treatments, but it can’t tell us <strong>which treatment</strong> is significantly different from the others. In order to compare groups and find exactly which groups within a variable are different from each other, we can perform a post-hoc test:</p>
 <ul>
 <li><p>For normally distributed data, we can test for significance between samples using a <strong>parametric test</strong> (e.g., Tukey’s Honest Significant Difference).</p>
@@ -581,8 +585,9 @@ Stop &amp; think
 </div>
 </div>
 </section>
-<section id="visualizing-plots-with-statistics" class="level5">
-<h5 class="anchored" data-anchor-id="visualizing-plots-with-statistics">Visualizing plots with statistics</h5>
+</section>
+<section id="visualizing-alpha-diversity-metrics-with-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-alpha-diversity-metrics-with-statistics">Visualizing alpha diversity metrics with statistics</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>alpha_shannon_stats.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(alpha_diversity, <span class="fu">aes</span>(<span class="at">x=</span>Oxygen_Level, <span class="at">y=</span>alpha_shannon)) <span class="sc">+</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span> <span class="co">#add a boxplot</span></span>
@@ -627,10 +632,9 @@ Considerations for your own data
 </div>
 </section>
 </section>
-</section>
-<section id="beta-diversity" class="level3">
-<h3 class="anchored" data-anchor-id="beta-diversity">Beta diversity</h3>
-<p>While alpha-diversity represents the diversity within a sample, beta-diversity represents the difference between two samples. In other word, how similar or different are two samples?</p>
+<section id="beta-diversity" class="level2">
+<h2 class="anchored" data-anchor-id="beta-diversity">Beta diversity</h2>
+<p>While alpha-diversity represents the diversity within a sample, beta-diversity measures represent the <strong>differences</strong> <strong>between two samples</strong>. In other word, how similar are two samples?</p>
 <p>Beta-diversity is a distance between two samples. Microbial ecologists do not use Euclidean distances. Bray-Curtis, Jaccard or weight/unweight Unifrac distances are more frequently to estimate the beta diversity:</p>
 <ul>
 <li><p><strong>Bray-Curtis dissimilarity</strong> is based on occurrence data (abundance).</p></li>
@@ -659,8 +663,8 @@ Considerations around when to use raw or filtered data
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#look at the first 5 rows</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>bc_dist[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="visualizing-high-dimensional-data-with-ordination-techniques" class="level4">
-<h4 class="anchored" data-anchor-id="visualizing-high-dimensional-data-with-ordination-techniques">Visualizing high-dimensional data with ordination techniques</h4>
+<section id="visualizing-high-dimensional-data-with-ordination-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-high-dimensional-data-with-ordination-techniques">Visualizing high-dimensional data with ordination techniques</h3>
 <p>Ordinations techniques let us visualize high-dimensional data through dimensional reduction. In a nutshell, these techniques <strong>reduce high-dimensional data into a smaller number of dimensions</strong> so we can actually visualize them in 2D (or 3D). We can then compare samples based on relatedness.</p>
 <p>The dimensions are whatever you’ve measured in each sample - in this case, these are our counts for each ASV.</p>
 <p>There are several ordination techniques we could potentially use to do this:</p>
@@ -687,27 +691,30 @@ Considerations around when to use raw or filtered data
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>pe_PC2 <span class="ot">&lt;-</span>percent_explained[<span class="dv">2</span>]</span>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#report the percentage explained</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC1 explains "</span>,<span class="fu">signif</span>(pe_PC1,<span class="dv">3</span>),<span class="st">"% of variance observed;</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="st">             PC2 explains "</span>,<span class="fu">signif</span>(pe_PC2,<span class="dv">3</span>),<span class="st">"% of variance observed."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC1 explains "</span>,<span class="fu">signif</span>(pe_PC1,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "PC1 explains 14.2% of variance observed;\n             PC2 explains 11.9% of variance observed."</code></pre>
+<pre><code>[1] "PC1 explains 14.2% of variance observed"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create PCoA summary data</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pcoa.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> <span class="fu">rownames</span>(bc_pc1and2),</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA1 =</span> bc_pc1and2[,<span class="dv">1</span>],</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA2 =</span> bc_pc1and2[,<span class="dv">2</span>],</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Oxygen_Level =</span> meta.data<span class="sc">$</span>Oxygen_Level)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>pcoa.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pcoa.data, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Oxygen_Level, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Oxygen_Level), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co">#add a scatterplot</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA1 ("</span>, <span class="fu">round</span>(pe_PC1, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA2 ("</span>, <span class="fu">round</span>(pe_PC2, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Oxygen Level"</span>, <span class="at">fill=</span><span class="st">"Oxygen Level"</span>, <span class="at">shape=</span><span class="st">"Oxygen Level"</span>) <span class="sc">+</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="co">#theme with grid background</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>pcoa.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC2 explains "</span>,<span class="fu">signif</span>(pe_PC2,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "PC2 explains 11.9% of variance observed"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create PCoA summary data</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pcoa.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> <span class="fu">rownames</span>(bc_pc1and2),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA1 =</span> bc_pc1and2[,<span class="dv">1</span>],</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA2 =</span> bc_pc1and2[,<span class="dv">2</span>],</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Oxygen_Level =</span> meta.data<span class="sc">$</span>Oxygen_Level)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>pcoa.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pcoa.data, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Oxygen_Level, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Oxygen_Level), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co">#add a scatterplot</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA1 ("</span>, <span class="fu">round</span>(pe_PC1, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA2 ("</span>, <span class="fu">round</span>(pe_PC2, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Oxygen Level"</span>, <span class="at">fill=</span><span class="st">"Oxygen Level"</span>, <span class="at">shape=</span><span class="st">"Oxygen Level"</span>) <span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="co">#theme with grid background</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>pcoa.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -747,15 +754,15 @@ Considerations for your data
 </div>
 </div>
 </section>
-<section id="statistical-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h4>
+<section id="statistical-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h3>
 <p>To test whether the groups are different with respect to centroid and dispersion, a PERMANOVA statistical test will be performed. For this, a <strong>multi-variate extension of ANOVA</strong> will be used, as there are many ASVs that will be used in the test. The extension is based on distances between samples. The test compares distances of samples within the same group to distances of samples from different groups. If the distance between samples from the different groups is much larger than samples from the same group, we conclude that the groups are not equal.</p>
 <p>In order to test the significance of the result, a permutation test is used - all samples are randomly mixed over the groups and the test is repeated many times. If the ratio (between group distance / within group distance) is much larger for the original data than for the permutations, we conclude there is a statistical significant difference.</p>
 <p>The test can be applied in combination with any distance measure. Here we use the Bray-Curtis distance used for the PCoA above.</p>
 <p>First, we will test if there is any significant effect of the treatment/variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PERMANOVA test using the vegan package</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PERMANOVA test using the vegan package</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for adonis under reduced model
 Permutation: free
@@ -763,7 +770,7 @@ Number of permutations: 9999
 
 adonis2(formula = rarefied_filtered_asv_count.data ~ Oxygen_Level, data = meta.data, permutations = 9999, method = "bray")
          Df SumOfSqs      R2      F Pr(&gt;F)
-Model     2   0.8584 0.10893 0.9168 0.7143
+Model     2   0.8584 0.10893 0.9168  0.711
 Residual 15   7.0220 0.89107              
 Total    17   7.8804 1.00000              </code></pre>
 </div>
@@ -802,9 +809,11 @@ Answers
 </div>
 </section>
 </section>
-</section>
 <section id="visualizing-taxonomic-composition" class="level2">
 <h2 class="anchored" data-anchor-id="visualizing-taxonomic-composition">Visualizing taxonomic composition</h2>
+</section>
+<section id="determining-the-core-microbiome" class="level2">
+<h2 class="anchored" data-anchor-id="determining-the-core-microbiome">Determining the core microbiome</h2>
 
 
 </section>
