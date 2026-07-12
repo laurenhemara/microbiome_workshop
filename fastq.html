@@ -161,12 +161,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Introduction to R</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./introtoseq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction to 16S sequencing</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -189,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./day4_introduction.qmd" class="sidebar-item-text sidebar-link">
+  <a href="./day4_introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Day 4: Show &amp; tell + advanced data viz</span></a>
   </div>
 </li>
@@ -260,19 +254,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Today’s tutorial follows the <a href="https://benjjneb.github.io/dada2/tutorial.html">dada2 pipeline tutorial</a>, where we’ll use the Divisive Amplicon Denoising Algorithm (DADA) to correct amplicon errors and assign taxonomy to amplicon sequence variants (ASVs).</p>
+<p>Today’s tutorial follows the <a href="https://benjjneb.github.io/dada2/tutorial.html">dada2 pipeline tutorial</a>, where we’ll use the <strong>Divisive Amplicon Denoising Algorithm (DADA)</strong> to correct amplicon errors and assign taxonomy to amplicon sequence variants (ASVs).</p>
 <p>Our starting point is a set of Illumina-sequenced, paired-end fastq files that have been split (or “demultiplexed”) by sample and from which the barcodes have been removed.</p>
 <p>From this ‘raw’ microbiome sequencing data, the end products will be:</p>
 <ul>
 <li><p>An <strong>amplicon sequence variant (ASV) count table</strong> which records the numbers of times each <a href="https://www.nature.com/articles/ismej2017119">exact amplicon sequence variant</a> was observed in each sample.</p></li>
 <li><p>A <strong>taxonomy table</strong> which records the taxonomic assignments for each ASV.</p></li>
 </ul>
-<p>We will then import the <strong>ASV count table, taxonomy table,</strong> and <strong>sample metadata</strong> into a <a href="https://joey711.github.io/phyloseq/">phyloseq</a> object for analysis.</p>
+<p>We will then export the <strong>ASV count table</strong> and <strong>taxonomy table</strong> for analysis.</p>
 <section id="learning-objectives" class="level3">
 <h3 class="anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
 <p>By the end of today’s session, you should be able to:</p>
 <ul>
-<li><p>Understand what an amplicon sequencing variant is &amp; why we need to control for sequencing errors</p></li>
+<li><p>Describe what an amplicon sequencing variant is</p></li>
+<li><p>Evaluate why we need to control for sequencing errors</p></li>
 <li><p>Apply the DADA2 pipeline steps to your own datasets</p></li>
 </ul>
 </section>
@@ -326,7 +321,7 @@ GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
 +SEQ_ID
 !''*((((***+))%%%++)(%%%%).1***-+*''))**55CCF&gt;&gt;&gt;&gt;&gt;&gt;CCCCCCC65</code></pre>
 <p>Typically, when qualities look like “swearing” in a comic book (!@#$%^&amp;*), it means that the data is low quality.</p>
-<p><img src="Grawlix.jpg" class="img-fluid" width="200"></p>
+<p><img src="grawlix.png" class="img-fluid" width="300"></p>
 <p>We can use <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastQC</a> to check the quality of our sequencing reads before we proceed with analysis. You can either run fastQC as an application on your computer, or as a tool in the command line. This tool will generate a report that lets us assess the quality of our sequencing data.</p>
 <p>FastQC has a really well documented <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">manual page</a> with <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/">detailed explanations</a> about every plot in the report. Examples of <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/good_sequence_short_fastqc.html">good</a> and <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html">bad</a> fastQC reports can also be found on the project website.</p>
 </section>
@@ -381,12 +376,31 @@ Adjustments for iSeq100 (2 x 150 bp) sequences
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled" title="Adjustments for long-read sequences">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Adjustments for long-read sequences
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you are working with PacBio reads, there is a <a href="https://benjjneb.github.io/LRASManuscript/LRASms_fecal.html">DADA2 + PacBio pipeline</a> available.</p>
+<p>There are varying schools of thought around whether it is appropriate to assign amplicon sequencing variants to use <strong>Oxford Nanopore Technologies (ONT)</strong> long-read sequencing data with DADA2. This is primarily because of the higher error rates associated with older sequencing chemistry and basecalling models when this platform was first released. Circa 2024, <a href="https://github.com/benjjneb/dada2/issues/759%5D,%20which%20(may)%5Bhttps://github.com/fiererlab/dada2_ONT">ONT sequencing has been able to produce data with quality scores corresponding to &gt;10% error-free reads</a> or <a href="https://www.nature.com/articles/s41598-025-10999-8">may not</a> make it suited for the DADA2 workflow.</p>
+<p>Similar to the iSeq workflow, you would process your singular read file (rather than two paired-end read files) and would change your <code>minLen</code> and <code>maxLen</code> parameters accordingly.</p>
+<p><strong>We would recommend that you investigate taxonomic assignment workflows which have been explicitly developed for error-prone long reads</strong>, including the <a href="https://github.com/epi2me-labs/wf-metagenomics">epi2me metagenomics workflow</a> and <a href="https://github.com/treangenlab/emu">emu</a>.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="examining-read-quality" class="level3">
 <h3 class="anchored" data-anchor-id="examining-read-quality">Examining read quality</h3>
 <p>We’ll start by visualizing the quality profiles of the forward reads:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQualityProfile</span>(fnFs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQualityProfile</span>(fnFs[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -399,7 +413,7 @@ Adjustments for iSeq100 (2 x 150 bp) sequences
 <p>These forward reads are of good quality. We generally suggest you trim the last few nucleotides to avoid errors and reduced quality that can arise at the end of a sequence (after &gt;200 cycles). These quality profiles do not suggest that any additional trimming is needed. We will truncate the forward reads at position 240 (trimming the last 10 nucleotides).</p>
 <p>Now we visualize the quality profile of the reverse reads:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQualityProfile</span>(fnRs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQualityProfile</span>(fnRs[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -474,7 +488,7 @@ Considerations for your own data
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Adjustments for iSeq100 (2 x 150 bp) sequences">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -483,7 +497,7 @@ Adjustments for iSeq100 (2 x 150 bp) sequences
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">filterAndTrim</span>(fnFs, filtFs, <span class="at">truncLen=</span> <span class="dv">0</span>,</span>
@@ -534,12 +548,61 @@ log-10 transformation introduced infinite values.</code></pre>
 <h3 class="anchored" data-anchor-id="inferring-sequence-variants">Inferring sequence variants</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#infer real sequence variants (denoised by taking the error rate into account)</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dadaFs <span class="ot">&lt;-</span> <span class="fu">dada</span>(filtFs, <span class="at">err=</span>errF, <span class="at">multithread=</span><span class="cn">TRUE</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>dadaRs <span class="ot">&lt;-</span> <span class="fu">dada</span>(filtRs, <span class="at">err=</span>errR, <span class="at">multithread=</span><span class="cn">TRUE</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#show the results for the first sample's forward and reverse reads</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>dadaFs[[<span class="dv">1</span>]]</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>dadaRs[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dadaFs <span class="ot">&lt;-</span> <span class="fu">dada</span>(filtFs, <span class="at">err=</span>errF, <span class="at">multithread=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample 1 - 39519 reads in 4217 unique sequences.
+Sample 2 - 44884 reads in 14406 unique sequences.
+Sample 3 - 12306 reads in 3906 unique sequences.
+Sample 4 - 85605 reads in 21840 unique sequences.
+Sample 5 - 34442 reads in 11371 unique sequences.
+Sample 6 - 35916 reads in 10270 unique sequences.
+Sample 7 - 20853 reads in 5822 unique sequences.
+Sample 8 - 77342 reads in 26498 unique sequences.
+Sample 9 - 11824 reads in 5089 unique sequences.
+Sample 10 - 6182 reads in 2844 unique sequences.
+Sample 11 - 12855 reads in 2959 unique sequences.
+Sample 12 - 12741 reads in 5122 unique sequences.
+Sample 13 - 6795 reads in 2356 unique sequences.
+Sample 14 - 47567 reads in 8807 unique sequences.
+Sample 15 - 28671 reads in 4768 unique sequences.
+Sample 16 - 21734 reads in 5741 unique sequences.
+Sample 17 - 3320 reads in 2412 unique sequences.
+Sample 18 - 17332 reads in 4397 unique sequences.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dadaRs <span class="ot">&lt;-</span> <span class="fu">dada</span>(filtRs, <span class="at">err=</span>errR, <span class="at">multithread=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sample 1 - 39519 reads in 7756 unique sequences.
+Sample 2 - 44884 reads in 10521 unique sequences.
+Sample 3 - 12306 reads in 4962 unique sequences.
+Sample 4 - 85605 reads in 24981 unique sequences.
+Sample 5 - 34442 reads in 12412 unique sequences.
+Sample 6 - 35916 reads in 10823 unique sequences.
+Sample 7 - 20853 reads in 6878 unique sequences.
+Sample 8 - 77342 reads in 28210 unique sequences.
+Sample 9 - 11824 reads in 5128 unique sequences.
+Sample 10 - 6182 reads in 2321 unique sequences.
+Sample 11 - 12855 reads in 3461 unique sequences.
+Sample 12 - 12741 reads in 5473 unique sequences.
+Sample 13 - 6795 reads in 2386 unique sequences.
+Sample 14 - 47567 reads in 10155 unique sequences.
+Sample 15 - 28671 reads in 6506 unique sequences.
+Sample 16 - 21734 reads in 6221 unique sequences.
+Sample 17 - 3320 reads in 2562 unique sequences.
+Sample 18 - 17332 reads in 5097 unique sequences.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#show the results for the first sample's forward and reverse reads</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dadaFs[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dada-class: object describing DADA2 denoising results
+81 sequence variants were inferred from 4217 input unique sequences.
+Key parameters: OMEGA_A = 1e-40, OMEGA_C = 1e-40, BAND_SIZE = 16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dadaRs[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dada-class: object describing DADA2 denoising results
+87 sequence variants were inferred from 7756 input unique sequences.
+Key parameters: OMEGA_A = 1e-40, OMEGA_C = 1e-40, BAND_SIZE = 16</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -549,11 +612,76 @@ log-10 transformation introduced infinite values.</code></pre>
 <h3 class="anchored" data-anchor-id="merging-paired-reads">Merging paired reads</h3>
 <p>This step merges the forward and reverse reads to together obtain the full sequence, based on overlapping regions. By default, this function searches for 12 basepairs that match exactly - this condition can be adjusted using the <code>minOverlap</code> parameter.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#merge paired reads</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mergers <span class="ot">&lt;-</span> <span class="fu">mergePairs</span>(dadaFs, filtFs, dadaRs, filtRs, <span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#inspect the merger data.frame from the first sample</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mergers[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>38018 paired-reads (in 956 unique pairings) successfully merged out of 39189 (in 1253 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>41874 paired-reads (in 1210 unique pairings) successfully merged out of 44138 (in 1996 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>10220 paired-reads (in 640 unique pairings) successfully merged out of 11888 (in 1244 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>81625 paired-reads (in 1587 unique pairings) successfully merged out of 84153 (in 2412 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>32500 paired-reads (in 1102 unique pairings) successfully merged out of 33153 (in 1248 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>34209 paired-reads (in 1533 unique pairings) successfully merged out of 34773 (in 1674 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>19626 paired-reads (in 480 unique pairings) successfully merged out of 20172 (in 629 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>70627 paired-reads (in 2509 unique pairings) successfully merged out of 73743 (in 3114 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>9586 paired-reads (in 337 unique pairings) successfully merged out of 10642 (in 636 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>5243 paired-reads (in 240 unique pairings) successfully merged out of 5740 (in 391 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>12013 paired-reads (in 258 unique pairings) successfully merged out of 12478 (in 402 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>9914 paired-reads (in 431 unique pairings) successfully merged out of 11439 (in 851 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>5624 paired-reads (in 259 unique pairings) successfully merged out of 6304 (in 399 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>46799 paired-reads (in 698 unique pairings) successfully merged out of 47319 (in 882 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>27948 paired-reads (in 484 unique pairings) successfully merged out of 28316 (in 630 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>21140 paired-reads (in 465 unique pairings) successfully merged out of 21487 (in 539 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>1023 paired-reads (in 132 unique pairings) successfully merged out of 2002 (in 285 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>17051 paired-reads (in 571 unique pairings) successfully merged out of 17085 (in 579 pairings) input.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                                                                                                                                                                                                                                              sequence
+1 GTGTCAGCAGCCGCGGTAATACAGAGGGTGCAAGCGTTAATCGGATTTACTGGGCGTAAAGCGCGCGTAGGTGGCCAATTAAGTCAAATGTGAAATCCCCGAGCTTAACTTGGGAATTGCATTCGATACTGGTTGGCTAGAGTATGGGAGAGGATGGTAGAATTCCAGGTGTAGCGGTGAAATGCGTAGAGATCTGGAGGAATACCGATGGCGAAGGCAGCCATCTGGCCTAATACTGACACTGAGGTGCGAAAGCATGGGGAGCAAACAGGATTAGAAACCCTAGTAGTCC
+2 GTGTCAGCAGCCGCGGTAATACAGAGGGTGCAAGCGTTAATCGGATTTACTGGGCGTAAAGCGCGCGTAGGTGGCCAATTAAGTCAAATGTGAAATCCCCGAGCTTAACTTGGGAATTGCATTCGATACTGGTTGGCTAGAGTATGGGAGAGGATGGTAGAATTCCAGGTGTAGCGGTGAAATGCGTAGAGATCTGGAGGAATACCGATGGCGAAGGCAGCCATCTGGCCTAATACTGACACTGAGGTGCGAAAGCATGGGGAGCAAACAGGATTAGATACCCTAGTAGTCC
+3 GTGTCAGCAGCCGCGGTAATACAGAGGGTGCAAGCGTTAATCGGATTTACTGGGCGTAAAGCGCGCGTAGGTGGCCAATTAAGTCAAATGTGAAATCCCCGAGCTTAACTTGGGAATTGCATTCGATACTGGTTGGCTAGAGTATGGGAGAGGATGGTAGAATTCCAGGTGTAGCGGTGAAATGCGTAGAGATCTGGAGGAATACCGATGGCGAAGGCAGCCATCTGGCCTAATACTGACACTGAGGTGCGAAAGCATGGGGAGCAAACAGGATTAGAAACCCTTGTAGTCC
+4 GTGTCAGCAGCCGCGGTAATACAGAGGGTGCAAGCGTTAATCGGATTTACTGGGCGTAAAGCGCGCGTAGGTGGCCAATTAAGTCAAATGTGAAATCCCCGAGCTTAACTTGGGAATTGCATTCGATACTGGTTGGCTAGAGTATGGGAGAGGATGGTAGAATTCCAGGTGTAGCGGTGAAATGCGTAGAGATCTGGAGGAATACCGATGGCGAAGGCAGCCATCTGGCCTAATACTGACACTGAGGTGCGAAAGCATGGGGAGCAAACAGGATTAGAAACCCCAGTAGTCC
+5 GTGTCAGCAGCCGCGGTAATACAGAGGGTGCAAGCGTTAATCGGATTTACTGGGCGTAAAGCGCGCGTAGGTGGCCAATTAAGTCAAATGTGAAATCCCCGAGCTTAACTTGGGAATTGCATTCGATACTGGTTGGCTAGAGTATGGGAGAGGATGGTAGAATTCCAGGTGTAGCGGTGAAATGCGTAGAGATCTGGAGGAATACCGATGGCGAAGGCAGCCATCTGGCCTAATACTGACACTGAGGTGCGAAAGCATGGGGAGCAAACAGGATTAGATACCCCAGTAGTCC
+6 GTGTCAGCAGCCGCGGTAATACAGAGGGTGCAAGCGTTAATCGGATTTACTGGGCGTAAAGCGCGCGTAGGTGGCCAATTAAGTCAAATGTGAAATCCCCGAGCTTAACTTGGGAATTGCATTCGATACTGGTTGGCTAGAGTATGGGAGAGGATGGTAGAATTCCAGGTGTAGCGGTGAAATGCGTAGAGATCTGGAGGAATACCGATGGCGAAGGCAGCCATCTGGCCTAATACTGACACTGAGGTGCGAAAGCATGGGGAGCAAACAGGATTAGATACCCTTGTAGTCC
+  abundance forward reverse nmatch nmismatch nindel prefer accept
+1       819       1       1    108         0      0      1   TRUE
+2       717       1       2    108         0      0      1   TRUE
+3       698       1       3    108         0      0      1   TRUE
+4       648       1       5    108         0      0      1   TRUE
+5       597       1       9    108         0      0      1   TRUE
+6       596       1       4    108         0      0      1   TRUE</code></pre>
+</div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
@@ -569,7 +697,7 @@ Considerations for your own data
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Adjustments for iSeq100 (2 x 150 bp) sequences">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -578,18 +706,18 @@ Adjustments for iSeq100 (2 x 150 bp) sequences
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge dadaFs and filtFs</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mergers <span class="ot">&lt;-</span> <span class="fu">mergePairs</span>(dadaFs, filtFs, <span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mergers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge dadaFs and filtFs</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>mergers <span class="ot">&lt;-</span> <span class="fu">mergePairs</span>(dadaFs, filtFs, <span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mergers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Adjustments for ITS sequencing">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -598,13 +726,13 @@ Adjustments for ITS sequencing
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>For ITS sequences, you should increase the minimum overlap required between the forward and reverse reads, as ITS regions are more variable in length.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#merge paired reads</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>mergers <span class="ot">&lt;-</span> <span class="fu">mergePairs</span>(dadaFs, filtFs, dadaRs, filtRs, <span class="at">minOverlap=</span><span class="dv">20</span>, <span class="at">maxMismatch=</span><span class="dv">0</span>, <span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mergers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#merge paired reads</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>mergers <span class="ot">&lt;-</span> <span class="fu">mergePairs</span>(dadaFs, filtFs, dadaRs, filtRs, <span class="at">minOverlap=</span><span class="dv">20</span>, <span class="at">maxMismatch=</span><span class="dv">0</span>, <span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mergers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -615,16 +743,20 @@ Adjustments for ITS sequencing
 <p>We can now construct an ASV table. The sequence table is a matrix with rows corresponding to (and named by) the samples, and columns corresponding to (and named by) the sequence variants.</p>
 <p>This step filters out reads with lengths much smaller or larger than our target read length (~250-350 bp). The first step counts the occurrence of different read lengths in a table format. The second step allows you to trim sequence reads that are much shorter or larger than the read length with the highest counts.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#construct ASV sequence table</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>seqtab <span class="ot">&lt;-</span> <span class="fu">makeSequenceTable</span>(mergers)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(seqtab)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#inspect distribution of sequence lengths</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">nchar</span>(<span class="fu">getSequences</span>(seqtab))</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#filter out reads larger or smaller than our target read length</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>seqtab2 <span class="ot">&lt;-</span> seqtab[,<span class="fu">nchar</span>(<span class="fu">colnames</span>(seqtab)) <span class="sc">%in%</span> <span class="dv">289</span><span class="sc">:</span><span class="dv">296</span>] </span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">nchar</span>(<span class="fu">getSequences</span>(seqtab2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#construct ASV sequence table</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>seqtab <span class="ot">&lt;-</span> <span class="fu">makeSequenceTable</span>(mergers)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co">#inspect distribution of sequence lengths</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">nchar</span>(<span class="fu">getSequences</span>(seqtab)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  204   220   259   260   261   262   267   290   291   292   293   294   295 
+    2     1     2    97     1    16    95     2   467 11377    96    16     1 
+  296   299   306   315 
+   12     4     1     1 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter out reads larger or smaller than our target read length</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>seqtab2 <span class="ot">&lt;-</span> seqtab[,<span class="fu">nchar</span>(<span class="fu">colnames</span>(seqtab)) <span class="sc">%in%</span> <span class="dv">260</span><span class="sc">:</span><span class="dv">296</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
@@ -640,7 +772,7 @@ Considerations for your own data
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Adjustments for ITS sequencing">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -649,12 +781,12 @@ Adjustments for ITS sequencing
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>For ITS sequences, you should increase the allowed range of sequence lengths due to variability.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#merge paired reads</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>seqtab2 <span class="ot">&lt;-</span> seqtab[,<span class="fu">nchar</span>(<span class="fu">colnames</span>(seqtab)) <span class="sc">%in%</span> <span class="dv">200</span><span class="sc">:</span><span class="dv">500</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#merge paired reads</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>seqtab2 <span class="ot">&lt;-</span> seqtab[,<span class="fu">nchar</span>(<span class="fu">colnames</span>(seqtab)) <span class="sc">%in%</span> <span class="dv">200</span><span class="sc">:</span><span class="dv">500</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -667,12 +799,16 @@ Adjustments for ITS sequencing
 <p>This often occurs during PCR reactions using mixed templates (e.g., environmental samples). Incomplete extensions during PCR allow subsequent PCR cycles to use a partially extended strand to bind to the template of a different, but similar, sequence. This partially extended strand then acts as a primer to extend and form a chimeric sequence. Once created, the chimeric sequence is then further amplified in subsequent cycles. The end result is a PCR artifact that does not represent a sequence that exists in nature.</p>
 <p>Chimeric sequences can be identified if they can be exactly reconstructed by combining a left-segment and a right-segment from two more abundant “parent” sequences.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#remove chimeras</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>seqtab.nochim <span class="ot">&lt;-</span> <span class="fu">removeBimeraDenovo</span>(seqtab2, <span class="at">method=</span><span class="st">"consensus"</span>, <span class="at">multithread=</span><span class="cn">TRUE</span>, <span class="at">verbose=</span><span class="cn">TRUE</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(seqtab.nochim)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the percentage of sequences that are non-chimeric</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(seqtab.nochim)<span class="sc">/</span><span class="fu">sum</span>(seqtab2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#remove chimeras</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>seqtab.nochim <span class="ot">&lt;-</span> <span class="fu">removeBimeraDenovo</span>(seqtab2, <span class="at">method=</span><span class="st">"consensus"</span>, <span class="at">multithread=</span><span class="cn">TRUE</span>, <span class="at">verbose=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Identified 9251 bimeras out of 12180 input sequences.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the percentage of sequences that are non-chimeric</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(seqtab.nochim)<span class="sc">/</span><span class="fu">sum</span>(seqtab2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4571335</code></pre>
+</div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
@@ -695,12 +831,12 @@ Considerations for your own data
 <h2 class="anchored" data-anchor-id="checkpoint-tracking-reads-through-the-pipeline">Checkpoint: tracking reads through the pipeline</h2>
 <p>As a final check of our progress, we’ll look at the number of reads that made it through each step in the pipeline:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>getN <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">getUniques</span>(x))</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>track <span class="ot">&lt;-</span> <span class="fu">cbind</span>(out, <span class="fu">sapply</span>(dadaFs, getN), <span class="fu">sapply</span>(dadaRs, getN), <span class="fu">sapply</span>(mergers, getN), <span class="fu">rowSums</span>(seqtab.nochim))</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(track) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"input"</span>, <span class="st">"filtered"</span>, <span class="st">"denoisedF"</span>, <span class="st">"denoisedR"</span>, <span class="st">"merged"</span>, <span class="st">"nonchim"</span>)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(track) <span class="ot">&lt;-</span> sample.names</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(track)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>getN <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="fu">getUniques</span>(x))</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>track <span class="ot">&lt;-</span> <span class="fu">cbind</span>(out, <span class="fu">sapply</span>(dadaFs, getN), <span class="fu">sapply</span>(dadaRs, getN), <span class="fu">sapply</span>(mergers, getN), <span class="fu">rowSums</span>(seqtab.nochim))</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(track) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"input"</span>, <span class="st">"filtered"</span>, <span class="st">"denoisedF"</span>, <span class="st">"denoisedR"</span>, <span class="st">"merged"</span>, <span class="st">"nonchim"</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(track) <span class="ot">&lt;-</span> sample.names</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(track)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
@@ -719,11 +855,11 @@ Considerations for your own data
 <section id="assigning-taxonomy" class="level2">
 <h2 class="anchored" data-anchor-id="assigning-taxonomy">Assigning taxonomy</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign taxonomy</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">assignTaxonomy</span>(seqtab.nochim, <span class="st">"db/silva_nr99_v138.2_toGenus_trainset.fa.gz"</span>, <span class="at">multithread=</span><span class="cn">TRUE</span>) </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check the output</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(taxa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign taxonomy</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>taxa <span class="ot">&lt;-</span> <span class="fu">assignTaxonomy</span>(seqtab.nochim, <span class="st">"db/silva_nr99_v138.2_toGenus_trainset.fa.gz"</span>, <span class="at">multithread=</span><span class="cn">TRUE</span>) </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check the output</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(taxa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
@@ -747,26 +883,26 @@ Considerations for your own data
 <li><p>An <strong>amplicon sequence variant (ASV) count table</strong> (<code>seqtab.nochim</code>) which records the numbers of times each <a href="https://www.nature.com/articles/ismej2017119">exact amplicon sequence variant</a> was observed in each sample.</p></li>
 <li><p>A <strong>taxonomy table</strong> (<code>taxa</code>) which records the taxonomic assignments for each ASV.</p></li>
 </ul>
-<p>The <em>most</em> important thing to do at this stage is to <strong>save and export our data</strong> so we can analyze it later. Today we’ll export these tables to <code>.txt</code> or <code>.csv</code> files.</p>
+<p>The <em>most</em> important thing to do at this stage is to <strong>save and export our data</strong> so we can analyze it later. Today we’ll export these tables to <code>.txt</code> files.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make a copy of your final ASV table</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>asv_count.data <span class="ot">&lt;-</span> seqtab.nochim</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check number of columns</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(asv_count.data)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#assign numbers to each column (i.e., each ASV), starting with ASV1</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>ASV_ID <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"ASV"</span>,<span class="at">sep =</span> <span class="st">""</span>,<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(asv_count.data)))</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#replace the column names with ASV numbers</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(asv_count.data) <span class="ot">&lt;-</span> ASV_ID</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#export your ASV table to a file</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(asv_count.data, <span class="at">file=</span><span class="st">"asv_count_table.txt"</span>)</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Export your ASV names and the associated taxonomy to a file</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>taxa.data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ASV_ID,taxa)</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(taxa.data, <span class="at">file =</span> <span class="st">"taxonomy_table.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make a copy of your final ASV table</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>asv_count.data <span class="ot">&lt;-</span> seqtab.nochim</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check number of columns</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(asv_count.data)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co">#assign numbers to each column (i.e., each ASV), starting with ASV1</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>ASV_ID <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"ASV"</span>,<span class="at">sep =</span> <span class="st">""</span>,<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(asv_count.data)))</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co">#replace the column names with ASV numbers</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(asv_count.data) <span class="ot">&lt;-</span> ASV_ID</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="co">#export your ASV table to a file</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(asv_count.data, <span class="at">file=</span><span class="st">"asv_count_table.txt"</span>)</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Export your ASV names and the associated taxonomy to a file</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>taxa.data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ASV_ID,taxa)</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(taxa.data, <span class="at">file =</span> <span class="st">"taxonomy_table.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -865,7 +1001,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/laurenhemara\.github\.io\/microbiome_workshop\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

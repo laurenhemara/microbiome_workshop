@@ -161,12 +161,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Introduction to R</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./introtoseq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction to 16S sequencing</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -282,12 +276,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="karas-compost-tea-experiment" class="level3">
 <h3 class="anchored" data-anchor-id="karas-compost-tea-experiment">Kara’s compost tea experiment</h3>
-<p>If you want to use Kara’s data, you can download the following:</p>
-<pre><code>-   Sequencing reads (`.fastq.gz`)
-
--   A metadata table: `metadata.txt`</code></pre>
-<p>With Kara’s dataset, we will investigate if there is any differences between bacterial communities in experimental compost teas brewed in the Bell lab. [Interested in understanding how different practices - used by organic growers in the field - may influence community composition &amp; beneficial impacts].</p>
-<p>We will compare bacterial diversity and composition across [experimental design e.g., samples harvested from compost teas brewed for 4 months in Winter 2025]. For each sampling time point, three replicates were sampled. Then, DNA was extracted from each sample and the 16S gene was amplified and sequenced on [Illumina platform specs].</p>
+<p>If you want to use Kara’s compost tea data, you can download the following:</p>
+<ul>
+<li>Sequencing reads (<code>.fastq.gz</code>)</li>
+<li>A metadata table: <code>metadata.txt</code></li>
+</ul>
+<p>This project is about <strong>compost teas</strong> (liquid fertilizers made by brewing organic material in water) and compares how different methods for making diverse agricultural probiotics affect microbiome composition. With Kara’s dataset, we will investigate if there are any differences between bacterial communities in experimental compost teas brewed in the Bell lab.</p>
+<p>This experiment contains four treatments:</p>
+<ol type="1">
+<li><strong>Inoculant Source</strong></li>
+<li><strong>Oxygen Level</strong></li>
+<li><strong>Nutrient Source</strong></li>
+<li><strong>Steep Time</strong></li>
+</ol>
+<p>There are four replicates of each treatment combination (n=312).</p>
+<p><img src="kara_tea.png" class="img-fluid"></p>
 
 
 </section>
@@ -386,7 +389,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/laurenhemara\.github\.io\/microbiome_workshop\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
