@@ -766,23 +766,11 @@ Stop &amp; think
 <li><p>What can you say about the total variance explained by this ordination?</p></li>
 <li><p>What can you say about intra- and inter-group variability?</p></li>
 </ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your data">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Considerations for your data
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you want to run an analysis on a subset of your data, you <em>must</em> re-calculate your beta diversity index from the first step.</p>
+<p>Note: If you want to run an analysis on a subset of your data later on, you <em>must</em> re-calculate your beta diversity index from scratch - you should never filter out data post-ordination.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Adjustments for nMDS ordinations">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -791,7 +779,7 @@ Adjustments for nMDS ordinations
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If you decide to perform a nMDS ordination, you will need to interpret the <strong>stress</strong> value. The stress value falls between 0-1 and essentially tells us how well the data ‘fits’. A lower stress value indicates a better fit - ideally, you want this to be below 0.2:</p>
 <table class="caption-top table">
@@ -858,26 +846,11 @@ Adjustments for nMDS ordinations
 <span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>nmds.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in decostand(x, "max", 2, na.rm = na.rm): result contains NaN, perhaps due to impossible mathematical
-                 operation</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in decostand(x, "total", 1, na.rm = na.rm): result contains NaN, perhaps due to impossible mathematical
-                 operation</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in postMDS(out$points, dis, plot = max(0, plot - 1), ...): skipping
-half-change scaling: too few points below threshold</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in metaMDS(rarefied_filtered_asv_count.data, distance = "bray", : WA
-scores were not calculated due to missing values</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>nmds.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="dataviz_files/figure-html/nmds2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="dataviz_files/figure-html/nmdsplot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -893,8 +866,8 @@ scores were not calculated due to missing values</code></pre>
 <p>The test can be applied in combination with any distance measure. Here we use the Bray-Curtis distance used for the PCoA above.</p>
 <p>First, we will test if there is any significant effect of the treatment/variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PERMANOVA test using the vegan package</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>filtered_meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PERMANOVA test using the vegan package</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>filtered_meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for adonis under reduced model
 Permutation: free
@@ -924,7 +897,7 @@ Stop &amp; think
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Answers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -933,7 +906,7 @@ Answers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If the P-value is less than 0.05, we can conclude that the <strong>intra-variability is lower</strong> than the inter-variability among the two groups and that we have a significant effect.</p>
 </div>
