@@ -247,16 +247,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>An <strong>amplicon sequence variant (ASV) count table</strong> (<code>rarefied_filtered_asv_count.data</code>) which has:</p>
 <ul>
 <li><p>Been filtered to remove unwanted ASVs</p></li>
+<li><p>Had negative controls removed</p></li>
 <li><p>Been normalized to rarefy samples</p></li>
 </ul></li>
 <li><p>An <strong>amplicon sequence variant (ASV) count table</strong> (<code>asv_relative_abundance.data</code>) which has:</p>
 <ul>
 <li><p>Been filtered to remove unwanted ASVs</p></li>
+<li><p>Had negative controls removed</p></li>
 <li><p>Been normalized to rarefy samples</p></li>
 <li><p>Had counts converted to relative abundance (%)</p></li>
 </ul></li>
 </ul>
-<p>We’ll also be working with a <strong>metadata table</strong> (<code>meta.data</code>) which represents metadata information for the different samples.</p>
+<p>We’ll also be working with a <strong>metadata table</strong> (<code>filtered_meta.data</code>) which represents metadata information for the different samples.</p>
 <p>In this session, we will:</p>
 <ul>
 <li><p>Define, calculate and interpret <strong>alpha-diversity</strong> indices.</p></li>
@@ -347,7 +349,9 @@ Considerations around when to use raw or filtered data
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>meta.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_metadata.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>filtered_meta.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"filtered_sample_metadata.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here we are using the <code>estimateR()</code> and <code>diversity()</code> functions from the <code>vegan</code> package to calculate alpha diversity metrics.</p>
 <p><strong>Calculate richness:</strong> The <code>estimateR()</code> function estimates two richness types: bias-corrected Chao <a href="https://pubmed.ncbi.nlm.nih.gov/24945937/">Chiu et al., 2014</a> and ACE <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/j.1365-2656.2005.00940.x">O’Hara 2005</a>.</p>
@@ -367,19 +371,16 @@ Considerations around when to use raw or filtered data
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>alpha_simpson <span class="ot">&lt;-</span> <span class="fu">diversity</span>(rarefied_filtered_asv_count.data, <span class="at">index=</span><span class="st">"simpson"</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#combine all indices into one alpha diversity data object</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>alpha_diversity_all <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meta.data, <span class="fu">t</span>(alpha_richness), alpha_evenness, alpha_shannon, alpha_simpson) </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">cbind</span>(filtered_meta.data, <span class="fu">t</span>(alpha_richness), alpha_evenness, alpha_shannon, alpha_simpson) </span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#remove rownames</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(alpha_diversity_all) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(alpha_diversity) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#check out the new data</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(alpha_diversity_all)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(alpha_diversity)</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#if you don't want to visualize your controls, we can filter them out</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> alpha_diversity_all <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Nutrient_Source <span class="sc">!=</span> <span class="st">"Control"</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#check out the new data</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>alpha_diversity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#check out the new data</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>alpha_diversity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="visualizing-alpha-diversity-metrics" class="level3">
@@ -486,11 +487,11 @@ Discussion point
 <p>Now we’ll use statistical tests to test whether there are any significant differences between treatments. For this step, we’ll be looking at the <strong>Shannon diversity metric</strong>.</p>
 <p><em>Before</em> running significance tests, we need to know if data is normally distributed, which will tell use whether to use a parametric or non-parametric test. To test if the data are normally distributed, we will use the Shapiro-Wilk Normality test.</p>
 <ul>
-<li>If the p-values are both <strong>not significant (p &gt; 0.05)</strong> from the tests, we accept the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>parametric tests</strong> <a href="https://www.datanovia.com/en/lessons/t-test-in-r/">e.g., t-test</a> and <a href="https://www.datanovia.com/en/lessons/anova-in-r/">ANOVA</a>).
+<li>If the p-values are both <strong>not significant (p &gt; 0.05)</strong> from the tests, we accept the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>parametric tests</strong> e.g., pairwise <a href="https://www.datanovia.com/en/lessons/t-test-in-r/">t-test</a> and omnibus <a href="https://www.datanovia.com/en/lessons/anova-in-r/">ANOVA</a>).
 <ul>
 <li><code>summary(aov(metric ~ variable, data = alpha_diversity))</code></li>
 </ul></li>
-<li>If the p-values are both <strong>significant (p &lt; 0.05)</strong>, we reject the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>non-parametric tests</strong> e.g., <a href="https://www.datanovia.com/en/lessons/wilcoxon-test-in-r/">Wilcoxon</a> and <a href="https://www.datanovia.com/en/lessons/kruskal-wallis-test-in-r/">Kruskal-Wallis</a>).
+<li>If the p-values are both <strong>significant (p &lt; 0.05)</strong>, we reject the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>non-parametric tests</strong> e.g., pairwise <a href="https://www.datanovia.com/en/lessons/wilcoxon-test-in-r/">Wilcoxon</a> and omnibus <a href="https://www.datanovia.com/en/lessons/kruskal-wallis-test-in-r/">Kruskal-Wallis</a>).
 <ul>
 <li><code>kruskal.test(metric ~ variable, data = alpha_diversity)</code></li>
 </ul></li>
@@ -590,7 +591,7 @@ Stop &amp; think
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Before performing a post-hoc test, think about how many levels your variable of interest has. It’s pretty much useless to perform a post-hoc test on a variable with only two levels - just use a pairwise comparison test to compare group means.</p>
+<p>Before performing a post-hoc test, think about how many levels your variable of interest has. It’s pretty much useless to perform an omnibus or post-hoc test on a variable with only two levels - just use a pairwise comparison test to compare group means.</p>
 </div>
 </div>
 </section>
@@ -702,7 +703,7 @@ Considerations around when to use raw or filtered data
 <span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#report the percentage explained</span></span>
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC1 explains "</span>,<span class="fu">signif</span>(pe_PC1,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "PC1 explains 14.2% of variance observed"</code></pre>
+<pre><code>[1] "PC1 explains 14.8% of variance observed"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC2 explains "</span>,<span class="fu">signif</span>(pe_PC2,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -713,12 +714,12 @@ Considerations around when to use raw or filtered data
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> <span class="fu">rownames</span>(bc_pc1and2),</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA1 =</span> bc_pc1and2[,<span class="dv">1</span>],</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA2 =</span> bc_pc1and2[,<span class="dv">2</span>],</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Oxygen_Level =</span> meta.data<span class="sc">$</span>Oxygen_Level)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Oxygen_Level =</span> filtered_meta.data<span class="sc">$</span>Oxygen_Level)</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>pcoa.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pcoa.data, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Oxygen_Level, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Oxygen_Level), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co">#add a scatterplot</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"grey"</span>, <span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA1 ("</span>, <span class="fu">round</span>(pe_PC1, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA2 ("</span>, <span class="fu">round</span>(pe_PC2, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
 <span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Oxygen Level"</span>, <span class="at">fill=</span><span class="st">"Oxygen Level"</span>, <span class="at">shape=</span><span class="st">"Oxygen Level"</span>) <span class="sc">+</span></span>
@@ -771,17 +772,17 @@ Considerations for your data
 <p>First, we will test if there is any significant effect of the treatment/variable:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PERMANOVA test using the vegan package</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>filtered_meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for adonis under reduced model
 Permutation: free
 Number of permutations: 9999
 
-adonis2(formula = rarefied_filtered_asv_count.data ~ Oxygen_Level, data = meta.data, permutations = 9999, method = "bray")
+adonis2(formula = rarefied_filtered_asv_count.data ~ Oxygen_Level, data = filtered_meta.data, permutations = 9999, method = "bray")
          Df SumOfSqs      R2      F Pr(&gt;F)
-Model     2   0.8584 0.10893 0.9168 0.7037
-Residual 15   7.0220 0.89107              
-Total    17   7.8804 1.00000              </code></pre>
+Model     1   0.4314 0.06204 0.9259 0.5726
+Residual 14   6.5220 0.93796              
+Total    15   6.9534 1.00000              </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
