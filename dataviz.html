@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Diversity metrics &amp; data visualizations – Microbiome Data Analysis</title>
+<title>Data viz – Microbiome Data Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -201,20 +201,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning objectives</a></li>
   </ul></li>
-  <li><a href="#alpha-diversity" id="toc-alpha-diversity" class="nav-link" data-scroll-target="#alpha-diversity">Alpha diversity</a>
+  <li><a href="#calculating-diversity-indices" id="toc-calculating-diversity-indices" class="nav-link" data-scroll-target="#calculating-diversity-indices">Calculating diversity indices</a>
   <ul class="collapse">
-  <li><a href="#calculating-alpha-diversity-indices" id="toc-calculating-alpha-diversity-indices" class="nav-link" data-scroll-target="#calculating-alpha-diversity-indices">Calculating alpha diversity indices</a></li>
-  <li><a href="#visualizing-alpha-diversity-metrics" id="toc-visualizing-alpha-diversity-metrics" class="nav-link" data-scroll-target="#visualizing-alpha-diversity-metrics">Visualizing alpha diversity metrics</a></li>
-  <li><a href="#statistical-analyses" id="toc-statistical-analyses" class="nav-link" data-scroll-target="#statistical-analyses">Statistical analyses</a></li>
-  <li><a href="#visualizing-alpha-diversity-metrics-with-statistics" id="toc-visualizing-alpha-diversity-metrics-with-statistics" class="nav-link" data-scroll-target="#visualizing-alpha-diversity-metrics-with-statistics">Visualizing alpha diversity metrics with statistics</a></li>
+  <li><a href="#alpha-diversity" id="toc-alpha-diversity" class="nav-link" data-scroll-target="#alpha-diversity">Alpha diversity</a></li>
+  <li><a href="#calculating-alpha-diversity-metrics" id="toc-calculating-alpha-diversity-metrics" class="nav-link" data-scroll-target="#calculating-alpha-diversity-metrics">Calculating alpha diversity metrics</a></li>
+  <li><a href="#beta-diversity" id="toc-beta-diversity" class="nav-link" data-scroll-target="#beta-diversity">Beta diversity</a></li>
   </ul></li>
-  <li><a href="#beta-diversity" id="toc-beta-diversity" class="nav-link" data-scroll-target="#beta-diversity">Beta diversity</a>
-  <ul class="collapse">
-  <li><a href="#visualizing-high-dimensional-data-with-ordination-techniques" id="toc-visualizing-high-dimensional-data-with-ordination-techniques" class="nav-link" data-scroll-target="#visualizing-high-dimensional-data-with-ordination-techniques">Visualizing high-dimensional data with ordination techniques</a></li>
-  <li><a href="#statistical-analysis" id="toc-statistical-analysis" class="nav-link" data-scroll-target="#statistical-analysis">Statistical analysis</a></li>
-  </ul></li>
-  <li><a href="#visualizing-taxonomic-composition" id="toc-visualizing-taxonomic-composition" class="nav-link" data-scroll-target="#visualizing-taxonomic-composition">Visualizing taxonomic composition</a></li>
-  <li><a href="#determining-the-core-microbiome" id="toc-determining-the-core-microbiome" class="nav-link" data-scroll-target="#determining-the-core-microbiome">Determining the core microbiome</a></li>
+  <li><a href="#bacterial-composition-plots" id="toc-bacterial-composition-plots" class="nav-link" data-scroll-target="#bacterial-composition-plots">Bacterial composition plots</a></li>
   </ul>
 </nav>
     </div>
@@ -223,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Diversity metrics &amp; data visualizations</h1>
+<h1 class="title">Data viz</h1>
 </div>
 
 
@@ -247,18 +240,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>An <strong>amplicon sequence variant (ASV) count table</strong> (<code>rarefied_filtered_asv_count.data</code>) which has:</p>
 <ul>
 <li><p>Been filtered to remove unwanted ASVs</p></li>
-<li><p>Had negative controls removed</p></li>
 <li><p>Been normalized to rarefy samples</p></li>
 </ul></li>
 <li><p>An <strong>amplicon sequence variant (ASV) count table</strong> (<code>asv_relative_abundance.data</code>) which has:</p>
 <ul>
 <li><p>Been filtered to remove unwanted ASVs</p></li>
-<li><p>Had negative controls removed</p></li>
 <li><p>Been normalized to rarefy samples</p></li>
 <li><p>Had counts converted to relative abundance (%)</p></li>
 </ul></li>
 </ul>
-<p>We’ll also be working with a <strong>metadata table</strong> (<code>filtered_meta.data</code>) which represents metadata information for the different samples.</p>
+<p>We’ll also be working with a <strong>metadata table</strong> (<code>meta.data</code>) which represents metadata information for the different samples.</p>
 <p>In this session, we will:</p>
 <ul>
 <li><p>Define, calculate and interpret <strong>alpha-diversity</strong> indices.</p></li>
@@ -289,18 +280,20 @@ Discussion point
 </ul>
 </section>
 </section>
-<section id="alpha-diversity" class="level2">
-<h2 class="anchored" data-anchor-id="alpha-diversity">Alpha diversity</h2>
-<section id="calculating-alpha-diversity-indices" class="level3">
-<h3 class="anchored" data-anchor-id="calculating-alpha-diversity-indices">Calculating alpha diversity indices</h3>
-<p>Alpha diversity represents diversity <strong>within a sample.</strong> In other words, <strong>what</strong> is there and <strong>how much</strong> is there in terms of species. It is not always easy to define a species. Fortunately, we can calculate alpha diversity at different taxonomic levels. In this tutorial, we are looking at the ASV level.</p>
+<section id="calculating-diversity-indices" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-diversity-indices">Calculating diversity indices</h2>
+<p>Two common diversity measures reported in microbiome studies are <strong>alpha</strong> and <strong>beta</strong> <strong>diversity</strong>:</p>
+<ul>
+<li><p>Alpha diversity describes the species richness, evenness, or presence alone <strong>within a sample</strong>.</p></li>
+<li><p>Beta-diversity measures compare the similarity of two or more <strong>communities</strong>.</p></li>
+</ul>
+<section id="alpha-diversity" class="level3">
+<h3 class="anchored" data-anchor-id="alpha-diversity">Alpha diversity</h3>
+<p>Alpha diversity represents diversity within a sample. In other words, <strong>what</strong> is there and <strong>how much</strong> is there in terms of species. It is not always easy to define a species. Fortunately, we can calculate alpha diversity at different taxonomic levels. In this tutorial, we are looking at the ASV level.</p>
 <p>Several alpha diversity indices can be calculated. Each index take into account different factors, which gives them unique advantages for assessing diversity within a sample:</p>
 <ul>
 <li><p><strong>Richness</strong> represents the total number of of distinct units observed within a sample. In our case, these are ASVs.</p></li>
-<li><p><strong>Chao1</strong> estimates total richness. This prioritizes detection of rare species within a sample.</p>
-<ul>
-<li>Note: <a href="https://academic.oup.com/ismej/article/18/1/wrae106/7692950">Chao1 may not be appropriate to use with ASV data generated with DADA2</a>.</li>
-</ul></li>
+<li><p><strong>Chao1</strong> estimates total richness. This prioritizes detection of rare species within a sample.</p></li>
 <li><p><strong>Pielou’s evenness</strong> provides information about the equity in species abundance in each sample. In other words, do all species have similar abundances, or do some species dominate?</p></li>
 <li><p><strong>Shannon</strong> index is based on richness &amp; evenness and prioritizes spread of species within a sample.</p></li>
 </ul>
@@ -320,46 +313,37 @@ Considerations around when to use raw or filtered data
 <p>Note: these are really metrics to help contrast our samples within an experiment. Alpha diversity metrics should not be considered “true” values or be compared across studies.</p>
 </div>
 </div>
+<p>Here, we are going to generate <a href="https://joey711.github.io/phyloseq/plot_richness-examples.html">alpha-diversity plots following this tutoria</a>l.</p>
 <p><strong>Load the required packages and objects:</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dunn.test)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PMCMR)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#change this path to match your folder's location</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"/Users/myname/folder1/subfolder2/MicrobiomeAnalysisWorkshop"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#check your working directory location</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#import our ASV, taxa, and metadata tables</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>rarefied_filtered_asv_count.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"rarefied_filtered_asv_abundance_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>asv_relative_abundance.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"relative_rarefied_filtered_asv_abundance_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>filtered_taxa.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"filtered_taxonomy_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>filtered_meta.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"filtered_sample_metadata.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#import our ASV, taxa, and metadata tables</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>rarefied_filtered_asv_count.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"rarefied_filtered_asv_abundance_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>asv_relative_abundance.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"relative_rarefied_filtered_asv_abundance_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>filtered_taxa.data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">"filtered_taxonomy_table.txt"</span>, <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>meta.data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sample_metadata.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="calculating-alpha-diversity-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-alpha-diversity-metrics">Calculating alpha diversity metrics</h3>
 <p>Here we are using the <code>estimateR()</code> and <code>diversity()</code> functions from the <code>vegan</code> package to calculate alpha diversity metrics.</p>
-<p><strong>Calculate richness:</strong> The <code>estimateR()</code> function estimates two richness types: bias-corrected Chao <a href="https://pubmed.ncbi.nlm.nih.gov/24945937/">Chiu et al., 2014</a> and ACE <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/j.1365-2656.2005.00940.x">O’Hara 2005</a>.</p>
+<p><strong>Calculate richness:</strong> The <code>estimateR()</code> function estimates two richness types: bias-corrected Chao (Chiu et al., 2014)[https://pubmed.ncbi.nlm.nih.gov/24945937/] and ACE (O’Hara 2005)[https://besjournals.onlinelibrary.wiley.com/doi/10.1111/j.1365-2656.2005.00940.x].</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#estimate richness using ASV count data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>alpha_richness <span class="ot">&lt;-</span> <span class="fu">estimateR</span>(rarefied_filtered_asv_count.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>alpha_richness <span class="ot">&lt;-</span> <span class="fu">estimateR</span>(rarefied_filtered_asv_count.data)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#have a look at the output</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>alpha_richness</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Calculate evenness:</strong> The <code>diversity()</code> function can be used to estimate evenness, Shannon, and Simpson diversity indices.</p>
+<p><strong>Calculate evenness:</strong> The <code>diversity()</code> function can be used to estimate Shannon and Simpson diversity indices.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate evenness</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>alpha_evenness <span class="ot">&lt;-</span> <span class="fu">diversity</span>(rarefied_filtered_asv_count.data) <span class="sc">/</span> <span class="fu">log</span>(<span class="fu">specnumber</span>(rarefied_filtered_asv_count.data))</span>
@@ -371,96 +355,37 @@ Considerations around when to use raw or filtered data
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>alpha_simpson <span class="ot">&lt;-</span> <span class="fu">diversity</span>(rarefied_filtered_asv_count.data, <span class="at">index=</span><span class="st">"simpson"</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#combine all indices into one alpha diversity data object</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">cbind</span>(filtered_meta.data, <span class="fu">t</span>(alpha_richness), alpha_evenness, alpha_shannon, alpha_simpson) </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meta.data, <span class="fu">t</span>(alpha_richness), alpha_evenness, alpha_shannon, alpha_simpson) </span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#remove rownames</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(alpha_diversity) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#check out the new data</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(alpha_diversity)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#check out the new data</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>alpha_diversity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="visualizing-alpha-diversity-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-alpha-diversity-metrics">Visualizing alpha diversity metrics</h3>
-<p><strong>Plot richness (number of species observed):</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the four alpha diversity indices</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>alpha_richness.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(alpha_diversity, <span class="fu">aes</span>(<span class="at">x=</span>Oxygen_Level, <span class="at">y=</span>S.obs)) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span> <span class="co">#add a boxplot</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>), <span class="at">name=</span><span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#custom colour palette and legend title</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> <span class="co">#add points</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Observed richness"</span>) <span class="sc">+</span> <span class="co">#y axis label</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#x axis label</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co">#plot theme</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>alpha_richness.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/richness plot-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Plot evenness:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>alpha_evenness.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(alpha_diversity, <span class="fu">aes</span>(<span class="at">x=</span>Oxygen_Level, <span class="at">y=</span>alpha_evenness)) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span> <span class="co">#add a boxplot</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>), <span class="at">name=</span><span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#custom colour palette and legend title</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> <span class="co">#add points</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Evenness"</span>) <span class="sc">+</span> <span class="co">#y axis label</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#x axis label</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co">#plot theme</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>alpha_evenness.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/evenness-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Plot Shannon diversity:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>alpha_shannon.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(alpha_diversity, <span class="fu">aes</span>(<span class="at">x=</span>Oxygen_Level, <span class="at">y=</span>alpha_shannon)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span> <span class="co">#add a boxplot</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>), <span class="at">name=</span><span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#custom colour palette and legend title</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> <span class="co">#add points</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Shannon diversity"</span>) <span class="sc">+</span> <span class="co">#y axis label</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#x axis label</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co">#plot theme</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>alpha_shannon.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/shannon-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Plot Simpson diversity:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>alpha_simpson.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(alpha_diversity, <span class="fu">aes</span>(<span class="at">x=</span>Oxygen_Level, <span class="at">y=</span>alpha_simpson)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span> <span class="co">#add a boxplot</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>), <span class="at">name=</span><span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#custom colour palette and legend title</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> <span class="co">#add points</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Simpson diversity"</span>) <span class="sc">+</span> <span class="co">#y axis label</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#x axis label</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="co">#plot theme</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>alpha_simpson.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/simpson-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(alpha_diversity) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(alpha_diversity)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#we don't want to visualize our controls, so will drop rows with N/A values to remove them</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(alpha_diversity)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the four alpha diversity indices</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>richness.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(alpha_diversity, <span class="fu">aes</span>(<span class="at">x=</span>Oxygen_Level, <span class="at">y=</span>S.obs, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Observed richness"</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>()</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>richness.plot</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>P2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_alphadiv_tidy, <span class="fu">aes</span>(<span class="at">x=</span>site, <span class="at">y=</span>S.chao1)) <span class="sc">+</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span> <span class="st">'Chao1'</span>, <span class="at">x=</span> <span class="st">' '</span>, <span class="at">y=</span> <span class="st">''</span>, <span class="at">tag =</span> <span class="st">"B"</span>) <span class="sc">+</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>P3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_alphadiv_tidy, <span class="fu">aes</span>(<span class="at">x=</span>site, <span class="at">y=</span>data_evenness)) <span class="sc">+</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span> <span class="st">'Eveness'</span>, <span class="at">x=</span> <span class="st">' '</span>, <span class="at">y=</span> <span class="st">''</span>, <span class="at">tag =</span> <span class="st">"C"</span>) <span class="sc">+</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>P4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_alphadiv_tidy, <span class="fu">aes</span>(<span class="at">x=</span>site, <span class="at">y=</span>data_shannon)) <span class="sc">+</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span> <span class="st">'Shannon'</span>, <span class="at">x=</span> <span class="st">' '</span>, <span class="at">y=</span> <span class="st">''</span>, <span class="at">tag =</span> <span class="st">"D"</span>) <span class="sc">+</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># all plots together using the patchwork package</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>(P1 <span class="sc">|</span> P2) <span class="sc">/</span> (P3 <span class="sc">|</span> P4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Discussion point">
 <div class="callout-header d-flex align-content-center">
@@ -479,159 +404,57 @@ Discussion point
 </ul>
 </div>
 </div>
-</section>
-<section id="statistical-analyses" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-analyses">Statistical analyses</h3>
-<section id="checking-the-normality-assumption" class="level4">
-<h4 class="anchored" data-anchor-id="checking-the-normality-assumption">Checking the normality assumption</h4>
-<p>Now we’ll use statistical tests to test whether there are any significant differences between treatments. For this step, we’ll be looking at the <strong>Shannon diversity metric</strong>.</p>
-<p><em>Before</em> running significance tests, we need to know if data is normally distributed, which will tell use whether to use a parametric or non-parametric test. To test if the data are normally distributed, we will use the Shapiro-Wilk Normality test.</p>
-<ul>
-<li>If the p-values are both <strong>not significant (p &gt; 0.05)</strong> from the tests, we accept the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>parametric tests</strong> e.g., pairwise <a href="https://www.datanovia.com/en/lessons/t-test-in-r/">t-test</a> and omnibus <a href="https://www.datanovia.com/en/lessons/anova-in-r/">ANOVA</a>).
-<ul>
-<li><code>summary(aov(metric ~ variable, data = alpha_diversity))</code></li>
-</ul></li>
-<li>If the p-values are both <strong>significant (p &lt; 0.05)</strong>, we reject the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>non-parametric tests</strong> e.g., pairwise <a href="https://www.datanovia.com/en/lessons/wilcoxon-test-in-r/">Wilcoxon</a> and omnibus <a href="https://www.datanovia.com/en/lessons/kruskal-wallis-test-in-r/">Kruskal-Wallis</a>).
-<ul>
-<li><code>kruskal.test(metric ~ variable, data = alpha_diversity)</code></li>
-</ul></li>
-</ul>
+<section id="statistical-analyses" class="level4">
+<h4 class="anchored" data-anchor-id="statistical-analyses">Statistical analyses</h4>
+<p>You can use different statistical tests in order to test if there is any significant differences between treatments: parametric tests (t-test and ANOVA) or non-parametric tests (Mann-Whitney and Kruskal-Wallis). Before using parametric tests, you need to make sure that you can use them (e.g., normal distribution, homoscedasticity).</p>
+<p>Does your treatment/variable of interest have an effect of alpha diversity?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create a linear model with lm() function</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>model  <span class="ot">&lt;-</span> <span class="fu">lm</span>(alpha_shannon <span class="sc">~</span> Oxygen_Level <span class="sc">+</span> Nutrient_Source <span class="sc">+</span> Inoculant_Source <span class="sc">+</span> Steep_Time,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> alpha_diversity)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a QQ plot of residuals</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggqqplot</span>(<span class="fu">residuals</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/normality-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(data_shannon <span class="sc">~</span> site, <span class="at">data =</span> data_alphadiv_tidy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform normality tests on richness metric</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(alpha_diversity<span class="sc">$</span>S.obs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  alpha_diversity$S.obs
-W = 0.81482, p-value = 0.004314</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform normality tests on shannon divesity metric</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(alpha_diversity<span class="sc">$</span>alpha_shannon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  alpha_diversity$alpha_shannon
-W = 0.96181, p-value = 0.6947</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform normality tests on simpson divesity metric</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(alpha_diversity<span class="sc">$</span>alpha_simpson)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  alpha_diversity$alpha_simpson
-W = 0.89843, p-value = 0.07584</code></pre>
-</div>
-</div>
-</section>
-<section id="performing-an-omnibus-test" class="level4">
-<h4 class="anchored" data-anchor-id="performing-an-omnibus-test">Performing an omnibus test</h4>
+<p>An omnibus test may tell us that there is significant difference between the treatments, but we don’t know which treatment is significantly different from the others. In order to know what are the differences among the treatments/variable levels, we can do a post-hoc test (such as Tukey test for the parametric version or Dunn test for the non-parametric version).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#histogram to visually assess normality assumption</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(alpha_diversity<span class="sc">$</span>alpha_shannon, <span class="at">main =</span> <span class="st">"Histogram of Shannon Diversity"</span>, <span class="at">xlab =</span> <span class="st">"Shannon Diversity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/omnibus-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hsd_test <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(aov_test) <span class="co"># require the agricolae package  </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>hsd_res <span class="ot">&lt;-</span> <span class="fu">HSD.test</span>(aov_test, <span class="st">"month"</span>, <span class="at">group=</span>T)<span class="sc">$</span>groups  </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>hsd_res  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#for normally distributed data, we can perform an ANOVA omnibus test</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>shannon_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(alpha_shannon <span class="sc">~</span> Oxygen_Level, <span class="at">data =</span> alpha_diversity)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(shannon_aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)
-Oxygen_Level  1  0.836  0.8361   3.025  0.104
-Residuals    14  3.870  0.2764               </code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Considerations for your own data
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p>Is your data normally distributed?</p></li>
-<li><p>Do any of your treatments or variables have an effect on alpha diversity?</p></li>
-</ul>
-</div>
-</div>
-</section>
-<section id="post-hoc-tests" class="level4">
-<h4 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc tests</h4>
-<p>An omnibus test (e.g., ANOVA or Kruskal-Wallis) may tell us that there is significant difference between the treatments, but it can’t tell us <strong>which treatment</strong> is significantly different from the others. In order to compare groups and find exactly which groups within a variable are different from each other, we can perform a post-hoc test:</p>
-<ul>
-<li><p>For normally distributed data, we can test for significance between samples using a <strong>parametric test</strong> (e.g., Tukey’s Honest Significant Difference).</p>
-<ul>
-<li><code>HSD.test(metric_aov, "Variable", group=T)$groups</code></li>
-</ul></li>
-<li><p>For data that is not normally distributed, we can test for significance between samples using a <strong>non-parametric test</strong> (e.g., A Dunn test with <code>FSA</code> package, or a Nemenyi test with the <code>PMCMRplus</code> package).</p>
-<ul>
-<li><code>dunnTest(alpha_metric ~ Variable, data=alpha_diversity)</code></li>
-</ul></li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Stop &amp; think
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Before performing a post-hoc test, think about how many levels your variable of interest has. It’s pretty much useless to perform an omnibus or post-hoc test on a variable with only two levels - just use a pairwise comparison test to compare group means.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="visualizing-alpha-diversity-metrics-with-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-alpha-diversity-metrics-with-statistics">Visualizing alpha diversity metrics with statistics</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>alpha_shannon_stats.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(alpha_diversity, <span class="fu">aes</span>(<span class="at">x=</span>Oxygen_Level, <span class="at">y=</span>alpha_shannon)) <span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span> <span class="co">#add a boxplot</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>),</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">name=</span><span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#custom colour palette and legend title</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> <span class="co">#add points</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Shannon diversity"</span>) <span class="sc">+</span> <span class="co">#y axis label</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#x axis label</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#plot theme</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">method =</span> <span class="st">"anova"</span>,<span class="at">size=</span><span class="dv">4</span>,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"ANOVA, p="</span>, ..p.format..)), <span class="at">label.y=</span><span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pwc</span>(<span class="fu">aes</span>(<span class="at">group =</span> Oxygen_Level), <span class="co">#add t-test</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>   <span class="at">tip.length =</span> <span class="dv">0</span>,</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>   <span class="at">method =</span> <span class="st">"t_test"</span>, </span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>   <span class="at">label =</span> <span class="st">"p.adj.format"</span>,</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>   <span class="at">p.adjust.method =</span> <span class="st">"fdr"</span>) <span class="co"># false discovery rate adjusted p-value</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>alpha_shannon_stats.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/shan_stats-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#kara</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(asv_shannon, <span class="at">main =</span> <span class="st">"Histogram of Shannon Diversity"</span>, <span class="at">xlab =</span> <span class="st">"Shannon Diversity"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Test normality of distribution</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(asv_shannon) <span class="co"># &lt;0.01 is non-normal</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with statistical test by treatment (e.g. by Steep_Time)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>common <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">names</span>(asv.div), <span class="fu">rownames</span>(asv.table))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>df.shannon <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Shannon =</span> asv.div[common],</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Steep_Time =</span> raref.metadat[common, <span class="st">"Steep_Time"</span>]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>df.shannon<span class="sc">$</span>Steep_Time <span class="ot">&lt;-</span> <span class="fu">factor</span>(df.shannon<span class="sc">$</span>Steep_Time, </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"5"</span>, <span class="st">"14"</span>, <span class="st">"21"</span>, <span class="st">"28"</span>))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Test statistical significance between diversity indices of each treatment level</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(Shannon <span class="sc">~</span> Steep_Time, <span class="at">data =</span> df.shannon) <span class="co"># Kruskal-Wallis is a statistical test for non-normal distributions</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(df.shannon<span class="sc">$</span>Shannon, df.shannon<span class="sc">$</span>Steep_Time,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">p.adjust.method =</span> <span class="st">"fdr"</span>) <span class="co"># p-adjusment helps limit false positives from multiple comparisons</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">quartz</span>() <span class="co"># opens a new figure window on Mac</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df.shannon, <span class="fu">aes</span>(<span class="at">x =</span> Steep_Time, <span class="at">y =</span> Shannon, <span class="at">fill =</span> Steep_Time)) <span class="sc">+</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Shannon Diversity over Time spent in Compost Tea"</span>,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Steep Time"</span>,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Shannon Diversity"</span>) <span class="sc">+</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"28"</span> <span class="ot">=</span> <span class="st">"#006475"</span>, <span class="st">"21"</span> <span class="ot">=</span> <span class="st">"#00a1b7"</span>, <span class="st">"14"</span> <span class="ot">=</span> <span class="st">"#56d0d8"</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"#596028"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"#898929"</span>, <span class="st">"1"</span><span class="ot">=</span><span class="st">"#606571"</span>, <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"black"</span>)) <span class="sc">+</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">method =</span> <span class="st">"kruskal.test"</span>, <span class="at">label.y =</span> <span class="fu">max</span>(df.shannon<span class="sc">$</span>Shannon) <span class="sc">+</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">method =</span> <span class="st">"wilcox.test"</span>,</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">comparisons =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"5"</span>, <span class="st">"14"</span>, <span class="st">"21"</span>, <span class="st">"28"</span>)),</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>                    <span class="at">label =</span> <span class="st">"p.signif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
@@ -646,14 +469,14 @@ Considerations for your own data
 <p>Using bullet points, write down everything you notice about the plots you produced.</p>
 <p>What do you understand? What do you find confusing?</p>
 <p>If you were going to publish these plots in a scientific paper, what features would you want to improve or add?</p>
-<p>Now try plotting and running a statistical comparison for another variable. Adjust the necessary parameters and objects from the code above to assess a new variable’s levels. Which do you think may have the strongest impact on the final microbiome composition?</p>
+<p>Now try plotting and running a statstical comparison for another variable. Adjust the necessary parameters and objects from the code above to assess a new variable’s levels. Which do you think may have the strongest impact on the final microbiome composition?</p>
 </div>
 </div>
 </section>
 </section>
-<section id="beta-diversity" class="level2">
-<h2 class="anchored" data-anchor-id="beta-diversity">Beta diversity</h2>
-<p>While alpha-diversity represents the diversity within a sample, beta-diversity measures represent the <strong>differences</strong> <strong>between two samples</strong>. In other word, how similar are two samples?</p>
+<section id="beta-diversity" class="level3">
+<h3 class="anchored" data-anchor-id="beta-diversity">Beta diversity</h3>
+<p>While alpha-diversity represents the diversity within a sample, beta-diversity represents the difference between two samples. In other word, how similar or different are two samples?</p>
 <p>Beta-diversity is a distance between two samples. Microbial ecologists do not use Euclidean distances. Bray-Curtis, Jaccard or weight/unweight Unifrac distances are more frequently to estimate the beta diversity:</p>
 <ul>
 <li><p><strong>Bray-Curtis dissimilarity</strong> is based on occurrence data (abundance).</p></li>
@@ -671,84 +494,64 @@ Considerations around when to use raw or filtered data
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Beta diversity is calculated using filtered, normalized, and rarified data (<code>rarefied_filtered_asv_count.data</code>).</p>
+<p>Beta diversity is calculated on filtered and normalized data tables (<code>object</code>).</p>
 </div>
 </div>
 <p><strong>Calculate beta diversity:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate Bray-Curtis distance using the vegan package</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>bc_dist <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">vegdist</span>(rarefied_filtered_asv_count.data, <span class="at">method =</span> <span class="st">"bray"</span>)) </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#look at the first 5 rows</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>bc_dist[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate Bray-Curtis distance using the vegan package</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>asv.bray <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(asv.table, <span class="at">method=</span><span class="st">"bray"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>asv.bray.table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(asv.bray)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>asv.bray.table[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="visualizing-high-dimensional-data-with-ordination-techniques" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-high-dimensional-data-with-ordination-techniques">Visualizing high-dimensional data with ordination techniques</h3>
-<p>Ordinations techniques let us visualize high-dimensional data through dimensional reduction. In a nutshell, these techniques <strong>reduce high-dimensional data into a smaller number of dimensions</strong> so we can actually visualize them in 2D (or 3D). We can then compare samples based on relatedness.</p>
+<section id="visualizing-high-dimensional-data-with-ordination-techniques" class="level4">
+<h4 class="anchored" data-anchor-id="visualizing-high-dimensional-data-with-ordination-techniques">Visualizing high-dimensional data with ordination techniques</h4>
+<p>Ordinations techniques let us visualize high-dimensional data through dimensional reduction. In a nutshell, these techniques reduce high-dimensional data into a smaller number of dimensions so we can actually visualize them in 2D (or 3D). We can then compare samples based on relatedness.</p>
 <p>The dimensions are whatever you’ve measured in each sample - in this case, these are our counts for each ASV.</p>
 <p>There are several ordination techniques we could potentially use to do this:</p>
 <ul>
 <li><p>Principal Components Analysis</p></li>
 <li><p>non-metric multidimensional scaling (nMDS)</p></li>
 </ul>
-<p>Today, we’re looking specifically at PCoA visualizations. We prioritize PCoA because this technique <strong>preserves true distances</strong> and is reproducible.</p>
+<p>[make and compare both; today we’re looking specifically at PCoA; provide code for nMDS; requisite tests e.g., stress tests for nMDS].</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform classic multidimensional scaling (cMDS)</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>bc_pcoa <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(bc_dist,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">k=</span>(<span class="fu">nrow</span>(bc_dist)<span class="sc">-</span><span class="dv">1</span>), <span class="co">#k is number of dimensions/ASVs - 1</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eig=</span><span class="cn">TRUE</span>) <span class="co">#eigenvalues will be generated</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#store coordinates for first two principal components (PC) in new variable</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>bc_pc1and2 <span class="ot">&lt;-</span> bc_pcoa<span class="sc">$</span>points[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#store the eigenvalues in a new variable</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>bc_eigenvalue <span class="ot">&lt;-</span> bc_pcoa<span class="sc">$</span>eig</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the percentage of variance explained by PC1 and PC2</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>percent_explained <span class="ot">&lt;-</span>bc_eigenvalue<span class="sc">/</span>(<span class="fu">sum</span>(bc_eigenvalue))<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>pe_PC1 <span class="ot">&lt;-</span>percent_explained[<span class="dv">1</span>]</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>pe_PC2 <span class="ot">&lt;-</span>percent_explained[<span class="dv">2</span>]</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co">#report the percentage explained</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC1 explains "</span>,<span class="fu">signif</span>(pe_PC1,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "PC1 explains 14.8% of variance observed"</code></pre>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#kara</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>asv.pcoa <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(asv.bray, <span class="at">k=</span>(<span class="fu">nrow</span>(asv.perc)<span class="sc">-</span><span class="dv">1</span>), <span class="at">eig=</span><span class="cn">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Store coordinates for first two axes in new variable #</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>asv.p <span class="ot">&lt;-</span> asv.pcoa<span class="sc">$</span>points[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate % variance explained by each axis #</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>asv.eig<span class="ot">&lt;-</span>asv.pcoa<span class="sc">$</span>eig</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>perc.exp<span class="ot">&lt;-</span>asv.eig<span class="sc">/</span>(<span class="fu">sum</span>(asv.eig))<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>pe1<span class="ot">&lt;-</span>perc.exp[<span class="dv">1</span>]</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>pe2<span class="ot">&lt;-</span>perc.exp[<span class="dv">2</span>]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Build PCoA dataframe</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>pcoa_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> <span class="fu">rownames</span>(asv.p),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA1 =</span> asv.p[,<span class="dv">1</span>],</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA2 =</span> asv.p[,<span class="dv">2</span>],</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">Group =</span> raref.metadat<span class="sc">$</span>Steep_Time)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pcoa_df, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Group, <span class="at">fill =</span> Group)) <span class="sc">+</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA1 ("</span>, <span class="fu">round</span>(pe1, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA2 ("</span>, <span class="fu">round</span>(pe2, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"PCoA of ASVs (Bray-Curtis)"</span>) <span class="sc">+</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>( <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"orange"</span>, <span class="st">"14"</span> <span class="ot">=</span> <span class="st">"gold"</span>, <span class="st">"21"</span> <span class="ot">=</span> <span class="st">"chartreuse4"</span>,<span class="st">"28"</span> <span class="ot">=</span> <span class="st">"blue1"</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"5"</span>, <span class="st">"14"</span>, <span class="st">"21"</span>, <span class="st">"28"</span>)) <span class="sc">+</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>( <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="st">"orange"</span>, <span class="st">"14"</span> <span class="ot">=</span> <span class="st">"gold"</span>, <span class="st">"21"</span> <span class="ot">=</span> <span class="st">"chartreuse4"</span>,<span class="st">"28"</span> <span class="ot">=</span> <span class="st">"blue1"</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"5"</span>, <span class="st">"14"</span>, <span class="st">"21"</span>, <span class="st">"28"</span>)) <span class="sc">+</span> </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC2 explains "</span>,<span class="fu">signif</span>(pe_PC2,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "PC2 explains 11.9% of variance observed"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create PCoA summary data</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>pcoa.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> <span class="fu">rownames</span>(bc_pc1and2),</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA1 =</span> bc_pc1and2[,<span class="dv">1</span>],</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA2 =</span> bc_pc1and2[,<span class="dv">2</span>],</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Oxygen_Level =</span> filtered_meta.data<span class="sc">$</span>Oxygen_Level)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>pcoa.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pcoa.data, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Oxygen_Level, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Oxygen_Level), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co">#add a scatterplot</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA1 ("</span>, <span class="fu">round</span>(pe_PC1, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA2 ("</span>, <span class="fu">round</span>(pe_PC2, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Oxygen Level"</span>, <span class="at">fill=</span><span class="st">"Oxygen Level"</span>, <span class="at">shape=</span><span class="st">"Oxygen Level"</span>) <span class="sc">+</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="co">#theme with grid background</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>pcoa.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/pcoa-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
+<div class="callout callout-style-default callout-tip callout-titled" title="DIscussion points">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Stop &amp; think
+DIscussion points
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -757,159 +560,91 @@ Stop &amp; think
 <li><p>What can you say about the total variance explained by this ordination?</p></li>
 <li><p>What can you say about intra- and inter-group variability?</p></li>
 </ul>
-<p>Note: If you want to run an analysis on a subset of your data later on, you <em>must</em> re-calculate your beta diversity index from scratch - you should never filter out data post-ordination.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Adjustments for nMDS ordinations">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Adjustments for nMDS ordinations
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>If you decide to perform a nMDS ordination, you will need to interpret the <strong>stress</strong> value. The stress value falls between 0-1 and essentially tells us how well the data ‘fits’. A lower stress value indicates a better fit - ideally, you want this to be below 0.2:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Stress</th>
-<th>Fit</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>&lt;0.05</td>
-<td>Excellent</td>
-<td>Good fit for nMDS interpretation</td>
-</tr>
-<tr class="even">
-<td>&lt;0.1</td>
-<td>Good</td>
-<td>Good fit with little risk of misinterpretation</td>
-</tr>
-<tr class="odd">
-<td>&lt;0.2</td>
-<td>Fair</td>
-<td>Usable…</td>
-</tr>
-<tr class="even">
-<td>&gt;0.2</td>
-<td>Poor</td>
-<td>Poorly represents the data</td>
-</tr>
-</tbody>
-</table>
-<p>The more dimensions (<code>k</code>) that you have, the lower the stress value will be. This is because having more dimensions reduces constraints on the distances of the data. However, the goal of nMDS ordination is being able to increase interpretation which we do by <strong>reducing the number of dimensions</strong>, so we can’t just keep adding more dimensions to give us a better fit - lower dimensions are easier to interpret.</p>
+<p>You can play with removing points from the plot to see how treatment groups may be separating from each other. However, this is not a true subset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">137</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#perform nMDS</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>nmds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(rarefied_filtered_asv_count.data, <span class="at">distance =</span> <span class="st">"bray"</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trymax =</span> <span class="dv">100</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#check stress value</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>nmds<span class="sc">$</span>stress</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#extract data</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>data.scores <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scores</span>(nmds))</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>data.scores<span class="sc">$</span>SampleID <span class="ot">&lt;-</span> <span class="fu">rownames</span>(data.scores)</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data.scores)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#add metadata</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>nmds.data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(data.scores, filtered_meta.data, <span class="at">by =</span> <span class="st">"SampleID"</span>)</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nmds.data)</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co">#plot nMDS</span></span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>nmds.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nmds.data, <span class="fu">aes</span>(NMDS1, NMDS2, <span class="at">color =</span> Oxygen_Level, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Oxygen_Level), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co">#add a scatterplot</span></span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NMDS1"</span>, <span class="at">y =</span> <span class="st">"NMDS2"</span>, <span class="at">color =</span> <span class="st">"Oxygen Level"</span>, <span class="at">fill=</span><span class="st">"Oxygen Level"</span>, <span class="at">shape=</span><span class="st">"Oxygen Level"</span>) <span class="sc">+</span></span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="co">#theme with grid background</span></span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>nmds.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pcoa_df_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(pcoa_df, Group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"28"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pcoa_df_sub, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Group, <span class="at">fill =</span> Group)) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA1 ("</span>, <span class="fu">round</span>(pe1, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA2 ("</span>, <span class="fu">round</span>(pe2, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"PCoA of ASVs (Bray-Curtis)"</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>( <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"28"</span> <span class="ot">=</span> <span class="st">"blue1"</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"28"</span>)) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>( <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"28"</span> <span class="ot">=</span> <span class="st">"blue1"</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"28"</span>)) <span class="sc">+</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>If you want to run an analysis on a subset of your data, you must re-calculate the diversity index. This will now replace the objects you created previously. Notice how this changes the % vairance explained.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>nmds.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/nmdsplot-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta diversity index</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>asv.bray <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(asv.Day1<span class="fl">.28</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>asv.bray.table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(asv.bray)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>asv.pcoa <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(asv.bray, <span class="at">k=</span>(<span class="fu">nrow</span>(asv.Day1<span class="fl">.28</span>)<span class="sc">-</span><span class="dv">1</span>), <span class="at">eig=</span><span class="cn">TRUE</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Store coordinates for first two axes in new variable #</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>asv.p <span class="ot">&lt;-</span> asv.pcoa<span class="sc">$</span>points[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate % variance explained by each axis #</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>asv.eig<span class="ot">&lt;-</span>asv.pcoa<span class="sc">$</span>eig</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>perc.exp<span class="ot">&lt;-</span>asv.eig<span class="sc">/</span>(<span class="fu">sum</span>(asv.eig))<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>pe1<span class="ot">&lt;-</span>perc.exp[<span class="dv">1</span>]</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>pe2<span class="ot">&lt;-</span>perc.exp[<span class="dv">2</span>]</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>pcoa_df_sub <span class="ot">&lt;-</span> <span class="fu">subset</span>(pcoa_df, Group <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"28"</span>))</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pcoa_df_sub, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Group, <span class="at">fill =</span> Group)) <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA1 ("</span>, <span class="fu">round</span>(pe1, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA2 ("</span>, <span class="fu">round</span>(pe2, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"PCoA of ASVs (Bray-Curtis)"</span>) <span class="sc">+</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>( <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"28"</span> <span class="ot">=</span> <span class="st">"blue1"</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"28"</span>)) <span class="sc">+</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>( <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"gray"</span>, <span class="st">"28"</span> <span class="ot">=</span> <span class="st">"blue1"</span>), <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"28"</span>)) <span class="sc">+</span> </span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="statistical-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h3>
-<p>To test whether the groups are different with respect to centroid and dispersion, a PERMANOVA statistical test will be performed. For this, a <strong>multi-variate extension of ANOVA</strong> will be used, as there are many ASVs that will be used in the test. The extension is based on distances between samples. The test compares distances of samples within the same group to distances of samples from different groups. If the distance between samples from the different groups is much larger than samples from the same group, we conclude that the groups are not equal.</p>
-<p>In order to test the significance of the result, a permutation test is used - all samples are randomly mixed over the groups and the test is repeated many times. If the ratio (between group distance / within group distance) is much larger for the original data than for the permutations, we conclude there is a statistical significant difference.</p>
-<p>The test can be applied in combination with any distance measure. Here we use the Bray-Curtis distance used for the PCoA above.</p>
+<section id="statistical-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="statistical-analysis">Statistical analysis</h4>
+<p>To test whether the groups are different with respect to centroid and dispersion, a PERMANOVA statistical test will be performed. For this a multivariate extension of ANOVA will be used, as there are many ASVs that will be used in the test. The extension is based on distances between samples. The test compares distances of samples within the same group to distances of samples from different groups. If the distance between samples from the different groups is much larger than samples from the same group, we conclude that the groups are not equal.</p>
+<p>In order to test the significance of the result, a permutation test is used. Thus all samples are randomly mixed over the groups and the test is repeated many times. If the ratio (between group distance / within group distance) is much larger for the original data than for the permutations, we conclude there is a statistical significant difference.</p>
+<p>The test can be applied in combination with any distance measure. Here we use the Bray-Curtis distance as was also used for the PCoA above.</p>
 <p>First, we will test if there is any significant effect of the treatment/variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PERMANOVA test using the vegan package</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>filtered_meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Permutation test for adonis under reduced model
-Permutation: free
-Number of permutations: 9999
-
-adonis2(formula = rarefied_filtered_asv_count.data ~ Oxygen_Level, data = filtered_meta.data, permutations = 9999, method = "bray")
-         Df SumOfSqs      R2      F Pr(&gt;F)
-Model     1   0.4314 0.06204 0.9259 0.5628
-Residual 14   6.5220 0.93796              
-Total    15   6.9534 1.00000              </code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Stop &amp; think
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p>How do you interpret this PERMANOVA result?</p></li>
-<li><p>What can you say about intra- and inter-group variability?</p></li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Answers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answers
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>If the P-value is less than 0.05, we can conclude that the <strong>intra-variability is lower</strong> than the inter-variability among the two groups and that we have a significant effect.</p>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Permanova test using the vegan package</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis</span>(data_otu_filt_rar<span class="sc">~</span>site,<span class="at">data=</span>data_grp, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="visualizing-taxonomic-composition" class="level2">
-<h2 class="anchored" data-anchor-id="visualizing-taxonomic-composition">Visualizing taxonomic composition</h2>
 </section>
-<section id="determining-the-core-microbiome" class="level2">
-<h2 class="anchored" data-anchor-id="determining-the-core-microbiome">Determining the core microbiome</h2>
+<section id="bacterial-composition-plots" class="level2">
+<h2 class="anchored" data-anchor-id="bacterial-composition-plots">Bacterial composition plots</h2>
+<p>Cover some very common visualizations which you will also frequently encounter in the literature - barplots… In this part of the tutorial, you will learn how to plot and interpret microbiome composition.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the taxonomic table, data_taxo_filt_rar, with the new OTU table, data_otu_filt_rar_temp</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>data_otu_taxo_filt_rar <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(data_taxo_filt_rar, data_otu_filt_rar_temp, <span class="at">by =</span> <span class="st">"OTU_id"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data_otu_taxo_filt_rar)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(data_otu_filt_rar_temp)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>data_otu_taxo_filt_rar[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum per Phyla</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>com_per_treatment_phylum_temp <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(data_otu_taxo_filt_rar[, <span class="dv">10</span><span class="sc">:</span><span class="dv">15</span>], <span class="at">by=</span><span class="fu">list</span>(<span class="at">Phylum=</span>data_otu_taxo_filt_rar<span class="sc">$</span>Phylum), sum)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidying the data set</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>com_per_treatment_phylum <span class="ot">&lt;-</span> com_per_treatment_phylum_temp <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key   =</span> treatment, <span class="at">value =</span> obs_values,<span class="sc">-</span>Phylum)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Barplot</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>com_per_treatment_phylum <span class="sc">%&gt;%</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">treatment =</span> <span class="fu">fct_relevel</span>(treatment, <span class="st">"Cleron_July"</span>, <span class="st">"Cleron_August"</span>, <span class="st">"Cleron_September"</span>, <span class="st">"Parcey_July"</span>, <span class="st">"Parcey_August"</span>, <span class="st">"Parcey_September"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> obs_values, <span class="at">fill =</span> Phylum)) <span class="sc">+</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.9</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(), <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>)) <span class="sc">+</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span> <span class="st">'Bacterial community composition at Phylum level'</span>, <span class="at">x=</span> <span class="st">''</span>, <span class="at">y=</span> <span class="st">'Proportion of the total counts'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
