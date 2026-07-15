@@ -559,9 +559,22 @@ Considerations for your own data
 </ul></li>
 <li><p>For data that is not normally distributed, we can test for significance between samples using a non-parametric test (e.g., A Dunn test with <code>FSA</code> package, or a Nemenyi test with the <code>PMCMRplus</code> package).</p>
 <ul>
-<li><code>dunnTest(alpha_metric ~ Variable, data=alpha_diversity)</code> ::: {.callout-tip title=“Stop &amp; think”} Before performing a post-hoc test, think about how many levels your variable of interest has. It’s pretty much useless to perform an omnibus or post-hoc test on a variable with only two levels - just use a pairwise comparison test to compare group means. :::</li>
+<li><code>dunnTest(alpha_metric ~ Variable, data=alpha_diversity)</code></li>
 </ul></li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Stop &amp; think
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before performing a post-hoc test, think about how many levels your variable of interest has. It’s pretty much useless to perform an omnibus or post-hoc test on a variable with only two levels - just use a pairwise comparison test to compare group means.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="visualizing-alpha-diversity-metrics-with-statistics" class="level3">
@@ -711,90 +724,13 @@ Considerations for your own data
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <p>If you decide to perform a nMDS ordination, you will need to interpret the <strong>stress</strong> value. The stress value falls between 0-1 and essentially tells us how well the data ‘fits’. A lower stress value indicates a better fit - ideally, you want this to be below 0.2:</p>
-<div class="line-block">Stress | Fit | Description |<br>
-&lt;0.05 | Excellent | Good fit for nMDS interpretation |<br>
-&lt;0.1 | Good | Good fit with little risk of misinterpretation |<br>
-&lt;0.2 | Fair | Usable… |<br>
-&gt;0.2 | Poor | Poorly represents the data |</div>
-<p>The more dimensions (<code>k</code>) that you have, the lower the stress value will be. This is because having more dimensions reduces constraints on the distances of the data. However, the goal of nMDS ordination is being able to increase interpretation which we do by <strong>reducing the number of dimensions</strong>, so we can’t just keep adding more dimensions to give us a better fit - lower dimensions are easier to interpret.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">137</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#perform nMDS</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>nmds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(rarefied_filtered_asv_count.data, <span class="at">distance =</span> <span class="st">"bray"</span>,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trymax =</span> <span class="dv">100</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in decostand(x, "max", 2, na.rm = na.rm): result contains NaN, perhaps due to impossible mathematical
-                 operation</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in decostand(x, "total", 1, na.rm = na.rm): result contains NaN, perhaps due to impossible mathematical
-                 operation</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in postMDS(out$points, dis, plot = max(0, plot - 1), ...): skipping
-half-change scaling: too few points below threshold</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in metaMDS(rarefied_filtered_asv_count.data, distance = "bray", : WA
-scores were not calculated due to missing values</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check stress value</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>nmds<span class="sc">$</span>stress</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1427212</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#extract data</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>data.scores <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scores</span>(nmds))</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>data.scores<span class="sc">$</span>SampleID <span class="ot">&lt;-</span> <span class="fu">rownames</span>(data.scores)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data.scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                  NMDS1       NMDS2   SampleID
-1BFlemo_1A -0.219356495 -0.37423464 1BFlemo_1A
-1BFlemo_1N  0.327893187 -0.11293496 1BFlemo_1N
-1BSWR_1A    0.506505231 -0.03565225   1BSWR_1A
-1BSWR_1N    0.411424543  0.22423773   1BSWR_1N
-1KFlemo_1A  0.004288928 -0.18972659 1KFlemo_1A
-1KFlemo_1N  0.090860025 -0.06519660 1KFlemo_1N</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#add metadata</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>nmds.data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(data.scores, filtered_meta.data, <span class="at">by =</span> <span class="st">"SampleID"</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nmds.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         NMDS1       NMDS2   SampleID Oxygen_Level Nutrient_Source
-1 -0.219356495 -0.37423464 1BFlemo_1A      Aerobic       Bone meal
-2  0.327893187 -0.11293496 1BFlemo_1N    Anaerobic       Bone meal
-3  0.506505231 -0.03565225   1BSWR_1A      Aerobic       Bone meal
-4  0.411424543  0.22423773   1BSWR_1N    Anaerobic       Bone meal
-5  0.004288928 -0.18972659 1KFlemo_1A      Aerobic            Kelp
-6  0.090860025 -0.06519660 1KFlemo_1N    Anaerobic            Kelp
-  Inoculant_Source Steep_Time
-1            Flemo          1
-2            Flemo          1
-3              SWR          1
-4              SWR          1
-5            Flemo          1
-6            Flemo          1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot nMDS</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>nmds.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nmds.data, <span class="fu">aes</span>(NMDS1, NMDS2, <span class="at">color =</span> Oxygen_Level, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Oxygen_Level), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co">#add a scatterplot</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NMDS1"</span>, <span class="at">y =</span> <span class="st">"NMDS2"</span>, <span class="at">color =</span> <span class="st">"Oxygen Level"</span>, <span class="at">fill=</span><span class="st">"Oxygen Level"</span>, <span class="at">shape=</span><span class="st">"Oxygen Level"</span>) <span class="sc">+</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="co">#theme with grid background</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>nmds.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="dataviz_files/figure-html/nmds-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
 </div>
 </div>
-</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"></ul>
+<div class="tab-content">
+
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
@@ -820,8 +756,8 @@ Stop &amp; think
 <p>The test can be applied in combination with any distance measure. Here we use the Bray-Curtis distance used for the PCoA above.</p>
 <p>First, we will test if there is any significant effect of the treatment/variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PERMANOVA test using the vegan package</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>filtered_meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PERMANOVA test using the vegan package</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(rarefied_filtered_asv_count.data<span class="sc">~</span>Oxygen_Level,<span class="at">data=</span>filtered_meta.data, <span class="at">permutations=</span><span class="dv">9999</span>, <span class="at">method=</span><span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for adonis under reduced model
 Permutation: free
@@ -849,7 +785,7 @@ Stop &amp; think
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Answers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -858,7 +794,7 @@ Answers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If the P-value is less than 0.05, we can conclude that the intra-variability is lower than the inter-variability among the two groups and that we have a significant effect.</p>
 </div>
