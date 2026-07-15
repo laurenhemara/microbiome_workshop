@@ -287,7 +287,8 @@ Stop &amp; think
 </section>
 <section id="alpha-diversity" class="level2">
 <h2 class="anchored" data-anchor-id="alpha-diversity">Alpha diversity</h2>
-<p>Alpha diversity represents diversity <strong>within a sample</strong>. In other words, <strong>what is there</strong> and <strong>how much is there</strong> in terms of species. When it comes to microbes, it’s not always easy to define a species… Fortunately, we can calculate alpha diversity at different taxonomic levels. In this tutorial, we are looking at the <strong>ASV level</strong>.</p>
+<p>Alpha (α) diversity represents diversity <strong>within a sample</strong>. In other words, <strong>what is there</strong> and <strong>how much is there</strong> in terms of species. When it comes to microbes, it’s not always easy to define a species… Fortunately, we can calculate alpha diversity at different taxonomic levels. In this tutorial, we are looking at the <strong>ASV level</strong>.</p>
+<p><img src="butterfly.png" class="img-fluid"></p>
 <p>Several alpha diversity indices can be calculated. Each index take into account different factors, which gives them unique advantages for assessing diversity within a sample:</p>
 <ul>
 <li><p><strong>Richness</strong> represents the total number of of distinct units observed within a sample. In our case, these are ASVs.</p></li>
@@ -346,7 +347,8 @@ Stop &amp; think
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here we are using the <code>estimateR()</code> and <code>diversity()</code> functions from the <code>vegan</code> package to calculate alpha diversity metrics.</p>
-<p><strong>Estimate richness</strong>: The <code>estimateR()</code> function estimates two richness types: bias-corrected Chao Chiu et al., 2014 and ACE O’Hara 2005.</p>
+<p><strong>Estimate richness</strong> <strong>with the <code>estimateR()</code> function:</strong> This function estimates three richness types - observed species richness (<code>S.obs</code>), bias-corrected Chao (<code>S.chao1</code>; Chiu et al., 2014) and ACE (<code>S.ACE</code>; O’Hara 2005).</p>
+<p>Note: <a href="https://academic.oup.com/ismej/article/18/1/wrae106/7692950?login=false">Nonparametric richness estimators Chao1 and ACE must <em>not</em> be used with amplicon sequence variant data - using these richness estimators with ASV data leads to meaningless results.</a>. Therefore, we will only interpret <code>S.obs</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#estimate richness using ASV count data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>alpha_richness <span class="ot">&lt;-</span> <span class="fu">estimateR</span>(rarefied_filtered_asv_count.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -362,17 +364,20 @@ Stop &amp; think
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#estimate Simpson diversity</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>alpha_simpson <span class="ot">&lt;-</span> <span class="fu">diversity</span>(rarefied_filtered_asv_count.data, <span class="at">index=</span><span class="st">"simpson"</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#combine all indices into one alpha diversity data object</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">cbind</span>(filtered_meta.data, <span class="fu">t</span>(alpha_richness), alpha_evenness, alpha_shannon, alpha_simpson)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#estimate inverse Simpson diversity</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>alpha_invsimpson <span class="ot">&lt;-</span> <span class="fu">diversity</span>(rarefied_filtered_asv_count.data, <span class="at">index=</span><span class="st">"invsimpson"</span>)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#remove rownames</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(alpha_diversity) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#combine all indices into one alpha diversity data object</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">cbind</span>(filtered_meta.data, <span class="fu">t</span>(alpha_richness), alpha_evenness, alpha_shannon, alpha_simpson, alpha_invsimpson)</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#check out the new data</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(alpha_diversity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#remove rownames</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(alpha_diversity) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#check out the new data</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(alpha_diversity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 16
-Columns: 13
+Columns: 14
 $ SampleID         &lt;chr&gt; "1BFlemo_1A", "1BFlemo_1N", "1BSWR_1A", "1BSWR_1N", "…
 $ Oxygen_Level     &lt;chr&gt; "Aerobic", "Anaerobic", "Aerobic", "Anaerobic", "Aero…
 $ Nutrient_Source  &lt;chr&gt; "Bone meal", "Bone meal", "Bone meal", "Bone meal", "…
@@ -385,7 +390,8 @@ $ S.ACE            &lt;dbl&gt; 114.29060, 110.03605, 82.48033, 314.08412, 275.04
 $ se.ACE           &lt;dbl&gt; 7.321330, 3.687589, 2.755152, 9.573733, 8.027222, 8.4…
 $ alpha_evenness   &lt;dbl&gt; 0.8464758, 0.9486379, 0.9566284, 0.9473875, 0.9676465…
 $ alpha_shannon    &lt;dbl&gt; 3.507063, 4.378078, 4.215593, 5.065783, 5.205839, 5.3…
-$ alpha_simpson    &lt;dbl&gt; 0.961488, 0.985440, 0.982464, 0.991608, 0.993592, 0.9…</code></pre>
+$ alpha_simpson    &lt;dbl&gt; 0.961488, 0.985440, 0.982464, 0.991608, 0.993592, 0.9…
+$ alpha_invsimpson &lt;dbl&gt; 25.96593, 68.68132, 57.02555, 119.16111, 156.05493, 1…</code></pre>
 </div>
 </div>
 </section>
@@ -435,6 +441,7 @@ Exercise: plot the other alpha diversity metrics
 <li><p><strong>Evenness</strong> (<code>alpha_diversity$alpha_evenness</code>)</p></li>
 <li><p><strong>Shannon diversity</strong> (<code>alpha_diversity$alpha_shannon</code>)</p></li>
 <li><p><strong>Simpson diversity</strong> (<code>alpha_diversity$alpha_simpson</code>)</p></li>
+<li><p><strong>Inverse Simpson diversity</strong> (<code>alpha_diversity$alpha_simpson</code>)</p></li>
 </ul>
 </div>
 </div>
@@ -452,7 +459,7 @@ Stop &amp; think
 <li>How many ASVs are observed across the different treatments?</li>
 <li>How do you interpret the Evenness and Shannon plots?</li>
 <li>Are there big differences between samples belonging to the same treatment?</li>
-<li>Are there big differences between treatments?</li>
+<li>Do any of your treatments or variables have an effect on alpha diversity?</li>
 <li>How could you check this?</li>
 </ul>
 </div>
@@ -465,16 +472,16 @@ Stop &amp; think
 <p>Now we’ll use statistical tests to test whether there are any significant differences between treatments.</p>
 <p>Before running significance tests, we need to know if data is normally distributed, which will tell use whether to use a parametric or non-parametric test. To test if the data are normally distributed, we will use the <strong>Shapiro-Wilk Normality test</strong>.</p>
 <ul>
-<li><p>If the p-values are both <strong>not significant (p &gt; 0.05)</strong>, we accept the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>parametric tests</strong> e.g., pairwise t-test and omnibus ANOVA).</p>
+<li><p>If the p-value is <strong>not significant (p &gt; 0.05)</strong>, we accept the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>parametric tests</strong> (e.g., pairwise t-test and omnibus ANOVA).</p>
 <ul>
 <li><code>summary(aov(metric ~ variable, data = alpha_diversity))</code></li>
 </ul></li>
-<li><p>If the p-values are both <strong>significant (p &lt; 0.05)</strong>, we reject the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>non-parametric tests</strong> e.g., pairwise Wilcoxon and omnibus Kruskal-Wallis).</p>
+<li><p>If the p-value is <strong>significant (p &lt; 0.05)</strong>, we reject the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>non-parametric tests</strong> (e.g., pairwise Wilcoxon and omnibus Kruskal-Wallis).</p>
 <ul>
-<li><p><code>kruskal.test(metric ~ variable, data = alpha_diversity)</code></p>
-<p>For this first example, we’ll be looking at the <strong>Shannon diversity metric</strong>.</p></li>
+<li><code>kruskal.test(metric ~ variable, data = alpha_diversity)</code></li>
 </ul></li>
 </ul>
+<p>For this first example, we’ll be looking at the <strong>Shannon diversity metric</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform normality tests on shannon diversity metric</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(alpha_diversity<span class="sc">$</span>alpha_shannon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -511,57 +518,7 @@ W = 0.96181, p-value = 0.6947</code></pre>
 </div>
 </div>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Normally distributed data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Non-normally distributed daata</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<section id="performing-an-omnibus-test" class="level4">
-<h4 class="anchored" data-anchor-id="performing-an-omnibus-test">Performing an omnibus test</h4>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform an ANOVA omnibus test</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>shannon_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(alpha_shannon <span class="sc">~</span> Oxygen_Level, <span class="at">data =</span> alpha_diversity)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(shannon_aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)
-Oxygen_Level  1  0.836  0.8361   3.025  0.104
-Residuals    14  3.870  0.2764               </code></pre>
-</div>
-</div>
-</section>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Considerations for your own data
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Is your data normally distributed?</p>
-<p>Do any of your treatments or variables have an effect on alpha diversity?</p>
-</div>
-</div>
-</section>
-<section id="post-hoc-tests" class="level4">
-<h4 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc tests</h4>
-<p>An omnibus test (e.g., ANOVA or Kruskal-Wallis) may tell us that there is significant difference between the treatments, but it <strong>can’t tell us <em>which</em> treatment</strong> is significantly different from the others. In order to compare groups and find exactly which groups within a variable are different from each other, we can perform a post-hoc test:</p>
-<ul>
-<li><p>For normally distributed data, we can test for significance between samples using a parametric test (e.g., Tukey’s Honest Significant Difference).</p>
-<ul>
-<li><code>HSD.test(metric_aov, "Variable", group=T)$groups</code></li>
-</ul></li>
-<li><p>For data that is not normally distributed, we can test for significance between samples using a non-parametric test (e.g., A Dunn test with <code>FSA</code> package, or a Nemenyi test with the <code>PMCMRplus</code> package).</p>
-<ul>
-<li><code>dunnTest(alpha_metric ~ Variable, data=alpha_diversity)</code></li>
-</ul></li>
-</ul>
+<p>An omnibus test (e.g., ANOVA or Kruskal-Wallis) may tell us that there is significant difference between the treatments, but it <strong>can’t tell us <em>which</em> treatment</strong> is significantly different from the others. In order to compare groups and find exactly which groups within a variable are different from each other, we can perform a post-hoc test.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -573,6 +530,58 @@ Stop &amp; think
 </div>
 <div class="callout-body-container callout-body">
 <p>Before performing a post-hoc test, think about how many levels your variable of interest has. It’s pretty much useless to perform an omnibus or post-hoc test on a variable with only two levels - just use a pairwise comparison test to compare group means.</p>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Parametric tests for normally distributed data</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Performing pairwise comparisons</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Performing an omnibus test</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Performing a post-hoc test</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># perform an ANOVA omnibus test</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>metric_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(metric <span class="sc">~</span> variable, <span class="at">data =</span> alpha_diversity)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(metric_aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>For normally distributed data, we can test for significance between samples using a parametric test (e.g., Tukey’s Honest Significant Difference).</p>
+<ul>
+<li><code>HSD.test(metric_aov, "Variable", group=T)$groups</code></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Non-parametric tests for non-normal data</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<section id="performing-pairwise-comparisons-1" class="level4">
+<h4 class="anchored" data-anchor-id="performing-pairwise-comparisons-1">Performing pairwise comparisons</h4>
+</section>
+<section id="performing-an-omnibus-test-1" class="level4">
+<h4 class="anchored" data-anchor-id="performing-an-omnibus-test-1">Performing an omnibus test</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform a non-parametric kw omnibus test</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(metric <span class="sc">~</span> variable, <span class="at">data =</span> alpha_diversity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="performing-a-post-hoc-test-1" class="level4">
+<h4 class="anchored" data-anchor-id="performing-a-post-hoc-test-1">Performing a post-hoc test</h4>
+<p>For data that is not normally distributed, we can test for significance between samples using a non-parametric test (e.g., A Dunn test with <code>FSA</code> package, or a Nemenyi test with the <code>PMCMRplus</code> package).</p>
+<ul>
+<li><code>dunnTest(alpha_metric ~ Variable, data=alpha_diversity)</code></li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -667,9 +676,9 @@ Considerations for your own data
 <p>The dimensions are whatever you’ve measured in each sample - in this case, these are our counts for each ASV.</p>
 <p>There are several ordination techniques we could potentially use to do this:</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Principal Components Analysis</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">non-metric multidimensional scaling (nMDS)</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Principal Components Analysis</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">non-metric multidimensional scaling (nMDS)</a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <p>Today, we’re looking specifically at PCoA visualizations. We prioritize PCoA because this technique preserves true distances and is reproducible.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform classic multidimensional scaling (cMDS)</span></span>
@@ -722,7 +731,7 @@ Considerations for your own data
 </div>
 </div>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <p>If you decide to perform a nMDS ordination, you will need to interpret the <strong>stress</strong> value. The stress value falls between 0-1 and essentially tells us how well the data ‘fits’. A lower stress value indicates a better fit - ideally, you want this to be below 0.2:</p>
 </div>
 </div>
@@ -785,7 +794,7 @@ Stop &amp; think
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Answers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -794,7 +803,7 @@ Answers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If the P-value is less than 0.05, we can conclude that the intra-variability is lower than the inter-variability among the two groups and that we have a significant effect.</p>
 </div>
@@ -900,7 +909,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/laurenhemara\.github\.io\/microbiome_workshop\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
