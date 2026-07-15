@@ -191,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p>Carrie will be telling us about how you can project environmental factors onto your PCoA with <code>envfit()</code>.</p></li>
 <li><p>Kara will show us how you can add density plots to your PCoA ordination plots.</p></li>
-<li><p>Lauren will talk about how you can determine &amp; visualize the core microbiome.</p>
+<li><p>Lauren will talk about how you visualize taxonomic composition with <code>phyloseq()</code>.</p>
 <p><img src="discussion.png" class="img-fluid" width="400"></p></li>
 </ul></li>
 </ul>
@@ -291,7 +291,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/laurenhemara\.github\.io\/microbiome_workshop\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

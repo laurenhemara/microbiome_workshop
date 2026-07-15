@@ -307,7 +307,7 @@
     "href": "day4_introduction.html",
     "title": "Show & Tell + Advanced Data Viz",
     "section": "",
-    "text": "On Day 4 (Wednesday 22 July), we will have a guided group discussion on next steps for creating publication-worthy plots, different types of advanced data visualizations, and resources for further self-guided learning.\nCome prepared & ready to present:\n\nYour most interesting figure from last week.\nAn interesting microbiome figure that you’d like to learn how to make.\n\nCarrie will be telling us about how you can project environmental factors onto your PCoA with envfit().\nKara will show us how you can add density plots to your PCoA ordination plots.\nLauren will talk about how you can determine & visualize the core microbiome.",
+    "text": "On Day 4 (Wednesday 22 July), we will have a guided group discussion on next steps for creating publication-worthy plots, different types of advanced data visualizations, and resources for further self-guided learning.\nCome prepared & ready to present:\n\nYour most interesting figure from last week.\nAn interesting microbiome figure that you’d like to learn how to make.\n\nCarrie will be telling us about how you can project environmental factors onto your PCoA with envfit().\nKara will show us how you can add density plots to your PCoA ordination plots.\nLauren will talk about how you visualize taxonomic composition with phyloseq().",
     "crumbs": [
       "Day 4: Show & tell + advanced data viz"
     ]
