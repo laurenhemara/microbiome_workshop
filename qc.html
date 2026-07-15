@@ -548,54 +548,15 @@ Answers
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Considerations for your own data
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<ul>
-<li>Microbial ecologists usually remove singletons (ASVs for which only one read has been identified in the full ASV table), as these are likely to be artifacts.</li>
-<li>Be aware that some diversity metrics take these singletons into account, so you might not always want to remove them (e.g., Chao1 alpha diversity).</li>
-<li>Another option for data filtering could be to remove ASVs that have a total count (per ASV, over all samples) lower than a defined value.</li>
-<li>As a reminder, chimeric amplification products have been already removed in DADA2 pipeline.</li>
-</ul>
-</div>
-</div>
-</div>
-<p><strong>Plot the ASV occurrence frequency as a histogram:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot frequency as a histogram </span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">as.matrix</span>(filtered_asv_count.data),  </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">max</span>(filtered_asv_count.data),  </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">right =</span> <span class="cn">FALSE</span>,  </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">las =</span> <span class="dv">1</span>, </span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Occurrence value"</span>,  </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Frequency"</span>,  </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Occurrence frequency"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="qc_files/figure-html/asv freq-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
 <p><strong>Check how frequently ASVs are shared between samples:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>non_zero <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">*</span><span class="dv">1</span><span class="sc">:</span>nb_var</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nb_var){</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  non_zero[i]<span class="ot">&lt;-</span><span class="fu">sum</span>(filtered_asv_count.data[,i] <span class="sc">!=</span> <span class="dv">0</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(non_zero, <span class="at">xlab =</span> <span class="st">"ASV"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>, <span class="at">main =</span> <span class="st">"Number of non zero values"</span>, <span class="at">las =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>non_zero <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">*</span><span class="dv">1</span><span class="sc">:</span>nb_var</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nb_var){</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  non_zero[i]<span class="ot">&lt;-</span><span class="fu">sum</span>(filtered_asv_count.data[,i] <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(non_zero, <span class="at">xlab =</span> <span class="st">"ASV"</span>, <span class="at">ylab =</span> <span class="st">"Frequency"</span>, <span class="at">main =</span> <span class="st">"Number of non zero values"</span>, <span class="at">las =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -642,7 +603,7 @@ Stop &amp; think
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Answers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -651,7 +612,7 @@ Answers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li>It is important to know if we sequenced enough to capture all the diversity present in our environment.</li>
@@ -665,31 +626,31 @@ Answers
 <h4 class="anchored" data-anchor-id="checking-library-size">Checking library size</h4>
 <p><strong>Check the number of ASV counts per sample:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the number of counts per sample</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>library_size <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(filtered_asv_count.data)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(library_size)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#check if any samples have zero counts</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>library_size[library_size <span class="sc">==</span> <span class="dv">0</span>]</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the number of counts per sample as a histogram</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(library_size, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), <span class="at">main=</span><span class="fu">c</span>(<span class="st">"Number of counts per sample"</span>), <span class="at">xlab=</span><span class="fu">c</span>(<span class="st">"Samples"</span>))</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#check the minimum library size</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(library_size)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co">#check the maximum library size</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(library_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the number of counts per sample</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>library_size <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(filtered_asv_count.data)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(library_size)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#check if any samples have zero counts</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>library_size[library_size <span class="sc">==</span> <span class="dv">0</span>]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the number of counts per sample as a histogram</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(library_size, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">25000</span>), <span class="at">main=</span><span class="fu">c</span>(<span class="st">"Number of counts per sample"</span>), <span class="at">xlab=</span><span class="fu">c</span>(<span class="st">"Samples"</span>))</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#check the minimum library size</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(library_size)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#check the maximum library size</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(library_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Removing negative controls (by row) and re-checking library size:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check library size AFTER removing negative controls </span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>controls_removed_filtered_asv_count.data <span class="ot">&lt;-</span> filtered_asv_count.data[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">17</span>,<span class="dv">18</span>),] </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>controls_removed_library_size <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(controls_removed_filtered_asv_count.data) </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(controls_removed_library_size)  </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(controls_removed_library_size) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check library size AFTER removing negative controls </span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>controls_removed_filtered_asv_count.data <span class="ot">&lt;-</span> filtered_asv_count.data[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">17</span>,<span class="dv">18</span>),] </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>controls_removed_library_size <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(controls_removed_filtered_asv_count.data) </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(controls_removed_library_size)  </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(controls_removed_library_size) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Considerations for your own data">
 <div class="callout-header d-flex align-content-center">
@@ -714,8 +675,8 @@ Considerations for your own data
 <h3 class="anchored" data-anchor-id="checking-the-rarefaction-curve">Checking the rarefaction curve</h3>
 <p>We can explore sequencing depth though a rarefaction curve. The rarefaction curve shows how many new ASVs are observed when we obtain new reads for a given sample - essentially visualizing ASV richness across sampling depths.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rarecurve</span>(controls_removed_filtered_asv_count.data, <span class="at">step =</span> <span class="dv">100</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">las =</span> <span class="dv">1</span>,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab=</span><span class="st">"Number of reads"</span>, <span class="at">ylab =</span> <span class="st">"Number of ASVs observed"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rarecurve</span>(controls_removed_filtered_asv_count.data, <span class="at">step =</span> <span class="dv">100</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">las =</span> <span class="dv">1</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab=</span><span class="st">"Number of reads"</span>, <span class="at">ylab =</span> <span class="st">"Number of ASVs observed"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in rarecurve(controls_removed_filtered_asv_count.data, step = 100, :
 most observed count data have counts 1, but smallest count is 2</code></pre>
@@ -748,40 +709,40 @@ Considerations for your own data
 <section id="rarefying-the-abundance-data" class="level3">
 <h3 class="anchored" data-anchor-id="rarefying-the-abundance-data">Rarefying the abundance data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set.seed() is a 'pseudo'-random number generator</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#this ensures your code is reproducible so you can repeat</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#this rarefaction process identically each time the code is run</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">137</span>) </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#check many samples have above 500 reads</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(library_size <span class="sc">&gt;=</span> <span class="dv">500</span>) </span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#create a rarefied ASV table</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>rarefied_filtered_asv_count.data <span class="ot">&lt;-</span> <span class="fu">rrarefy</span>(controls_removed_filtered_asv_count.data,<span class="dv">500</span>)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#check which samples were not rarefied </span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">rowSums</span>(controls_removed_filtered_asv_count.data) <span class="sc">&lt;</span> <span class="dv">500</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set.seed() is a 'pseudo'-random number generator</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#this ensures your code is reproducible so you can repeat</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#this rarefaction process identically each time the code is run</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">137</span>) </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#check many samples have above 500 reads</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(library_size <span class="sc">&gt;=</span> <span class="dv">500</span>) </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">#create a rarefied ASV table</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>rarefied_filtered_asv_count.data <span class="ot">&lt;-</span> <span class="fu">rrarefy</span>(controls_removed_filtered_asv_count.data,<span class="dv">500</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co">#check which samples were not rarefied </span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(<span class="fu">rowSums</span>(controls_removed_filtered_asv_count.data) <span class="sc">&lt;</span> <span class="dv">500</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calculating-the-relative-abundance-of-counts" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-the-relative-abundance-of-counts">Calculating the relative abundance of counts</h3>
 <p>Relative abundance is another normalization method. This step processes data as a proportion.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#convert ASV counts to percentages to calculate relative abundance</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>asv_percent.data <span class="ot">&lt;-</span>rarefied_filtered_asv_count.data<span class="sc">/</span><span class="fu">rowSums</span>(rarefied_filtered_asv_count.data)<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check how the data has changed</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(asv_percent.data)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#convert object to dataframe</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>asv_percent.df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(asv_percent.data)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#the t() function transposes the data so the samples (i.e., rows) become the columns</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>asv_relative_abundance.data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(asv_percent.df))</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">#have a look at our new dataframe</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(asv_relative_abundance.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#convert ASV counts to percentages to calculate relative abundance</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>asv_percent.data <span class="ot">&lt;-</span>rarefied_filtered_asv_count.data<span class="sc">/</span><span class="fu">rowSums</span>(rarefied_filtered_asv_count.data)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#check how the data has changed</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(asv_percent.data)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#convert object to dataframe</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>asv_percent.df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(asv_percent.data)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#the t() function transposes the data so the samples (i.e., rows) become the columns</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>asv_relative_abundance.data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">t</span>(asv_percent.df))</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#have a look at our new dataframe</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(asv_relative_abundance.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -810,17 +771,17 @@ Considerations for your own data
 </ul>
 <p>The <em>most</em> important thing to do at this stage is to <strong>save and export our data</strong> so we can analyze it later.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export filtered metadata to a file</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(filtered_meta.data, <span class="at">file=</span><span class="st">"filtered_sample_metadata.txt"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#export rarefied ASV table to a file</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(rarefied_filtered_asv_count.data, <span class="at">file=</span><span class="st">"rarefied_filtered_asv_abundance_table.txt"</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#export relative abundance ASV table to a file</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(asv_relative_abundance.data, <span class="at">file=</span><span class="st">"relative_rarefied_filtered_asv_abundance_table.txt"</span>)</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Export filtered taxonomy file to a file</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(filtered_taxa.data, <span class="at">file =</span> <span class="st">"filtered_taxonomy_table.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#export filtered metadata to a file</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(filtered_meta.data, <span class="at">file=</span><span class="st">"filtered_sample_metadata.txt"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#export rarefied ASV table to a file</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(rarefied_filtered_asv_count.data, <span class="at">file=</span><span class="st">"rarefied_filtered_asv_abundance_table.txt"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#export relative abundance ASV table to a file</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(asv_relative_abundance.data, <span class="at">file=</span><span class="st">"relative_rarefied_filtered_asv_abundance_table.txt"</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Export filtered taxonomy file to a file</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(filtered_taxa.data, <span class="at">file =</span> <span class="st">"filtered_taxonomy_table.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -919,7 +880,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/laurenhemara\.github\.io\/microbiome_workshop\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
