@@ -470,9 +470,14 @@ Stop &amp; think
 <section id="checking-the-normality-assumption" class="level4">
 <h4 class="anchored" data-anchor-id="checking-the-normality-assumption">Checking the normality assumption</h4>
 <p>Now we’ll use statistical tests to test whether there are any significant differences between treatments.</p>
-<p><em>Before</em> running significance tests, we need to know if data is normally distributed, which will tell use whether to use a parametric or non-parametric test. To test if the data are normally distributed, we will use the <strong>Shapiro-Wilk Normality test</strong>: - If the p-value is <strong>not significant (p &gt; 0.05)</strong>, we accept the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>parametric tests</strong>. - If the p-value is <strong>significant (p &lt; 0.05)</strong>, we reject the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>non-parametric tests</strong>.</p>
-<p>For this first example, we’ll be looking at the <strong>Shannon diversity metric</strong>.</p>
-<p><strong>Test if the data is normally distributed with a Shapiro-Wilk test:</strong></p>
+<p><em>Before</em> running significance tests, we need to know if data is normally distributed, which will tell use whether to use a parametric or non-parametric test.</p>
+<p>To test if the data are normally distributed, we will use the <strong>Shapiro-Wilk Normality test</strong>:</p>
+<ul>
+<li><p>If the p-value is <strong>not significant (p &gt; 0.05)</strong>, we accept the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>parametric tests</strong>.</p></li>
+<li><p>If the p-value is <strong>significant (p &lt; 0.05)</strong>, we reject the null hypothesis (that the results are normally distributed) and test for significance between samples using <strong>non-parametric tests</strong>.</p></li>
+</ul>
+<p>For this first example, we’ll be looking at the Shannon diversity metric.</p>
+<p><strong>Test if the data is normally distributed with a Shapiro-Wilks test:</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#perform normality tests on shannon diversity metric</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(alpha_diversity<span class="sc">$</span>alpha_shannon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -511,15 +516,13 @@ W = 0.9474, p-value = 0.4496</code></pre>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Shannon diversity"</span>) <span class="sc">+</span> <span class="co">#y axis label</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Oxygen level"</span>) <span class="sc">+</span> <span class="co">#x axis label</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#plot theme</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_compare_means</span>(<span class="at">method =</span> <span class="st">"anova"</span>,<span class="at">size=</span><span class="dv">4</span>,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"ANOVA, p="</span>, ..p.format..)), <span class="at">label.y=</span><span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pwc</span>(<span class="fu">aes</span>(<span class="at">group =</span> Oxygen_Level), <span class="co">#add t-test</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>   <span class="at">tip.length =</span> <span class="dv">0</span>,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>   <span class="at">method =</span> <span class="st">"t_test"</span>, </span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>   <span class="at">label =</span> <span class="st">"p.adj.format"</span>,</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>   <span class="at">p.adjust.method =</span> <span class="st">"fdr"</span>) <span class="co"># false discovery rate adjusted p-value</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>alpha_shannon_stats.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pwc</span>(<span class="fu">aes</span>(<span class="at">group =</span> Oxygen_Level), <span class="co">#add t-test</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">tip.length =</span> <span class="dv">0</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">method =</span> <span class="st">"t_test"</span>, </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>   <span class="at">label =</span> <span class="st">"p.adj.format"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>   <span class="at">p.adjust.method =</span> <span class="st">"fdr"</span>) <span class="co"># false discovery rate adjusted p-value</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>alpha_shannon_stats.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
