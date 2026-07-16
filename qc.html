@@ -596,7 +596,7 @@ Considerations for your own data
 <p>Sequencing depth and library size represent the number of counts per sample. This number can vary <em>a lot</em> among the different samples (up to 10-fold).</p>
 <p>Differences in library size can be due to technical biases or errors introduced when creating DNA sequencing libraries in the lab:</p>
 <ul>
-<li><p>The PCR amplification step can introduce some difference among samples because PCR amplification can be more orless efficient according to the sequence itself.</p></li>
+<li><p>The PCR amplification step can introduce some difference among samples because PCR amplification can be more or less efficient depending on the sequence itself.</p></li>
 <li><p>After cleaning up PCR amplicons from each sample, we typically measure the DNA concentration. Depending on the method used (e.g., band brightness, NanoDrop, Qubit), this may not be a highly accurate or sensitive measure.</p></li>
 <li><p>Then, according to these concentrations, we pool the different samples into one ‘equimolar’ mix, which can also introduce some error.</p></li>
 </ul>
@@ -664,7 +664,9 @@ Answers
 <span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Library size (counts)"</span>) <span class="sc">+</span></span>
 <span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">angle =</span> <span class="dv">45</span>)) <span class="sc">+</span></span>
 <span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>) </span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>library_size.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
