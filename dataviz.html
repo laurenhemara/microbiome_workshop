@@ -383,15 +383,15 @@ $ Oxygen_Level     &lt;chr&gt; "Aerobic", "Anaerobic", "Aerobic", "Anaerobic", "
 $ Nutrient_Source  &lt;chr&gt; "Bone meal", "Bone meal", "Bone meal", "Bone meal", "…
 $ Inoculant_Source &lt;chr&gt; "Flemo", "Flemo", "SWR", "SWR", "Flemo", "Flemo", "SW…
 $ Steep_Time       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 28, 28, 28, 28, 28, 28, 28, 28
-$ S.obs            &lt;dbl&gt; 63, 101, 82, 210, 217, 240, 132, 318, 127, 94, 71, 10…
-$ S.chao1          &lt;dbl&gt; 79.86667, 110.56250, 82.10000, 297.69231, 282.44231, …
-$ se.chao1         &lt;dbl&gt; 9.2883337, 6.0366733, 0.3817756, 23.5903552, 18.84469…
-$ S.ACE            &lt;dbl&gt; 114.29060, 110.03605, 82.48033, 314.08412, 275.04269,…
-$ se.ACE           &lt;dbl&gt; 7.321330, 3.687589, 2.755152, 9.573733, 8.027222, 8.4…
-$ alpha_evenness   &lt;dbl&gt; 0.8464758, 0.9486379, 0.9566284, 0.9473875, 0.9676465…
-$ alpha_shannon    &lt;dbl&gt; 3.507063, 4.378078, 4.215593, 5.065783, 5.205839, 5.3…
-$ alpha_simpson    &lt;dbl&gt; 0.961488, 0.985440, 0.982464, 0.991608, 0.993592, 0.9…
-$ alpha_invsimpson &lt;dbl&gt; 25.96593, 68.68132, 57.02555, 119.16111, 156.05493, 1…</code></pre>
+$ S.obs            &lt;dbl&gt; 63, 101, 82, 211, 216, 229, 129, 314, 118, 94, 68, 11…
+$ S.chao1          &lt;dbl&gt; 79.86667, 110.56250, 83.25000, 314.12500, 272.84211, …
+$ se.chao1         &lt;dbl&gt; 9.288334, 6.036673, 1.732135, 27.381249, 16.555334, 1…
+$ S.ACE            &lt;dbl&gt; 114.29060, 110.03605, 83.36671, 324.40060, 272.73841,…
+$ se.ACE           &lt;dbl&gt; 7.321330, 3.687589, 2.997188, 9.792608, 7.926618, 7.5…
+$ alpha_evenness   &lt;dbl&gt; 0.8464758, 0.9486379, 0.9540584, 0.9465465, 0.9671745…
+$ alpha_shannon    &lt;dbl&gt; 3.507063, 4.378078, 4.204267, 5.065783, 5.198832, 5.2…
+$ alpha_simpson    &lt;dbl&gt; 0.961488, 0.985440, 0.982256, 0.991592, 0.993528, 0.9…
+$ alpha_invsimpson &lt;dbl&gt; 25.96593, 68.68132, 56.35708, 118.93435, 154.51174, 1…</code></pre>
 </div>
 </div>
 </section>
@@ -501,7 +501,7 @@ Stop &amp; think
     Shapiro-Wilk normality test
 
 data:  alpha_diversity$alpha_shannon
-W = 0.96181, p-value = 0.6947</code></pre>
+W = 0.9474, p-value = 0.4496</code></pre>
 </div>
 </div>
 <p>We can also visually assess the normality assumption:</p>
@@ -670,11 +670,11 @@ Considerations for your own data
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>bc_dist[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           1BFlemo_1A 1BFlemo_1N 1BSWR_1A 1BSWR_1N 1KFlemo_1A
-1BFlemo_1A      0.000      0.992    1.000    1.000      0.976
-1BFlemo_1N      0.992      0.000    0.966    0.992      0.998
-1BSWR_1A        1.000      0.966    0.000    0.876      1.000
-1BSWR_1N        1.000      0.992    0.876    0.000      0.994
-1KFlemo_1A      0.976      0.998    1.000    0.994      0.000</code></pre>
+1BFlemo_1A      0.000      0.992    1.000    1.000      0.978
+1BFlemo_1N      0.992      0.000    0.968    0.994      0.998
+1BSWR_1A        1.000      0.968    0.000    0.874      1.000
+1BSWR_1N        1.000      0.994    0.874    0.000      0.996
+1KFlemo_1A      0.978      0.998    1.000    0.996      0.000</code></pre>
 </div>
 </div>
 <section id="visualizing-high-dimensional-data-with-ordination-techniques" class="level3">
@@ -707,11 +707,11 @@ Considerations for your own data
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co">#report the percentage explained</span></span>
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC1 explains "</span>,<span class="fu">signif</span>(pe_PC1,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "PC1 explains 14.8% of variance observed"</code></pre>
+<pre><code>[1] "PC1 explains 14.7% of variance observed"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC2 explains "</span>,<span class="fu">signif</span>(pe_PC2,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "PC2 explains 11.9% of variance observed"</code></pre>
+<pre><code>[1] "PC2 explains 11.6% of variance observed"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create PCoA summary data</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>pcoa.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
@@ -797,32 +797,32 @@ scores were not calculated due to missing values</code></pre>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#check stress value</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>nmds<span class="sc">$</span>stress</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1427212</code></pre>
+<pre><code>[1] 0.1440073</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#extract data</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>data.scores <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scores</span>(nmds))</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>data.scores<span class="sc">$</span>SampleID <span class="ot">&lt;-</span> <span class="fu">rownames</span>(data.scores)</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data.scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                  NMDS1       NMDS2   SampleID
-1BFlemo_1A -0.219356495 -0.37423464 1BFlemo_1A
-1BFlemo_1N  0.327893187 -0.11293496 1BFlemo_1N
-1BSWR_1A    0.506505231 -0.03565225   1BSWR_1A
-1BSWR_1N    0.411424543  0.22423773   1BSWR_1N
-1KFlemo_1A  0.004288928 -0.18972659 1KFlemo_1A
-1KFlemo_1N  0.090860025 -0.06519660 1KFlemo_1N</code></pre>
+<pre><code>                 NMDS1       NMDS2   SampleID
+1BFlemo_1A -0.43022888  0.29171692 1BFlemo_1A
+1BFlemo_1N -0.31324118  0.01257887 1BFlemo_1N
+1BSWR_1A   -0.42754163 -0.13738024   1BSWR_1A
+1BSWR_1N   -0.29901133 -0.36141435   1BSWR_1N
+1KFlemo_1A  0.10639051  0.15604908 1KFlemo_1A
+1KFlemo_1N -0.07043807  0.00396267 1KFlemo_1N</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#add metadata</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>nmds.data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(data.scores, filtered_meta.data, <span class="at">by =</span> <span class="st">"SampleID"</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nmds.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         NMDS1       NMDS2   SampleID Oxygen_Level Nutrient_Source
-1 -0.219356495 -0.37423464 1BFlemo_1A      Aerobic       Bone meal
-2  0.327893187 -0.11293496 1BFlemo_1N    Anaerobic       Bone meal
-3  0.506505231 -0.03565225   1BSWR_1A      Aerobic       Bone meal
-4  0.411424543  0.22423773   1BSWR_1N    Anaerobic       Bone meal
-5  0.004288928 -0.18972659 1KFlemo_1A      Aerobic            Kelp
-6  0.090860025 -0.06519660 1KFlemo_1N    Anaerobic            Kelp
+<pre><code>        NMDS1       NMDS2   SampleID Oxygen_Level Nutrient_Source
+1 -0.43022888  0.29171692 1BFlemo_1A      Aerobic       Bone meal
+2 -0.31324118  0.01257887 1BFlemo_1N    Anaerobic       Bone meal
+3 -0.42754163 -0.13738024   1BSWR_1A      Aerobic       Bone meal
+4 -0.29901133 -0.36141435   1BSWR_1N    Anaerobic       Bone meal
+5  0.10639051  0.15604908 1KFlemo_1A      Aerobic            Kelp
+6 -0.07043807  0.00396267 1KFlemo_1N    Anaerobic            Kelp
   Inoculant_Source Steep_Time
 1            Flemo          1
 2            Flemo          1
@@ -884,9 +884,9 @@ Number of permutations: 9999
 
 adonis2(formula = rarefied_filtered_asv_count.data ~ Oxygen_Level, data = filtered_meta.data, permutations = 9999, method = "bray")
          Df SumOfSqs      R2      F Pr(&gt;F)
-Model     1   0.4314 0.06204 0.9259 0.5628
-Residual 14   6.5220 0.93796              
-Total    15   6.9534 1.00000              </code></pre>
+Model     1   0.4257 0.06121 0.9128 0.6069
+Residual 14   6.5295 0.93879              
+Total    15   6.9552 1.00000              </code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Stop &amp; think">
@@ -919,7 +919,31 @@ Answers
 </div>
 </div>
 </div>
-<p>Where to from here? The sky’s the limit!</p>
+</section>
+<section id="confidence-intervals" class="level4">
+<h4 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h4>
+<p>The <code>stat_ellipse()</code> function draws a 95% confidence level around each group of points (assuming a Student’s t distribution).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>pcoa_ellipse.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pcoa.data, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Oxygen_Level, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Oxygen_Level), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co">#add a scatterplot</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#4477AA"</span>,<span class="st">"#EE6677"</span>)) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA1 ("</span>, <span class="fu">round</span>(pe_PC1, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA2 ("</span>, <span class="fu">round</span>(pe_PC2, <span class="dv">2</span>), <span class="st">"% variance explained)"</span>),</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Oxygen Level"</span>, <span class="at">fill=</span><span class="st">"Oxygen Level"</span>, <span class="at">shape=</span><span class="st">"Oxygen Level"</span>) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co">#theme with grid background</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_ellipse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+
+</div>
+</div>
+</div>
 
 
 </section>
