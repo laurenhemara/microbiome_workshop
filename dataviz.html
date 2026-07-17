@@ -509,6 +509,24 @@ Stop &amp; think
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="COnsiderations for your data">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+COnsiderations for your data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here, we report an <em>adjusted</em> p-value, which adjusts for multiple testing to correct for the occurrence of false positives.</p>
+<p>There are different p adjustment methods you can use for this:</p>
+<ul>
+<li><p><strong>Bonferroni</strong> is more strict &amp; basically ensures no chance of false positives - this is good for confirming critical results (e.g., new drug tests). This adjustment works by dividing your percent chance of false positives by the number of samples. For example, p &lt; 0.05 divided by 1000 comparisons becomes p &lt; 0.00005.</p></li>
+<li><p><strong>FDR</strong> is less strict - some false positives are still possible. However, it <em>is</em> able to detect more true positives. This makes it good for exploratory data like environmental microbiology (e.g., identifying target taxa in experimental data). This adjustment works by ordering p values from smallest to largest, and identifying a % threshold cutoff based on number of comparisons (uses rank order/# of comparisons * % threshold).</p></li>
+</ul>
+</div>
+</div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <p><strong>An omnibus test</strong> will tell us whether there is a significant difference between any of the groups. However, it can’t tell us <em>which</em> group is significantly different from the others.</p>
@@ -884,7 +902,7 @@ Stop &amp; think
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Answers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -893,7 +911,7 @@ Answers
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>If the P-value is less than 0.05, we can conclude that the intra-variability is lower than the inter-variability among the two groups and that we have a significant effect.</p>
 </div>
