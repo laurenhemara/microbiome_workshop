@@ -163,7 +163,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#resources" id="toc-resources" class="nav-link active" data-scroll-target="#resources">Resources</a>
+  <li><a href="#checklist" id="toc-checklist" class="nav-link active" data-scroll-target="#checklist">Checklist</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a>
   <ul class="collapse">
   <li><a href="#phyloseq-3" id="toc-phyloseq-3" class="nav-link" data-scroll-target="#phyloseq-3">Phyloseq &lt;3</a></li>
   <li><a href="#other-r-packages" id="toc-other-r-packages" class="nav-link" data-scroll-target="#other-r-packages">Other R packages</a></li>
@@ -194,6 +195,26 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="checklist" class="level2">
+<h2 class="anchored" data-anchor-id="checklist">Checklist</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Ensure you have sufficient read quality with <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a></label></li>
+<li><label><input type="checkbox">Create a <strong>metadata feature table</strong> with all of your variables of interest</label></li>
+<li><label><input type="checkbox">Trim, filter, and merge your reads to create an <strong>ASV count table</strong></label></li>
+<li><label><input type="checkbox">Assign taxonomy to your reads with DADA2 to create a <strong>taxonomy table</strong></label></li>
+<li><label><input type="checkbox">Explore your new data tables</label>
+<ul class="task-list">
+<li><label><input type="checkbox">Remove unclassified and unwanted taxa</label></li>
+<li><label><input type="checkbox">Examine library size, read depth, sparsity, and controls</label></li>
+</ul></li>
+<li><label><input type="checkbox">Normalize library size across samples</label></li>
+<li><label><input type="checkbox">Estimate alpha diversity (with rarefied data)</label></li>
+<li><label><input type="checkbox">Estimated beta diversity</label></li>
+<li><label><input type="checkbox">Test whether your data is normally distributed</label></li>
+<li><label><input type="checkbox">Calculate statistical significance with appropriate tests</label></li>
+<li><label><input type="checkbox">Explore your data thoroughly &amp; create figures that visualize your most meaningful results</label></li>
+</ul>
+</section>
 <section id="resources" class="level2">
 <h2 class="anchored" data-anchor-id="resources">Resources</h2>
 <section id="phyloseq-3" class="level3">
@@ -224,7 +245,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="other-r-packages">Other R packages</h3>
 <ul>
 <li><p><a href="https://vegandevs.github.io/vegan/"><strong><code>vegan</code></strong></a> is an R package for community ecologists, with tools for ordination and diversity analyses. While some of these functions are intended for vegetation data, there are lots applicable to microbiome data - like <code>envfit()</code>, which fits an environmental vector or factor onto your ordinations. You can see an example of <a href="https://www.randigriffin.com/2017/05/23/mosquito-community-ecology-in-vegan.html">community diversity analysis with <code>vegan</code> on Randi Griffin’s blog</a>.</p></li>
-<li><p>The <strong><a href="https://microbiome.github.io/tutorials/"><code>microbiome</code></a></strong> package has a number of tools for exploring and analyzing microbiome data sets, including:</p>
+<li><p>The <a href="https://microbiome.github.io/tutorials/"><strong><code>microbiome</code></strong></a> package has a number of tools for exploring and analyzing microbiome data sets, including:</p>
 <ul>
 <li><p>Calculating the dominance index (i.e., the abundance of the most abundant species).</p></li>
 <li><p>Calculating rarity indices (i.e., the abundance of rare or low abundance taxa).</p></li>
