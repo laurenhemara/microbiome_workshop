@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Microbiome Data Analysis in R – Microbiome Data Analysis</title>
+<title>Where to from here? – Microbiome Data Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -94,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Overview</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./resources.html">Resources</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -108,13 +108,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./index.html" class="sidebar-item-text sidebar-link active">
+            <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./setup.html" class="sidebar-item-text sidebar-link">
@@ -149,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+  <a href="./resources.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Resources</span></a>
   </div>
 </li>
@@ -163,16 +163,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#checklist" id="toc-checklist" class="nav-link active" data-scroll-target="#checklist">Checklist</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a>
   <ul class="collapse">
-  <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule">Schedule</a>
-  <ul class="collapse">
-  <li><a href="#before-the-workshop" id="toc-before-the-workshop" class="nav-link" data-scroll-target="#before-the-workshop">Before the workshop</a></li>
-  <li><a href="#day-1-from-raw-sequencing-data-to-asvs" id="toc-day-1-from-raw-sequencing-data-to-asvs" class="nav-link" data-scroll-target="#day-1-from-raw-sequencing-data-to-asvs">Day 1: From raw sequencing data to ASVs</a></li>
-  <li><a href="#day-2-data-exploration-normalization-quality-control" id="toc-day-2-data-exploration-normalization-quality-control" class="nav-link" data-scroll-target="#day-2-data-exploration-normalization-quality-control">Day 2: Data exploration, normalization, &amp; quality control</a></li>
-  <li><a href="#day-3-diversity-metrics-data-visualizations" id="toc-day-3-diversity-metrics-data-visualizations" class="nav-link" data-scroll-target="#day-3-diversity-metrics-data-visualizations">Day 3: Diversity metrics &amp; data visualizations</a></li>
-  </ul></li>
-  <li><a href="#utsc-workshop-july-2026" id="toc-utsc-workshop-july-2026" class="nav-link" data-scroll-target="#utsc-workshop-july-2026">UTSC workshop (July 2026)</a></li>
+  <li><a href="#phyloseq-3" id="toc-phyloseq-3" class="nav-link" data-scroll-target="#phyloseq-3">Phyloseq &lt;3</a></li>
+  <li><a href="#other-r-packages" id="toc-other-r-packages" class="nav-link" data-scroll-target="#other-r-packages">Other R packages</a></li>
+  <li><a href="#data-analysis-workflows" id="toc-data-analysis-workflows" class="nav-link" data-scroll-target="#data-analysis-workflows">Data analysis workflows</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -182,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Microbiome Data Analysis in R</h1>
+<h1 class="title">Where to from here?</h1>
 </div>
 
 
@@ -199,75 +195,78 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>This workshop will introduce you to microbiome data analysis and guide you through how to process, analyse, and visualize microbial amplicon sequencing data.</p>
-<p><img src="kara_dna_edit.png" class="img-fluid" width="800"></p>
-<section id="schedule" class="level2">
-<h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
-<section id="before-the-workshop" class="level3">
-<h3 class="anchored" data-anchor-id="before-the-workshop">Before the workshop</h3>
-<ul>
-<li><p><strong>Follow the instructions in the <a href="./setup.html">Set-up</a> section</strong> to install the required packages and files.</p></li>
-<li><p>Decide whether you want to use our practice data, or your own sequencing data.</p></li>
-<li><p>Get comfortable - you will be following along in RStudio on your own computer!</p></li>
+<section id="checklist" class="level2">
+<h2 class="anchored" data-anchor-id="checklist">Checklist</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Ensure you have sufficient read quality with <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a></label></li>
+<li><label><input type="checkbox">Create a <strong>metadata feature table</strong> with all of your variables of interest</label></li>
+<li><label><input type="checkbox">Trim, filter, and merge your reads to create an <strong>ASV count table</strong></label></li>
+<li><label><input type="checkbox">Assign taxonomy to your reads with DADA2 to create a <strong>taxonomy table</strong></label></li>
+<li><label><input type="checkbox">Explore your new data tables</label>
+<ul class="task-list">
+<li><label><input type="checkbox">Remove unclassified and unwanted taxa</label></li>
+<li><label><input type="checkbox">Examine library size, read depth, sparsity, and controls</label></li>
+</ul></li>
+<li><label><input type="checkbox">Normalize library size across samples</label></li>
+<li><label><input type="checkbox">Estimate alpha diversity (with rarefied data)</label></li>
+<li><label><input type="checkbox">Estimated beta diversity</label></li>
+<li><label><input type="checkbox">Test whether your data is normally distributed</label></li>
+<li><label><input type="checkbox">Calculate statistical significance with appropriate tests</label></li>
+<li><label><input type="checkbox">Explore your data thoroughly &amp; create figures that visualize your most meaningful results</label></li>
 </ul>
 </section>
-<section id="day-1-from-raw-sequencing-data-to-asvs" class="level3">
-<h3 class="anchored" data-anchor-id="day-1-from-raw-sequencing-data-to-asvs"><a href="./fastq.html">Day 1: From raw sequencing data to ASVs</a></h3>
-<p>Led by <a href="mailto:carrie.pratt@utoronto.ca"><strong>Dr.&nbsp;Carrie Pratt</strong></a> (Postdoctoral Fellow, University of Toronto Scarborough).</p>
-<table class="table-striped table-hover caption-top table">
-<tbody>
-<tr class="odd">
-<td><a href="./fastq.html#getting-started-in-r">Getting started in R</a></td>
-</tr>
-<tr class="even">
-<td><a href="./fastq.html#processing-your-sequencing-reads">Processing our sequencing reads</a></td>
-</tr>
-<tr class="odd">
-<td><a href="./fastq.html#denoising">Denoising and learning error rates</a></td>
-</tr>
-<tr class="even">
-<td><a href="./fastq.html#constructing-an-asv-table">Constructing an ASV table</a></td>
-</tr>
-<tr class="odd">
-<td><a href="./fastq.html#assigning-taxonomy">Assigning taxonomy</a></td>
-</tr>
-</tbody>
-</table>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<section id="phyloseq-3" class="level3">
+<h3 class="anchored" data-anchor-id="phyloseq-3">Phyloseq &lt;3</h3>
+<p><a href="https://joey711.github.io/phyloseq/"><strong><code>Phyloseq</code></strong></a> is a set of classes, wrappers, and tools (in R) to make it easier to import, store, and analyze phylogenetic sequencing data; and to reproducibly share that data and analysis with others.</p>
+<p>Once you import your data into <code>phyloseq</code>, you can:</p>
+<ul>
+<li><p><a href="https://joey711.github.io/phyloseq/preprocess.html">Pre-process your data</a></p>
+<ul>
+<li><p>Filter out samples or groups</p></li>
+<li><p>Rarefy your reads</p></li>
+<li><p>Standardize to median read depth</p></li>
+<li><p>Transform counts into relative abundance</p></li>
+<li><p>Subset particular taxa (e.g., to look just at Bacteroidetes)</p></li>
+</ul></li>
+<li><p><a href="https://joey711.github.io/phyloseq/plot_richness-examples.html">Calculate alpha diversity indices</a></p></li>
+<li><p><a href="https://joey711.github.io/phyloseq/plot_ordination-examples.html">Perform ordinations</a></p></li>
+<li><p><a href="https://joey711.github.io/phyloseq/plot_bar-examples.html">Create taxonomic bar charts</a></p></li>
+<li><p>Use other R packages to:</p>
+<ul>
+<li><p>Calculate the core microbiome (<code>microbiome</code>)</p></li>
+<li><p>Remove contaminants* (<code>decontam</code>)</p></li>
+<li><p>… &amp; more!</p></li>
+</ul></li>
+</ul>
 </section>
-<section id="day-2-data-exploration-normalization-quality-control" class="level3">
-<h3 class="anchored" data-anchor-id="day-2-data-exploration-normalization-quality-control"><a href="./qc.html">Day 2: Data exploration, normalization, &amp; quality control</a></h3>
-<p>Led by <a href="mailto:kara.reardon@mail.utoronto.ca"><strong>Kara Reardon</strong></a> (PhD Candidate, Microbiome Manipulation Lab, University of Toronto Scarborough).</p>
-<table class="table-striped table-hover caption-top table">
-<tbody>
-<tr class="odd">
-<td><a href="./qc.html#exploring-our-data">Data exploration</a></td>
-</tr>
-<tr class="even">
-<td><a href="./qc.html#normalizing-abundance-data">Normalizing abundance data</a></td>
-</tr>
-</tbody>
-</table>
+<section id="other-r-packages" class="level3">
+<h3 class="anchored" data-anchor-id="other-r-packages">Other R packages</h3>
+<ul>
+<li><p><a href="https://vegandevs.github.io/vegan/"><strong><code>vegan</code></strong></a> is an R package for community ecologists, with tools for ordination and diversity analyses. While some of these functions are intended for vegetation data, there are lots applicable to microbiome data - like <code>envfit()</code>, which fits an environmental vector or factor onto your ordinations. You can see an example of <a href="https://www.randigriffin.com/2017/05/23/mosquito-community-ecology-in-vegan.html">community diversity analysis with <code>vegan</code> on Randi Griffin’s blog</a>.</p></li>
+<li><p>The <a href="https://microbiome.github.io/tutorials/"><strong><code>microbiome</code></strong></a> package has a number of tools for exploring and analyzing microbiome data sets, including:</p>
+<ul>
+<li><p>Calculating the dominance index (i.e., the abundance of the most abundant species).</p></li>
+<li><p>Calculating rarity indices (i.e., the abundance of rare or low abundance taxa).</p></li>
+<li><p>VIsualizing compositional bar plots and heatmaps.</p></li>
+<li><p>Calculating the core microbiome.</p></li>
+<li><p>Plotting the trajectory of core taxa over time.</p></li>
+<li><p>Analyzing microbiome stability over time.</p></li>
+</ul></li>
+<li><p><a href="https://microbiome.github.io/OMA/docs/devel/"><strong>Orchestrating Microbiome Analysis</strong></a>is an online book under development which walks you through common strategies and workflows in microbiome data science. They have some great tutorials for more complex data analysis. This accompanies the <code>microbiome</code> package &amp; the wider (and only slightly convoluted) <a href="https://microbiome.github.io/"><em>miaverse</em></a>…</p></li>
+<li><p><a href="https://chiliubio.github.io/microeco_tutorial/intro.html"><strong><code>microeco</code></strong></a>, a modular R package designed to connect to interface with lots of other microbiome tools. LIke <code>phyloseq</code>, this is a “container” for microbiome data.</p></li>
+</ul>
 </section>
-<section id="day-3-diversity-metrics-data-visualizations" class="level3">
-<h3 class="anchored" data-anchor-id="day-3-diversity-metrics-data-visualizations"><a href="./dataviz.html">Day 3: Diversity metrics &amp; data visualizations</a></h3>
-<p>Led by <a href="mailto:lauren.hemara@utoronto.ca"><strong>Dr.&nbsp;Lauren Hemara</strong></a> (Postdoctoral Fellow, Microbiome Manipulation Lab, University of Toronto Scarborough).</p>
-<table class="table-striped table-hover caption-top table">
-<tbody>
-<tr class="odd">
-<td><a href="./dataviz.html#alpha-diversity">Alpha diversity metrics</a></td>
-</tr>
-<tr class="even">
-<td><a href="./dataviz.html#alpha-diversity">Beta diversity metrics</a></td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="utsc-workshop-july-2026" class="level2">
-<h2 class="anchored" data-anchor-id="utsc-workshop-july-2026">UTSC workshop (July 2026)</h2>
-<p><img src="assets/MicrobiomeWorkshop.png" class="img-fluid"></p>
+<section id="data-analysis-workflows" class="level3">
+<h3 class="anchored" data-anchor-id="data-analysis-workflows">Data analysis workflows</h3>
+<p>Resources that (often generously) inspired this workshop:</p>
+<ul>
+<li><p><a href="https://benjjneb.github.io/dada2/tutorial.html"><strong>DADA2 Pipeline Tutorial</strong></a> - <a href="https://callahanlab.cvm.ncsu.edu/">Benjamin Callahan</a></p></li>
+<li><p><a href="https://astrobiomike.github.io/amplicon/dada2_workflow_ex"><strong>A full example workflow for amplicon data</strong></a> - <a href="https://astrobiomike.github.io/">Astrobio Mike</a></p></li>
+<li><p><a href="https://scienceparkstudygroup.github.io/microbiome-lesson/"><strong>Microbiota data analysis</strong></a> - <a href="https://github.com/ScienceParkStudyGroup">Amsterdam Science Park Study Group</a></p></li>
+<li><p><a href="https://h3abionet.github.io/H3ABionet-SOPs/16s-rRNA"><strong>16S data processing and microbiome analysis</strong></a> - <a href="https://h3africa.org/index.php/h3abionet/">Pan African Bioinformatics Network for H3Africa</a></p></li>
+</ul>
 
 
 </section>
