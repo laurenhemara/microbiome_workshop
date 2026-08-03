@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Show &amp; Tell + Advanced Data Viz – Microbiome Data Analysis</title>
+<title>Where to from here? – Microbiome Data Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,15 +158,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#resources" id="toc-resources" class="nav-link active" data-scroll-target="#resources">Resources</a>
+  <ul class="collapse">
+  <li><a href="#phyloseq-3" id="toc-phyloseq-3" class="nav-link" data-scroll-target="#phyloseq-3">Phyloseq &lt;3</a></li>
+  <li><a href="#other-r-packages" id="toc-other-r-packages" class="nav-link" data-scroll-target="#other-r-packages">Other R packages</a></li>
+  <li><a href="#data-analysis-workflows" id="toc-data-analysis-workflows" class="nav-link" data-scroll-target="#data-analysis-workflows">Data analysis workflows</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Show &amp; Tell + Advanced Data Viz</h1>
+<h1 class="title">Where to from here?</h1>
 </div>
 
 
@@ -183,25 +194,62 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>On Day 4 (Wednesday 22 July), we will have a <strong>guided group discussion</strong> on next steps for creating publication-worthy plots, different types of advanced data visualizations, and resources for further self-guided learning.</p>
-<p><strong>Come prepared &amp; ready to present:</strong></p>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<section id="phyloseq-3" class="level3">
+<h3 class="anchored" data-anchor-id="phyloseq-3">Phyloseq &lt;3</h3>
+<p><a href="https://joey711.github.io/phyloseq/"><strong><code>Phyloseq</code></strong></a> is a set of classes, wrappers, and tools (in R) to make it easier to import, store, and analyze phylogenetic sequencing data; and to reproducibly share that data and analysis with others.</p>
+<p>Once you import your data into <code>phyloseq</code>, you can:</p>
 <ul>
-<li><p><strong>Your most interesting figure from last week.</strong></p></li>
-<li><p><strong>An interesting microbiome figure that you’d like to learn how to make.</strong></p>
+<li><p><a href="https://joey711.github.io/phyloseq/preprocess.html">Pre-process your data</a></p>
 <ul>
-<li><p>Carrie will be telling us about how you can project environmental factors onto your PCoA with <code>envfit()</code>.</p></li>
-<li><p>Kara will show us how you can add density plots to your PCoA ordination plots.</p></li>
-<li><p>Lauren will talk about all the cool things you can do with <code>phyloseq()</code>, including:</p>
+<li><p>Filter out samples or groups</p></li>
+<li><p>Rarefy your reads</p></li>
+<li><p>Standardize to median read depth</p></li>
+<li><p>Transform counts into relative abundance</p></li>
+<li><p>Subset particular taxa (e.g., to look just at Bacteroidetes)</p></li>
+</ul></li>
+<li><p><a href="https://joey711.github.io/phyloseq/plot_richness-examples.html">Calculate alpha diversity indices</a></p></li>
+<li><p><a href="https://joey711.github.io/phyloseq/plot_ordination-examples.html">Perform ordinations</a></p></li>
+<li><p><a href="https://joey711.github.io/phyloseq/plot_bar-examples.html">Create taxonomic bar charts</a></p></li>
+<li><p>Use other R packages to:</p>
 <ul>
-<li><p>Taxonomic composition plots.</p></li>
+<li><p>Calculate the core microbiome (<code>microbiome</code>)</p></li>
+<li><p>Remove contaminants* (<code>decontam</code>)</p></li>
+<li><p>… &amp; more!</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="other-r-packages" class="level3">
+<h3 class="anchored" data-anchor-id="other-r-packages">Other R packages</h3>
+<ul>
+<li><p><a href="https://vegandevs.github.io/vegan/"><strong><code>vegan</code></strong></a> is an R package for community ecologists, with tools for ordination and diversity analyses. While some of these functions are intended for vegetation data, there are lots applicable to microbiome data - like <code>envfit()</code>, which fits an environmental vector or factor onto your ordinations. You can see an example of <a href="https://www.randigriffin.com/2017/05/23/mosquito-community-ecology-in-vegan.html">community diversity analysis with <code>vegan</code> on Randi Griffin’s blog</a>.</p></li>
+<li><p>The <strong><a href="https://microbiome.github.io/tutorials/"><code>microbiome</code></a></strong> package has a number of tools for exploring and analyzing microbiome data sets, including:</p>
+<ul>
+<li><p>Calculating the dominance index (i.e., the abundance of the most abundant species).</p></li>
+<li><p>Calculating rarity indices (i.e., the abundance of rare or low abundance taxa).</p></li>
+<li><p>VIsualizing compositional bar plots and heatmaps.</p></li>
 <li><p>Calculating the core microbiome.</p></li>
-<li><p>Making plots with less pain and suffering.</p>
-<p><img src="discussion.png" class="img-fluid" width="400"></p></li>
+<li><p>Plotting the trajectory of core taxa over time.</p></li>
+<li><p>Analyzing microbiome stability over time.</p></li>
 </ul></li>
-</ul></li>
+<li><p><a href="https://chiliubio.github.io/microeco_tutorial/intro.html"><strong><code>microeco</code></strong></a> , a modular R package designed to connect to interface with lots of other microbiome tools. LIke <code>phyloseq</code>, this is a “container” for microbiome data.</p></li>
+</ul>
+</section>
+<section id="data-analysis-workflows" class="level3">
+<h3 class="anchored" data-anchor-id="data-analysis-workflows">Data analysis workflows</h3>
+<p>Resources that (often generously) inspired this workshop:</p>
+<ul>
+<li><p><a href="https://benjjneb.github.io/dada2/tutorial.html"><strong>DADA2 Pipeline Tutorial</strong></a> - <a href="https://callahanlab.cvm.ncsu.edu/">Benjamin Callahan</a></p></li>
+<li><p><a href="https://astrobiomike.github.io/amplicon/dada2_workflow_ex"><strong>A full example workflow for amplicon data</strong></a> - <a href="https://astrobiomike.github.io/">Astrobio Mike</a></p></li>
+<li><p><a href="https://scienceparkstudygroup.github.io/microbiome-lesson/"><strong>Microbiota data analysis</strong></a> - <a href="https://github.com/ScienceParkStudyGroup">Amsterdam Science Park Study Group</a></p></li>
+<li><p><a href="https://h3abionet.github.io/H3ABionet-SOPs/16s-rRNA"><strong>16S data processing and microbiome analysis</strong></a> - <a href="https://h3africa.org/index.php/h3abionet/">Pan African Bioinformatics Network for H3Africa</a></p></li>
+<li><p><a href="https://microbiome.github.io/OMA/docs/devel/"><strong>Orchestrating Microbiome Analysis</strong></a>is an online book under development which walks you through common strategies and workflows in microbiome data science. They have some great tutorials for more complex data analysis.</p></li>
 </ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
