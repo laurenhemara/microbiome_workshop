@@ -370,8 +370,8 @@ Stop &amp; think
 <p><strong>Estimate richness</strong> <strong>with the <code>estimateR()</code> function:</strong> This function estimates three richness types - observed species richness (<code>S.obs</code>), bias-corrected Chao (<code>S.chao1</code>; Chiu et al., 2014) and ACE (<code>S.ACE</code>; O’Hara 2005).</p>
 <p>Note: <a href="https://academic.oup.com/ismej/article/18/1/wrae106/7692950?login=false">Nonparametric richness estimators Chao1 and ACE must <em>not</em> be used with amplicon sequence variant data - using these richness estimators with ASV data leads to meaningless results</a>. Therefore, we will only interpret <code>S.obs</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#estimate richness using ASV count data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>alpha_richness <span class="ot">&lt;-</span> <span class="fu">estimateR</span>(rarefied_filtered_asv_count.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#estimate richness using ASV count data &amp; transpose dataframe</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>alpha_richness <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">estimateR</span>(rarefied_filtered_asv_count.data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Estimating alpha diversity metrics with the <code>diversity()</code> function:</strong></p>
 <div class="cell">
@@ -388,7 +388,7 @@ Stop &amp; think
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>alpha_invsimpson <span class="ot">&lt;-</span> <span class="fu">diversity</span>(rarefied_filtered_asv_count.data, <span class="at">index=</span><span class="st">"invsimpson"</span>)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#combine all indices into one alpha diversity data object</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">cbind</span>(filtered_meta.data, <span class="fu">t</span>(alpha_richness), alpha_evenness, alpha_shannon, alpha_simpson, alpha_invsimpson)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>alpha_diversity <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">SampleID=</span><span class="fu">rownames</span>(alpha_richness), alpha_evenness, alpha_shannon, alpha_simpson, alpha_invsimpson) <span class="sc">%&gt;%</span> <span class="fu">right_join</span>(filtered_meta.data, <span class="at">by =</span> <span class="st">"SampleID"</span>)</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#remove rownames</span></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(alpha_diversity) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
@@ -397,21 +397,16 @@ Stop &amp; think
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(alpha_diversity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 16
-Columns: 14
+Columns: 9
 $ SampleID         &lt;chr&gt; "1BFlemo_1A", "1BFlemo_1N", "1BSWR_1A", "1BSWR_1N", "…
-$ Oxygen_Level     &lt;chr&gt; "Aerobic", "Anaerobic", "Aerobic", "Anaerobic", "Aero…
-$ Nutrient_Source  &lt;chr&gt; "Bone meal", "Bone meal", "Bone meal", "Bone meal", "…
-$ Inoculant_Source &lt;chr&gt; "Flemo", "Flemo", "SWR", "SWR", "Flemo", "Flemo", "SW…
-$ Steep_Time       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 28, 28, 28, 28, 28, 28, 28, 28
-$ S.obs            &lt;dbl&gt; 63, 101, 82, 211, 216, 229, 129, 314, 118, 94, 68, 11…
-$ S.chao1          &lt;dbl&gt; 79.86667, 110.56250, 83.25000, 314.12500, 272.84211, …
-$ se.chao1         &lt;dbl&gt; 9.288334, 6.036673, 1.732135, 27.381249, 16.555334, 1…
-$ S.ACE            &lt;dbl&gt; 114.29060, 110.03605, 83.36671, 324.40060, 272.73841,…
-$ se.ACE           &lt;dbl&gt; 7.321330, 3.687589, 2.997188, 9.792608, 7.926618, 7.5…
 $ alpha_evenness   &lt;dbl&gt; 0.8464758, 0.9486379, 0.9540584, 0.9465465, 0.9671745…
 $ alpha_shannon    &lt;dbl&gt; 3.507063, 4.378078, 4.204267, 5.065783, 5.198832, 5.2…
 $ alpha_simpson    &lt;dbl&gt; 0.961488, 0.985440, 0.982256, 0.991592, 0.993528, 0.9…
-$ alpha_invsimpson &lt;dbl&gt; 25.96593, 68.68132, 56.35708, 118.93435, 154.51174, 1…</code></pre>
+$ alpha_invsimpson &lt;dbl&gt; 25.96593, 68.68132, 56.35708, 118.93435, 154.51174, 1…
+$ Oxygen_Level     &lt;chr&gt; "Aerobic", "Anaerobic", "Aerobic", "Anaerobic", "Aero…
+$ Nutrient_Source  &lt;chr&gt; "Bone meal", "Bone meal", "Bone meal", "Bone meal", "…
+$ Inoculant_Source &lt;chr&gt; "Flemo", "Flemo", "SWR", "SWR", "Flemo", "Flemo", "SW…
+$ Steep_Time       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 28, 28, 28, 28, 28, 28, 28, 28</code></pre>
 </div>
 </div>
 </section>
@@ -801,19 +796,16 @@ Considerations for your own data
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">k=</span>(<span class="fu">nrow</span>(bc_dist)<span class="sc">-</span><span class="dv">1</span>), <span class="co">#k is number of dimensions/ASVs - 1</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eig=</span><span class="cn">TRUE</span>) <span class="co">#eigenvalues will be generated</span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#store coordinates for first two principal components (PC) in new variable</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>bc_pc1and2 <span class="ot">&lt;-</span> bc_pcoa<span class="sc">$</span>points[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#store the eigenvalues in a new variable</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>bc_eigenvalue <span class="ot">&lt;-</span> bc_pcoa<span class="sc">$</span>eig</span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#store the eigenvalues in a new variable</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>bc_eigenvalue <span class="ot">&lt;-</span> bc_pcoa<span class="sc">$</span>eig</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the percentage of variance explained by PC1 and PC2</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>percent_explained <span class="ot">&lt;-</span>bc_eigenvalue<span class="sc">/</span>(<span class="fu">sum</span>(bc_eigenvalue))<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>pe_PC1 <span class="ot">&lt;-</span>percent_explained[<span class="dv">1</span>]</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>pe_PC2 <span class="ot">&lt;-</span>percent_explained[<span class="dv">2</span>]</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">#report the percentage explained</span></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC1 explains "</span>,<span class="fu">signif</span>(pe_PC1,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the percentage of variance explained by PC1 and PC2</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>percent_explained <span class="ot">&lt;-</span>bc_eigenvalue<span class="sc">/</span>(<span class="fu">sum</span>(bc_eigenvalue))<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>pe_PC1 <span class="ot">&lt;-</span>percent_explained[<span class="dv">1</span>]</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>pe_PC2 <span class="ot">&lt;-</span>percent_explained[<span class="dv">2</span>]</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">#report the percentage explained</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"PC1 explains "</span>,<span class="fu">signif</span>(pe_PC1,<span class="dv">3</span>),<span class="st">"% of variance observed"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "PC1 explains 14.7% of variance observed"</code></pre>
 </div>
@@ -823,10 +815,10 @@ Considerations for your own data
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create PCoA summary data</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>pcoa.data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> <span class="fu">rownames</span>(bc_pc1and2),</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA1 =</span> bc_pc1and2[,<span class="dv">1</span>],</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA2 =</span> bc_pc1and2[,<span class="dv">2</span>],</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Oxygen_Level =</span> filtered_meta.data<span class="sc">$</span>Oxygen_Level)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">SampleID =</span> <span class="fu">rownames</span>(bc_pcoa<span class="sc">$</span>points),</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA1 =</span> bc_pcoa<span class="sc">$</span>points[,<span class="dv">1</span>],</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">PCoA2 =</span> bc_pcoa<span class="sc">$</span>points[,<span class="dv">2</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(filtered_meta.data, <span class="at">by=</span><span class="st">"SampleID"</span>)</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>pcoa.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pcoa.data, <span class="fu">aes</span>(PCoA1, PCoA2, <span class="at">color =</span> Oxygen_Level, <span class="at">fill=</span>Oxygen_Level)) <span class="sc">+</span></span>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> Oxygen_Level), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">stroke =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co">#add a scatterplot</span></span>
@@ -921,7 +913,7 @@ scores were not calculated due to missing values</code></pre>
 1KFlemo_1N -0.07043807  0.00396267 1KFlemo_1N</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#add metadata</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>nmds.data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(data.scores, filtered_meta.data, <span class="at">by =</span> <span class="st">"SampleID"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>nmds.data <span class="ot">&lt;-</span> <span class="fu">right_join</span>(data.scores, filtered_meta.data, <span class="at">by =</span> <span class="st">"SampleID"</span>)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nmds.data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        NMDS1       NMDS2   SampleID Oxygen_Level Nutrient_Source
